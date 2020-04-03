@@ -116,6 +116,7 @@ Docker multi-stage --> plusieurs FROM dans un seul Dockerfile<br>
 2) Create user/password --> `docker run ... --entrypoint htpasswd registry:2 -Bbn <username> <password> > <path_to_file>`<br>
 3) Write a docker compose --> in docker-compose.yml :
 
+```
     version: "3.5"
     services: 
      registry:
@@ -134,7 +135,8 @@ Docker multi-stage --> plusieurs FROM dans un seul Dockerfile<br>
        - ./data:/var/lib/registry
        - ./certs:/certs
        - ./passwd:/auth
-       
+```
+
 Ensuite<br>
 `docker-compose up -d`<br>
 `docker login 127.0.0.1:5000`<br>
@@ -148,6 +150,7 @@ Cela permets de :
 Exemple avec un docker-compose:
 1) Dans docker-compose.yml :
 
+```
     version: "3.0"
     services:
       mynginx:
@@ -155,10 +158,12 @@ Exemple avec un docker-compose:
         container_name: mynginx
         ports:
          - 80:80
+```
 
 2) `docker-compose up -d`<br>
 3) Creation d'un fichier de service dans */etc/systemd/system/* ici *mynginx.service* :
 
+```
     [Unit]
     Description=My nginx
     Requires=docker.service
@@ -175,6 +180,7 @@ Exemple avec un docker-compose:
     
     [Install]
     WantedBy=multi-user.target
+```
 
 4) `docker rm -f mynginx`<br>
 5) `service mynginx start` et on verifie avec `service mynginx status` ainsi que dans les logs syslog <br>
