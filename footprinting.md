@@ -29,4 +29,5 @@
 
 ### **Zone transfer with dig** :
 `dig axfr @<global_server> host`
+
 `dnsenum <domain_name>` might be interresting too.
