@@ -1,6 +1,7 @@
 # Documentation
 
 ## Table des matières
+- [Footprinting](https://github.com/sirbrowser/astroworld/blob/master/footprinting.md)
 - [Scanning](#scanning)
 - [Website Penetration Testing](#website-penetration-testing)
 - [Docker](
