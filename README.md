@@ -1,2 +1,2 @@
 # astroworld
-http://github.com/astroworld/master/Documentation.md - Documentation
+https://github.com/sirbrowser/astroworld/blob/master/Documentation.md - Documentation
