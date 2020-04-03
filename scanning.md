@@ -1,3 +1,12 @@
+# FootPrinting
+
+## Tables des matière
+ - [Google Hacking](#Google-Hacking)
+ - [Whois Tool](#Whois-tool)
+ - [Harvester](#Harvester)
+ - [Shodan](#Shodan)
+ - [Zone transfer with dig](#Zone-transfer-with-dig)
+ 
 Nmap :
 	Uses for :
 		-vulnerability scanning and network discovery
