@@ -7,7 +7,7 @@
  - [DNS spoofing](#DNS-spoofing)
  - [HTTPS credentials sniffing](#HTTPS-credentials-sniffing)
  - [Hooking browsers with BEEF](#Hooking-browsers-with-BEEF)
- - [Some stuff you can do with mitmf](#Some stuff-you-can-do-with-mitmf)
+ - [Some stuff you can do with mitmf](#Some-stuff-you-can-do-with-mitmf)
  - [Cloning any webpage](#Cloning-any-webpage)
  - [Ettercap](#Ettercap)
 
