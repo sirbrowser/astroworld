@@ -2,7 +2,7 @@
 
 ## Table des matières
 - [Scanning](#scanning)
-- [Website Penetration Testing](#website-pentest)
+- [Website Penetration Testing](#website-penetration-testing)
 
 ### Scanning
 
