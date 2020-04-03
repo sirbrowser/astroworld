@@ -9,7 +9,7 @@
  - [Injection attack](#Injection-attack)
  - [XML Injection](#XML-Injection)
  - [XSS Reflected](#XSS-Reflected)
- - [XSS Stored](#XSS Stored)
+ - [XSS Stored](#XSS-Stored)
  - [Hydra](#Hydra)
 
 
