@@ -6,7 +6,7 @@
 
 ### Scanning
 
-#####   Nmap
+   #####   Nmap
 
     nmap -sV <host>     // version of services
     nmap -O <host>      // OS detection
@@ -30,11 +30,11 @@
 
 ### Website Penetration Testing
 
-#####   whatweb
+   ##### whatweb
 
 `whatweb -v <host> --> many information running on the website`
 
-#####   dirb
+   #####   dirb
 
 `dirb <host> <bruteforce list> --> search directories`
 
