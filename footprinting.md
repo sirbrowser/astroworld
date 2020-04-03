@@ -9,8 +9,8 @@
 
 ### **Google Hacking** :
  ##### *On firefox* :
-   1.`inurl: "index.php?id="` --> looking for all the websites that have this in their urls
-      2. dwqdwq 
+   `inurl: "index.php?id="` --> looking for all the websites that have this in their urls
+      
    We can use "google hacking database"
  ##### *On nikto* :
    `nikto -h <ip or domain> ?-p <port>`
