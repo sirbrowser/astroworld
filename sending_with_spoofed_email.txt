@@ -1,0 +1,7 @@
+Create an account in Sendgrid web site. Create a account that seems legit.
+
+--> go to "integrate using our [...] or SMTP relay"
+--> choose SMTP relay
+--> type a key name and click on create key (remember your password, the username is the same for everyone)
+
+--> run "sendemail -s smtp.sendgrid.net:<25 or 2525> -xu apikey -xp <password> -f "<email_spoofed>" -t "<target_email>" -u "<header>" -m "<message>" -o message-header="<message_header>"
