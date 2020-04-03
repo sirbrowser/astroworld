@@ -31,33 +31,33 @@
 #### Volumes
 `docker run ... -v <local_path_to_share>:<docker_path>` --> share local volume to docker<br>
     
-    docker volume create <myvolume><br>
-    docker volume inspect <myvolume><br>
+    docker volume create <myvolume>
+    docker volume inspect <myvolume>
     
-    docker run ... --mount source:<myvolume>,target=<target_path><br>
+    docker run ... --mount source:<myvolume>,target=<target_path>
     
 #### Images
-`docker image ls` --> list pulled images
-`docker commit <container_ID> <image_name>:<version>` --> create image from a docker
+`docker image ls` --> list pulled images<br>
+`docker commit <container_ID> <image_name>:<version>` --> create image from a docker<br>
 
 #### Dockerfile and Layers
-Dockerfile permets de : 
-- créer une image
-- relancer une création d'image à tout moment
-- partager facilement et giter facilement
+Dockerfile permets de : <br>
+- créer une image<br>
+- relancer une création d'image à tout moment<br>
+- partager facilement et giter facilement<br>
 
-Il y a deux couches sur docker :
-  - Read only
-  - Read-Write
+Il y a deux couches sur docker :<br>
+  - Read only<br>
+  - Read-Write<br>
   
 **En Read only :**
-Dans Dockerfile :
-    FROM <image>:<version>
-`RUN apt-get update` --> couche 1
-`RUN apt-get install -y nano` --> couche 2
-`RUN apt-get install -y git` --> couche 3
+Dans Dockerfile :<br>
+    FROM <image>:<version><br>
+`RUN apt-get update` --> couche 1<br>
+`RUN apt-get install -y nano` --> couche 2<br>
+`RUN apt-get install -y git` --> couche 3<br>
 
-`docker history <myimage>:<myversion>`   --> list layers
+`docker history <myimage>:<myversion>`   --> list layers<br>
 
 **En Read-Write :**
     docker run ... <docker_name> ...
@@ -65,45 +65,45 @@ Dans Dockerfile :
     touch toto
     rm -rf srv/
     
-`docker diff <docker_name>` --> A for append, D for drop ...
+`docker diff <docker_name>` --> A for append, D for drop ...<br>
 
-`docker run --volumes-from <other_docker>` --> share volume from an other docker
+`docker run --volumes-from <other_docker>` --> share volume from an other docker<br>
 
 #### Cache 
-Le cache docker permets de construire plus vite les images et de permettre le partage de couches
-Il faut faire attention à l'ordre de définition dans le Dockerfile et utiliser la commande *--no-cache* pour des commandes telles que *apt-get update*
+Le cache docker permets de construire plus vite les images et de permettre le partage de couches<br>
+Il faut faire attention à l'ordre de définition dans le Dockerfile et utiliser la commande *--no-cache* pour des commandes telles que *apt-get update*<br>
 
 #### Networks
-Par défaut le réseau docker est en bridge sur l'interface *docker0* ce qui permets la communication inte-docker
-Il faut faire attention au fait qu'il n'y a pas d'IP fixes et donc si un docker est supprimé puis restart il se peut qu'il ne possède pas la même IP.
+Par défaut le réseau docker est en bridge sur l'interface *docker0* ce qui permets la communication inte-docker<br>
+Il faut faire attention au fait qu'il n'y a pas d'IP fixes et donc si un docker est supprimé puis restart il se peut qu'il ne possède pas la même IP.<br>
 
-`docker network create -d bridge --subnet <IP+mask> <mynetwork>` --> create a network
-`docker run ... --network <mynetwork>` --> connect the docker to that network
+`docker network create -d bridge --subnet <IP+mask> <mynetwork>` --> create a network<br>
+`docker run ... --network <mynetwork>` --> connect the docker to that network<br>
     
 #### Sécurité
-L'image *docker bench* permets de detecter des failles présentes sur un docker
+L'image *docker bench* permets de detecter des failles présentes sur un docker<br>
 
-`docker push login`  --> pour dockerhub
-`docker push registry.github.com/...` --> pour github, gitlab ect
+`docker push login`  --> pour dockerhub<br>
+`docker push registry.github.com/...` --> pour github, gitlab ect<br>
     
-Dans */etc/systemd/system/docker.service.d/startup_options.conf* :
+Dans */etc/systemd/system/docker.service.d/startup_options.conf* :<br>
     [Service]
     ExecStart=
     ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock
-puis
+puis<br>
 `systemctl daemon-reload
 systemctl restart docker`
 
-Ceci permets de créer une socket d'écoute pour gérer docker en remote
-**Le port 2375 si pas de certif / le port 2376 avec certif**
+Ceci permets de créer une socket d'écoute pour gérer docker en remote<br>
+**Le port 2375 si pas de certif / le port 2376 avec certif**<br>
 
 -----------------------------------------------------------------------
 
-Docker multi-stage --> plusieurs FROM dans un seul Dockerfile
+Docker multi-stage --> plusieurs FROM dans un seul Dockerfile<br>
 
 -----------------------------------------------------------------------
 
 #### Docker registry
-1) Generate auto-signed cert --> `openssl req -x509 -newkey rsa:4096 -nodes -keyout certs/myregistry.key -out certs/myregistry.crt -days 365 -subj /CN=myregistry.my`
-2) Create user/password --> `docker run ... --entrypoint htpasswd registry:2 -Bbn <username> <password> > <path_to_file>`
-3) Write a docker compose (docker-compose.yml)
+1) Generate auto-signed cert --> `openssl req -x509 -newkey rsa:4096 -nodes -keyout certs/myregistry.key -out certs/myregistry.crt -days 365 -subj /CN=myregistry.my`<br>
+2) Create user/password --> `docker run ... --entrypoint htpasswd registry:2 -Bbn <username> <password> > <path_to_file>`<br>
+3) Write a docker compose (docker-compose.yml)<br>
