@@ -2,8 +2,8 @@
 
 ## Tables des matière
  - [MSFconsole environment](#MSFconsole-environment)
- - Metasploit framwork](#Metasploit-framwork)
- - [HTTP trafic sniffing](#HTTP-trafic-sniffing)
+ - [Metasploit framwork](#Metasploit-framwork)
+ - [Bruteforcing SSH with Metasploit](#Bruteforcing-SSH-with-Metasploit)
  - [DNS spoofing](#DNS-spoofing)
  - [HTTPS credentials sniffing](#HTTPS-credentials-sniffing)
  - [Hooking browsers with BEEF](#Hooking-browsers-with-BEEF)
@@ -30,23 +30,24 @@ In order to use some of the payload available for this exploit --> `set PAYLOAD 
 
 ### Metasploit framwork 
 
-	In /usr/share/metasploit-framework/
-		--> msfconsole --> run the msfconsole
-		--> msfvenom   --> create payloads and backdoors
-		--> msfupdate  --> update metasploit framework
-		--> auxilary/  --> for scanning
-		--> encoders/  --> for bypass antivirus, antiviruses have got a huge database of known exploits and viruses, if you run a program which is a known virus, the antivirus can alert an delete it. But if you change or scramble a litle bit the code, you can bypass them because the code is not in their database.
-		--> post/      --> tools or programs you can use after infecting the target. You can download them with a reverse shell and do some informations gathering.
-		--> nops/      --> command in assembly language and it's perform no operation.	
-	Every exploits, payloads... are stored in /usr/share/metasploit-framework/modules
-		In payloads directory :
-			--> singles --> payload that perform only one action
-			--> stagers --> use to deliver an another payload
-			--> stages  -->	larger payload which allows you to make some meterpreter shell (reverse shell), NVC...	
+In `/usr/share/metasploit-framework/` :
+	msfconsole --> run the msfconsole
+	msfvenom   --> create payloads and backdoors
+	msfupdate  --> update metasploit framework
+	auxilary/  --> for scanning
+	encoders/  --> for bypass antivirus, antiviruses have got a huge database of known exploits and viruses, if you run a program which is a known virus, the antivirus can alert an delete it. But if you change or scramble a litle bit the code, you can bypass them because the code is not in their database.
+	post/      --> tools or programs you can use after infecting the target. You can download them with a reverse shell and do some informations gathering.
+	nops/      --> command in assembly language and it's perform no operation.	
+	
+Every exploits, payloads... are stored in `/usr/share/metasploit-framework/modules`
+In payloads directory :
+	singles --> payload that perform only one action
+	stagers --> use to deliver an another payload
+	stages  --> larger payload which allows you to make some meterpreter shell (reverse shell), NVC...	
 
-Bruteforcing SSH with Metasploit :
+### Bruteforcing SSH with Metasploit
 
-	With nmap command, we find that the victim has his ssh port open. (22)
+With nmap command, we find that the victim has his ssh port open. (22)
 	Search an auxiliary module in msf "search ssh", for bruteforcing ssh login let's go to auxiliary/scanner/ssh/ssh_login module (before you can see the version of ssh with ssh_version module)
 	Set your options you want (RHOSTS, THREAD, STOP_ON_SUCCESS, PASSWD_LIST, USERS_LIST...)
 	And type the command "run" or "exploit"
