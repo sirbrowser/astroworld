@@ -3,8 +3,8 @@
 ## Tables des matière
  - [Enabling Monitor mode on your network card](#Enabling-Monitor-mode-on-your-network-card)
  - [Capturing handshake with airodump](#Capturing-handshake-with-airodump)
- - [Cracking with Aircrack (CPU power)](#Cracking-with-Aircrack-(CPU-power))
- - [Cracking with Hashcat (GPU power)](#Cracking-with-Hashcat-(GPU-power))
+ - [Cracking with Aircrack](#Cracking-with-Aircrack)
+ - [Cracking with Hashcat](#Cracking-with-Hashcat)
  - [Cracking with cowpatty](#Cracking-with-cowpatty)
  - [Creating wordlists](#Creating-wordlists)
  - [Rainbow table](#Rainbow-table)
@@ -32,11 +32,15 @@ Press `^C` and all the devices will be reconnected to the access point and you s
 
 4 files have been created and you can open the .cap in wireshark. You can filtered by `eapol` in order to see the packets link to the reconnection.
 	
-### Cracking with Aircrack (CPU power) 
+### Cracking with Aircrack 
+
+**Use CPU power** 
 
 You can brute-forcing th password by tiping : `aircrack-ng -w <wordlist> <file.cap>`
 
-### Cracking with Hashcat (GPU power)
+### Cracking with Hashcat
+
+**Use GPU power** 
 
 In order to crack with Hashcat you must convert the .cap to a hashcat capture file --> `https://hashcat.net/cap2hccapx/`
 
