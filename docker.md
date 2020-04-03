@@ -61,11 +61,14 @@ Dans Dockerfile :<br>
 `docker history <myimage>:<myversion>`   --> list layers<br>
 
 **En Read-Write :**
+
+```    
     docker run ... <docker_name> ...
     docker exec -ti <docker_name> sh
     touch toto
     rm -rf srv/
-    
+```
+
 `docker diff <docker_name>` --> A for append, D for drop ...<br>
 
 `docker run --volumes-from <other_docker>` --> share volume from an other docker<br>
@@ -88,9 +91,13 @@ L'image *docker bench* permets de detecter des failles présentes sur un docker<
 `docker push registry.github.com/...` --> pour github, gitlab ect<br>
     
 Dans */etc/systemd/system/docker.service.d/startup_options.conf* :
+
+```
     [Service]
     ExecStart=
     ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock
+```
+
 puis<br>
 `systemctl daemon-reload
 systemctl restart docker`
