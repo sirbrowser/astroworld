@@ -1,4 +1,4 @@
-# FootPrinting
+# **FootPrinting
 
 ## Tables des matière
  -[Google Hacking](#Google-Hacking)
@@ -7,16 +7,16 @@
  -[Shodan](#Shodan)
  -[Zone transfer with dig](#Zone-transfer-with-dig)
 
-#### Google Hacking :
+#### **Google Hacking :
 ##### On firefox :
 `inurl: "index.php?id="` --> looking for all the websites that have this in their urls
 use "google hacking database"
-##### On nikto :
+##### **On nikto :
 `nikto -h <ip or domain> ?-p <port>`
  `/etc/nikto.conf` --> configs
 We can use a proxy which is set in /etc/nikto.conf
 
-#### Whois tool :
+#### **Whois tool :
 `whois <domain_name>` --> gather company informations
 
 #### Harvester :
