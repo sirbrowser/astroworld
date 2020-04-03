@@ -1,3 +1,12 @@
+# FootPrinting
+
+## Tables des matière
+ - [Google Hacking](#google-hacking)
+ - [Whois Tool](#whois-tool)
+ - [Harvester](#harvester)
+ - [Shodan](#shodan)
+ - [Zone transfer with dig](#zone-transfer-with-dig)
+
 Enabling Monitor mode on your network card :
 	
 	Check your mode tiping "iwconfig". Put your network card down. Type "airmon-ng check <network_card_name>". Type "airmon-ng check kill <network_card_name>". 
