@@ -1,2 +1,2 @@
 # astroworld
-Docuementation
+Documentation
