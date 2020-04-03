@@ -9,7 +9,8 @@
 - [Networks](#networks)
 - [Sécurité](#securite)
 - [Docker registry](#docker-registry)
-    
+- [Launch dockers with systemd](#launch-dockers-with-systemd)
+
     
 #### Commandes docker de base
 `docker ps` --> list dockers running<br>
@@ -106,4 +107,63 @@ Docker multi-stage --> plusieurs FROM dans un seul Dockerfile<br>
 #### Docker registry
 1) Generate auto-signed cert --> `openssl req -x509 -newkey rsa:4096 -nodes -keyout certs/myregistry.key -out certs/myregistry.crt -days 365 -subj /CN=myregistry.my`<br>
 2) Create user/password --> `docker run ... --entrypoint htpasswd registry:2 -Bbn <username> <password> > <path_to_file>`<br>
-3) Write a docker compose (docker-compose.yml)<br>
+3) Write a docker compose --> in docker-compose.yml :<br>
+    version: "3.5"
+    services: 
+     registry:
+      restart: always
+      image: registry:2
+      container_name: registry
+      ports:
+       - 5000:5000
+      environment:
+       REGISTRY_HTTP_TLS_CERTIFICATE: /certs/myregistry.crt
+       REGISTRY_HTTP_TLS_KEY: /certs/myregistry.key
+       REGISTRY_AUTH: htpasswd
+       REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+       REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
+      volumes:
+       - ./data:/var/lib/registry
+       - ./certs:/certs
+       - ./passwd:/auth
+       
+Ensuite<br>
+`docker-compose up -d`<br>
+`docker login 127.0.0.1:5000`<br>
+
+#### Launch dockers with systemd
+Cela permets de : 
+    - formaliser les lancements
+    - utiliser les orchestrateurs et leurs modules systemd (ansible)
+    - améliorer les logs dans syslog
+
+Exemple avec un docker-compose:
+1) Dans docker-compose.yml :
+    version: "3.0"
+    services:
+      mynginx:
+        image: nginx:latest
+        container_name: mynginx
+        ports:
+         - 80:80
+2) `docker-compose up -d`<br>
+3) Creation d'un fichier de service dans */etc/systemd/system/* ici *mynginx.service* :
+    [Unit]
+    Description=My nginx
+    Requires=docker.service
+    After=docker.service
+    
+    [Service]
+    Restart=always
+    User=root
+    Group=docker
+    ExecStartPre=/usr/bin/docker-compose -f /root/docker-compose.yml down -v
+    ExecStart=/usr/bin/docker-compose -f /root/docker-compose.yml up
+    ExecSopt=/usr/bin/docker-compose -f /root/docker-compose.yml down -v
+    SyslogIdentifier=mynginx
+    
+    [Install]
+    WantedBy=multi-user.target
+
+4) `docker rm -f mynginx`<br>
+5) `service mynginx start` et on verifie avec `service mynginx status` ainsi que dans les logs syslog <br>
