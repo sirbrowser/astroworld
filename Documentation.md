@@ -1,5 +1,7 @@
 # Documentation
-## - [Scanning](#scanning)
+
+## Table des matières
+- [Scanning](#scanning)
 
 
 fv
