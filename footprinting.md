@@ -1,11 +1,11 @@
 # FootPrinting
 
 ## Tables des matière
- - [Google Hacking](#Google-Hacking)
- - [Whois Tool](#Whois-tool)
- - [Harvester](#Harvester)
- - [Shodan](#Shodan)
- - [Zone transfer with dig](#Zone-transfer-with-dig)
+ - [Google Hacking](#google-hacking)
+ - [Whois Tool](#whois-tool)
+ - [Harvester](#harvester)
+ - [Shodan](#shodan)
+ - [Zone transfer with dig](#zone-transfer-with-dig)
 
 ### **Google Hacking** :
  ##### *On firefox* :
