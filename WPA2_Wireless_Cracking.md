@@ -64,19 +64,19 @@ You can retrieve a word by its hash hash -->` rcrack . -h <hash>`
 
 --> For WPA-WPA2 carcking :
 	
-  -create file with the name of the essid of your access point (SFR_0F30?)
+	-create file with the name of the essid of your access point (SFR_0F30?)
 
-  -airolib-ng <rainbow_table_name> --import essid <essid_name_file>
+  	-airolib-ng <rainbow_table_name> --import essid <essid_name_file>
   
-  -airolib-ng <rainbow_table_name> --import passwd <wordlist>
+  	-airolib-ng <rainbow_table_name> --import passwd <wordlist>
 		
-  -airolib-ng <rainbow_table_name> --clean all
+  	-airolib-ng <rainbow_table_name> --clean all
 		
-  -airolib-ng <rainbow_table_name> --batch
+  	-airolib-ng <rainbow_table_name> --batch
 
-  -airolib-ng <rainbow_table_name> --verify all
+  	-airolib-ng <rainbow_table_name> --verify all
 		
-  -aircrack-ng -r <rainbow_table_name> <file.cap>
+ 	-aircrack-ng -r <rainbow_table_name> <file.cap>
 	
 ### Fluxion
 
