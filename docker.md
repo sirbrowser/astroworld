@@ -108,6 +108,7 @@ Docker multi-stage --> plusieurs FROM dans un seul Dockerfile<br>
 1) Generate auto-signed cert --> `openssl req -x509 -newkey rsa:4096 -nodes -keyout certs/myregistry.key -out certs/myregistry.crt -days 365 -subj /CN=myregistry.my`<br>
 2) Create user/password --> `docker run ... --entrypoint htpasswd registry:2 -Bbn <username> <password> > <path_to_file>`<br>
 3) Write a docker compose --> in docker-compose.yml :
+
     version: "3.5"
     services: 
      registry:
@@ -139,6 +140,7 @@ Cela permets de :
 
 Exemple avec un docker-compose:
 1) Dans docker-compose.yml :
+
     version: "3.0"
     services:
       mynginx:
@@ -146,8 +148,10 @@ Exemple avec un docker-compose:
         container_name: mynginx
         ports:
          - 80:80
+
 2) `docker-compose up -d`<br>
 3) Creation d'un fichier de service dans */etc/systemd/system/* ici *mynginx.service* :
+
     [Unit]
     Description=My nginx
     Requires=docker.service
