@@ -12,29 +12,29 @@
     
     
 #### Commandes docker de base
-`docker ps` --> list dockers running
+`docker ps` --> list dockers running<br>
     
-`docker run -tid -p <port source>:<port destination> --name <docker_name> <image>:<img_version>` --> run a docker with port redirection
+`docker run -tid -p <port source>:<port destination> --name <docker_name> <image>:<img_version>` --> run a docker with port redirection<br>
     
-`docker exec -ti <docker_name> sh` --> enter in a docker with shell bash
+`docker exec -ti <docker_name> sh` --> enter in a docker with shell bash<br>
     
-`docker inspect <docker_name>` --> information about docker
+`docker inspect <docker_name>` --> information about docker<br>
     
-`docker start <docker_name>` --> start a docker which was stopped in docker ps -a
+`docker start <docker_name>` --> start a docker which was stopped in docker ps -a<br>
     
-`docker rm -f <docker_name>` --> force deletion of a docker
+`docker rm -f <docker_name>` --> force deletion of a docker<br>
     
-`docker run ... --env <MYVARIABLE>="1234"` --> set an environment variable in a docker
-`docker run ... --env-file <variable_file>`
-`docker run ... --hostname <hostname>` --> set an hostname for the docker
+`docker run ... --env <MYVARIABLE>="1234"` --> set an environment variable in a docker<br>
+`docker run ... --env-file <variable_file>`<br>
+`docker run ... --hostname <hostname>` --> set an hostname for the docker<br>
     
 #### Volumes
-`docker run ... -v <local_path_to_share>:<docker_path>` --> share local volume to docker
+`docker run ... -v <local_path_to_share>:<docker_path>` --> share local volume to docker<br>
     
-    docker volume create <myvolume>
-    docker volume inspect <myvolume>
+    docker volume create <myvolume><br>
+    docker volume inspect <myvolume><br>
     
-    docker run ... --mount source:<myvolume>,target=<target_path>
+    docker run ... --mount source:<myvolume>,target=<target_path><br>
     
 #### Images
 `docker image ls` --> list pulled images
