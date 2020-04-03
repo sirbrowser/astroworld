@@ -77,3 +77,5 @@ d
 
 ### Scanning
 
+    if var == true
+      sku.mp4
