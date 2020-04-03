@@ -2,6 +2,7 @@
 
 ## Table des matières
 - [Scanning](#scanning)
+- [Website Penetration Testing](#website-pentest)
 
 ### Scanning
 
@@ -26,4 +27,14 @@
     nmap --script vulscan,nmap-vulners -sV -Pn <host>
     
     script http-methods.nse --> scan methods (GET, POST, ...)
+
+### Website Penetration Testing
+
+##### whatweb
+
+`whatweb -v <host> --> many information running on the website`
+
+##### dirb
+
+`dirb <host> <bruteforce list> --> search directories`
 
