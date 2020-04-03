@@ -10,7 +10,8 @@
 ### **Google Hacking** :
  ##### *On firefox* :
    `inurl: "index.php?id="` --> looking for all the websites that have this in their urls
-    use "google hacking database"
+    
+   We can use "google hacking database"
  ##### *On nikto* :
    `nikto -h <ip or domain> ?-p <port>`
    `/etc/nikto.conf` --> configs
