@@ -87,7 +87,7 @@ L'image *docker bench* permets de detecter des failles présentes sur un docker<
 `docker push login`  --> pour dockerhub<br>
 `docker push registry.github.com/...` --> pour github, gitlab ect<br>
     
-Dans */etc/systemd/system/docker.service.d/startup_options.conf* :<br>
+Dans */etc/systemd/system/docker.service.d/startup_options.conf* :
     [Service]
     ExecStart=
     ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock
@@ -107,7 +107,7 @@ Docker multi-stage --> plusieurs FROM dans un seul Dockerfile<br>
 #### Docker registry
 1) Generate auto-signed cert --> `openssl req -x509 -newkey rsa:4096 -nodes -keyout certs/myregistry.key -out certs/myregistry.crt -days 365 -subj /CN=myregistry.my`<br>
 2) Create user/password --> `docker run ... --entrypoint htpasswd registry:2 -Bbn <username> <password> > <path_to_file>`<br>
-3) Write a docker compose --> in docker-compose.yml :<br>
+3) Write a docker compose --> in docker-compose.yml :
     version: "3.5"
     services: 
      registry:
