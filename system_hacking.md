@@ -1,17 +1,34 @@
-MSFconsole environment :
+# System Hacking
 
-	"service postgresql start" to run your metasploit framwork faster using sql databases.
-	Start Msfconsole --> "msfconsole"
-	You can run every linux commands in the msfconsole terminal
-	Search command to see available exploit --> for example "search windows"
-	Use command to go to this exploit  --> for example "use <exploit_path>
-	Show command -->"show info", "show options", "show targets", 
-			"show payload" --> in order to use some of the payload available for this exploit --> set PAYLOAD <payload_path>
-			You can see payload options --> "show options"
-			You can set the options for this payload --> set <option_name> <value> --> For example "set LHOST 192.168.1.246"
+## Tables des matière
+ - [MSFconsole environment](#MSFconsole-environment)
+ - Metasploit framwork](#Metasploit-framwork)
+ - [HTTP trafic sniffing](#HTTP-trafic-sniffing)
+ - [DNS spoofing](#DNS-spoofing)
+ - [HTTPS credentials sniffing](#HTTPS-credentials-sniffing)
+ - [Hooking browsers with BEEF](#Hooking-browsers-with-BEEF)
+ - [Some stuff you can do with mitmf](#Some-stuff-you-can-do-with-mitmf)
+ - [Cloning any webpage](#Cloning-any-webpage)
+ - [Ettercap](#Ettercap)
+
+### MSFconsole environment
+
+`service postgresql start` to run your metasploit framwork faster using sql databases.
+
+Start Msfconsole --> `msfconsole`
+	
+You can run every linux commands in the msfconsole terminal
+	
+Search command to see available exploit --> for example `search windows`
+
+Use command to go to this exploit  --> for example `use <exploit_path>`
+
+Show command --> `show info`, `show options`, `show targets`, `show payload` 
+
+In order to use some of the payload available for this exploit --> `set PAYLOAD <payload_path>`. You can see payload options --> `show options`. You can set the options for this payload --> `set <option_name> <value>` --> For example `set LHOST 192.168.1.246`
 			   
 
-Metasploit framwork :
+### Metasploit framwork 
 
 	In /usr/share/metasploit-framework/
 		--> msfconsole --> run the msfconsole
