@@ -212,6 +212,59 @@ Il est lui même un docker!
 
 [Présentation de Traefik](https://www.youtube.com/watch?v=QvAz9mVx5TI)
 
-Sans Traefik :<br>
+Sans Traefik :
 <img src=https://github.com/sirbrowser/astroworld/blob/master/images/Capture.PNG><br>
+
+Avec Traefik :
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/with-traefik.png><br>
+
+**Example d'utilisation** 
+Le *docker-compose.yml* de Traefik:
+```
+version: "3"
+services:
+  traefik:
+    image: traefik    ===> METTRE traefik:v1.7.16 SINON CA MARCHE PAS
+    command: --web --docker --docker.domain=docker.localhost --loglevel=DEBUG
+    ports:
+      - "80:80"
+      - "8080:8080"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock   --> traefik a besoin de la socket docker
+      - /dev/null:/traefik.toml     --> traefik.toml = fichier de conf de traefik qu'on partage avec la machine host
+    networks:
+      - webgateway
+networks:
+  webgateway:             --> traefik a besoin de son propre réseau docker
+    driver: bridge
+```
+
+Le *docker-compose.yml* global :
+```
+version: '3'
+services:
+  app:
+    build: .
+    image: flask-redis:1.0
+    environment:
+      - FLASK_ENV=development
+    expose:
+      - "80"
+    networks:
+      - traefik
+    labels:
+      - "traefik.docker.network=traefik"      --> on spécifie le réseau qu'on doit utiliser
+      - "traefik.backend=browser"             --> on donne un nom à l'interface graphique de traefik
+      - "traefik.frontend.rule=Host:browser.localhost"    --> on précise l'host sur lequel trafeik va tourner
+      - "traefik.port=80"
+    redis:
+      image: redis:4.0.11-alpine
+      networks:
+        - traefik
+networks:
+  traefik:
+    external:
+      traefik_webgateway   --> nom du réseau défini dans le docker-compose.yml de Traefik
+```
 
