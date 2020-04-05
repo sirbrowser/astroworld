@@ -213,6 +213,5 @@ Il est lui même un docker!
 [Présentation de Traefik](https://www.youtube.com/watch?v=QvAz9mVx5TI)
 
 Sans Traefik :<br>
-
-![alt text](https://github.com/sirbrowser/astroworld/blob/master/images/Capture.PNG)
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/Capture.PNG><br>
 
