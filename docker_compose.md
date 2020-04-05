@@ -3,7 +3,7 @@
 ### Index
 - [What is docker compose?](#what-is-docker-compose)
 - [Deploiement d'une application avec plusieurs services](#deploiement-dune-application-avec-plusieurs-services)
-
+- [Networks](#networks)
 
 
 
@@ -119,3 +119,19 @@ curl localhost:5000
 
 `docker-compose down`     --> supprime les docker qui ont été lancés en une seule commande<br>
 
+#### Networks
+
+Dans *docker-compose.yml* on peut specifier :
+```
+version: '3'
+services:
+  <span class="text-danger">app:      --> first service</span>
+    build: .
+    image: flask-redis:1.0 --> image_name + version that we want to create
+    environment:
+      - FLASK_ENV=development
+    ports:
+      - 5000:5000
+  redis:    --> second service
+    image: redis:4.0.11-alpine
+```
