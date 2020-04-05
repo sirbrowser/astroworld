@@ -4,7 +4,8 @@
 - [What is docker compose?](#what-is-docker-compose)
 - [Deploiement d'une application avec plusieurs services](#deploiement-dune-application-avec-plusieurs-services)
 - [Networks](#networks)
-
+- [Volumes](#volumes)
+- [Traefik](#traefik)
 
 
 
@@ -125,13 +126,87 @@ Dans *docker-compose.yml* on peut specifier :
 ```
 version: '3'
 services:
-  <span class="text-danger">app:      --> first service</span>
+  app:
     build: .
-    image: flask-redis:1.0 --> image_name + version that we want to create
+    image: flask-redis:1.0
     environment:
       - FLASK_ENV=development
     ports:
       - 5000:5000
-  redis:    --> second service
+    networks:     |
+      - backend   | --> uses backend and frontend networks
+      - frontend  | 
+  redis:
     image: redis:4.0.11-alpine
+    networks:
+      - backend   --> uses backend network
+      
+ networks:        |
+   backend:       | --> create 2 networks 
+   frontend:      |
 ```
+
+#### Volumes
+
+Avec docker dans *Dockerfile* :
+```
+redis:
+  image: redis:4.0.11-alpine
+  networks:
+    - backend
+  volumes:
+    - dbdata:/data
+  
+volumes:
+  dbdata:
+```
+Ici on laisse docker gérer les volumes, or on veut pouvoir définir plus précisément nos volumes en utilisant docker-compose.
+Avec docker-compose dans *docker-compose.yml* :
+```
+version: '3'
+services:
+  app:
+    build: .
+    image: flask-redis:1.0
+    environment:
+      - FLASK_ENV=development
+    ports:
+      - 5000:5000
+    networks:
+      - backend
+      - frontend
+  redis:
+    image: redis:4.0.11-alpine
+    networks:
+      - backend
+    volumes:
+      - dbdata: /data  --> uses volume dbdata
+      
+networks:
+  backend:
+  frontend:
+
+volumes:
+  dbdata:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/srv/redis' --> host volume
+```
+
+`docker-compose up -d --build` --> to apply volume information and mount it<br>
+
+To test it we can do a `docker-compose down` and then `docker-compose up -d` and with running the script *./post-get.sh* we can see that our data have been saved by the volume even if we down the docker.<br>
+
+#### Traefik
+
+Traefik est un reverse proxy pour conteneurs, il permets de :
+- ne pas utiliser les ip des conteneurs
+- valable pour plusieurs url et plusieurs conteneurs
+- maintenir des url
+- maintenir du service traefik (toujours up)
+- load balancing si scaling
+
+Il est lui même un docker!
+
