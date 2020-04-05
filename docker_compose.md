@@ -45,6 +45,9 @@ Dans un répertoire :
 - requirements.txt --> contient la liste des modules pip pour l'image
 - script shell de test
 
+Redis is an open-source data structured store used as a database, cache and message broker. It works on Linux and OSX systems.
+Flask is an open-source framework in python used as development server and debugger and template engine for HTML. It is very light under BSD license.
+
 *dockercompose.yml :*
 ```
 version: '3'
@@ -80,4 +83,39 @@ redis
 *app.py :*
 ```python
 from flask import Flask, request, jsonify
+from redis import Redis
+
+app = Flask(__name__)
+redis = Redis(host="redis", db=0, socket_timeout=5, charset="utf-8", decode_responses=True)
+
+@app.route('/', methods=['POST', 'GET'])
+def index():
+  
+  if request.method == 'POST':
+    name = request.json['name']
+    redis.rpush('students', name)             --> if the method is POST we do an insert or update in table students
+    return jsonify({'name': name})
+    
+  if request.method == 'GET':
+    return jsonify(redis.lrange('students', 0, -1))     --> if the method is GET we get back all data in table students
 ```
+
+Then we need to do :
+`docker-compose up -d`    --> -d for the detach mode<br>
+
+*post-get.sh* To test :
+```sh
+#!/bin/bash
+
+echo "GET on database before POST:"
+curl localhost:5000
+
+echo "POST..."
+curl --header "Content-Type: application/json" --request POST --data '{"name": "browser"}' localhost:5000
+
+echo "GET on database after POST"
+curl localhost:5000
+```
+
+`docker-compose down`     --> supprime les docker qui ont été lancés en une seule commande<br>
+
