@@ -211,3 +211,6 @@ Traefik est un reverse proxy pour conteneurs, il permets de :
 Il est lui même un docker!
 
 [Présentation de Traefik](https://www.youtube.com/watch?v=QvAz9mVx5TI)
+
+Sans Traefik :
+
