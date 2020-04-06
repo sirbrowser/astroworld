@@ -20,6 +20,7 @@
 
 **Princiales commandes**
 - un répertoire avec docker-compose.yml
+- commandes similaires à docker
 - `docker-compose build` --> construction uniquement des images
 - `dokcer-compose up` --> build et run des images
 - `docker-compose up -d` --> en mode detached
@@ -270,3 +271,25 @@ networks:
       traefik_webgateway   --> nom du réseau défini dans le docker-compose.yml de Traefik
 ```
 
+Le dashboard de Traefik :
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/traefik-dashboard.png><br>
+
+#### Dockprom
+
+[Github de dockprom](https://github.com/stefanprodan/dockprom)
+
+Dockprom c'est :
+- prometheus (serveur de supervision)
+- grafana (data visualisation métriques)
+- cAdvisor (collecte de métriques sur conteneurs)
+- alertmanager (gestion d'alertes)
+- nodeexporter (export de métriques)
+- pushgateway (pousser des métriques personnalisées)
+- caddy (reverse proxy pour conteneurs)
+
+Installation de dockprom :
+```
+git clone https://github.com/stefanprodan/dockprom
+cd dockprom
+docker-compose up -d
+```
