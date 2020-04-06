@@ -20,7 +20,9 @@
 
 **Princiales commandes**
 - un répertoire avec docker-compose.yml
-- commandes similaires à docker
+- docker-compose build --> construction uniquement des images
+- dokcer-compose up --> build et run des images
+- docker-compose up -d --> en mode detached
 
 `docker-compose scale <service_name>=3` --> lance 3 instances de service<br>
 
