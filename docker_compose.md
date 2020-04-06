@@ -6,8 +6,7 @@
 - [Networks](#networks)
 - [Volumes](#volumes)
 - [Traefik](#traefik)
-
-
+- [Dockprom](#dockprom)
 
 
 #### What is docker compose?
@@ -297,9 +296,13 @@ docker-compose up -d
 - Prometheus (peu utilisé) dashboard (port 9090 par défaut) :
 <img src=https://github.com/sirbrowser/astroworld/blob/master/images/prometheus-dashboard.png><br>
 
-- Grafana :
+- Grafana (port 3000 par défaut) :
 <img src=https://github.com/sirbrowser/astroworld/blob/master/images/grafana-dashboard.png><br>
 <img src=https://github.com/sirbrowser/astroworld/blob/master/images/grafana-dashboard1.png><br>
 
+To increase traffic and watch grafana running we can run :
+`while True; do ./post-get.sh; done`<br>
+As a result we can see that there is an increase in network traffic for example in grafana :
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/grafana-dashboard2.png><br>
 
 
