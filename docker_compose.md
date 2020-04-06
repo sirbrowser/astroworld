@@ -8,6 +8,7 @@
 - [Traefik](#traefik)
 - [Dockprom](#dockprom)
 - [Scaling](#scaling)
+- [Portainer](#portainer)
 
 #### What is docker compose?
 
@@ -316,3 +317,22 @@ Avec scaling :<br>
 
 `docker-compose up -d scale <servie_name>=2`<br>
 On a beaucoup plus d'options en utilisant le cluster docker swarm.<br>
+
+#### Portainer
+Permet :
+- interface graphique de gestion docker
+- d'effectuer des actions sur les conteneurs y compris la création
+- détails sur les conteneurs
+- métrique de conteneur
+- logs des conteneurs
+- console du conteneur
+- gestion des images
+- réseaux
+- volumes
+- template de conteneurs
+- visualisation de Swarm (nodes)
+- gestion des services (compose et swarm)
+- gestion des endpoints (ajout de serveur à portainer)
+
+Mise en place :
+`docker -H tcp://127.0.0.1:2375 ps -a` --> permet de rendre tous les dockers accessible en remote<br>
