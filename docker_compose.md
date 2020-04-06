@@ -7,7 +7,7 @@
 - [Volumes](#volumes)
 - [Traefik](#traefik)
 - [Dockprom](#dockprom)
-
+- [Scaling](#scaling)
 
 #### What is docker compose?
 
@@ -305,4 +305,14 @@ To increase traffic and watch grafana running we can run :
 As a result we can see that there is an increase in network traffic for example in grafana :
 <img src=https://github.com/sirbrowser/astroworld/blob/master/images/grafana-dashboard2.png><br>
 
+#### Scaling
 
+Permets d'avoir plusieurs conteneurs applicatifs sur la même base de données
+Sans scaling :
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/without-scaling.png><br>
+
+Avec scaling :
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/with-scaling.png><br>
+
+`docker-compose up -d scale app=2`<br>
+On a beaucoup plus d'options en utilisant le cluster docker swarm
