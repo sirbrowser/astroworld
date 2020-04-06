@@ -314,5 +314,5 @@ Sans scaling :<br>
 Avec scaling :<br>
 <img src=https://github.com/sirbrowser/astroworld/blob/master/images/with-scaling.png><br>
 
-`docker-compose up -d scale app=2`<br>
+`docker-compose up -d scale <servie_name>=2`<br>
 On a beaucoup plus d'options en utilisant le cluster docker swarm.<br>
