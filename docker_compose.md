@@ -293,3 +293,13 @@ git clone https://github.com/stefanprodan/dockprom
 cd dockprom
 docker-compose up -d
 ```
+
+- Prometheus (peu utilisé) dashboard (port 9090 par défaut) :
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/prometheus-dashboard.png><br>
+
+- Grafana :
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/grafana-dashboard.png><br>
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/grafana-dashboard1.png><br>
+
+
+
