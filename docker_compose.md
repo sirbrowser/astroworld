@@ -307,12 +307,12 @@ As a result we can see that there is an increase in network traffic for example 
 
 #### Scaling
 
-Permets d'avoir plusieurs conteneurs applicatifs sur la même base de données
-Sans scaling :
+Permets d'avoir plusieurs conteneurs applicatifs sur la même base de données<br>
+Sans scaling :<br>
 <img src=https://github.com/sirbrowser/astroworld/blob/master/images/without-scaling.png><br>
 
-Avec scaling :
+Avec scaling :<br>
 <img src=https://github.com/sirbrowser/astroworld/blob/master/images/with-scaling.png><br>
 
 `docker-compose up -d scale app=2`<br>
-On a beaucoup plus d'options en utilisant le cluster docker swarm
+On a beaucoup plus d'options en utilisant le cluster docker swarm.<br>
