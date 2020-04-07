@@ -9,6 +9,7 @@
 - [Dockprom](#dockprom)
 - [Scaling](#scaling)
 - [Portainer](#portainer)
+- [Stack wordpress/mysql](#stack-wordpressmysql)
 
 #### What is docker compose?
 
@@ -375,4 +376,4 @@ Then the result is the endpoint url in portainer.
 Un exemple de page du dashboard, enormément d'options sont disponibles :
 <img src=https://github.com/sirbrowser/astroworld/blob/master/images/portainer3.png><br>
 
-
+#### Stack wordpress/mysql
