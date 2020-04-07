@@ -335,4 +335,4 @@ Permet :
 - gestion des endpoints (ajout de serveur à portainer)
 
 Mise en place :
-`docker -H tcp://127.0.0.1:2375 ps -a` --> permet de rendre tous les dockers accessible en remote<br>
+
