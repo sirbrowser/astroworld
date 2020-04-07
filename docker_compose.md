@@ -334,6 +334,8 @@ Permet :
 - gestion des services (compose et swarm)
 - gestion des endpoints (ajout de serveur à portainer)
 
+`docker -H tcp://0.0.0.0:2375 ps -a` --> mise en place de la socket d'ecoute sur tous les conteneurs
+
 Mise en place :
 `mkdir portainer`<br>
 Dans le *docker-compose.yml* :
@@ -369,4 +371,8 @@ Dashboard portainer :<br>
 Then we select the network related to that ip and :<br>
 `ifconfig | grep 172.18.0`
 Then the result is the endpoint url in portainer.
+
+Un exemple de page du dashboard, enormément d'options sont disponibles :
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/portainer3.png><br>
+
 
