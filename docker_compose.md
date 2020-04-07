@@ -236,7 +236,7 @@ services:
       - "443:443"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock   --> traefik a besoin de la socket docker
-      - /dev/null:/traefik.toml     --> traefik.toml = fichier de conf de traefik qu'on partage avec la machine host
+      - /dev/null:/etc/traefik/traefik.toml     --> traefik.toml = fichier de conf de traefik qu'on partage avec la machine host
     networks:
       - webgateway
 networks:
