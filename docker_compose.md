@@ -335,4 +335,38 @@ Permet :
 - gestion des endpoints (ajout de serveur à portainer)
 
 Mise en place :
+`mkdir portainer`<br>
+Dans le *docker-compose.yml* :
+```
+version: '2'
+services:
+  portainer:
+    image: portainer/portainer
+    expose:
+      - "9000"
+    networks:
+      - traefik
+    labels:
+      - "traefik.docker.network=traefik"
+      - "traefik.frontend.rule=Host:portainer.localhost"
+      - "traefik.port=9000"
+      - "traefik.backend=portainer"
+      - "traefik.frontend.entryPoints=http"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+networks:
+  traefik:
+    external:
+      name: traefik_webgateway
+```
+
+`docker-compose up -d`<br>
+
+Dashboard portainer :<br>
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/portainer.png><br>
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/portainer2.png><br>
+Then we select the network related to that ip and :<br>
+`ifconfig | grep 172.18.0`
+Then the result is the endpoint url in portainer.
 
