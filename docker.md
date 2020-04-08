@@ -98,6 +98,8 @@ Dans */etc/systemd/system/docker.service.d/startup_options.conf* :
     ExecStart=/usr/sbin/dockerd -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock
 ```
 <span style="color: #26B260"> ATTENTION CES CONNARD DE DEVS ONT MIS /usr/bin dans la doc alors que c'est /usr/sbin!!!!!!</span>
+Mdrrr askip ils ont voulu que niquer Benjamin moi c'est bien dans /usr/bin, mettez du respect sur le nom des devs bordel
+
 
 puis<br>
 `systemctl daemon-reload
