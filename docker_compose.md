@@ -596,8 +596,8 @@ networks:
    ipam:
      config:
        - subnet: 192.168.168.0/24                   | <-- on peut configurer la plage d'adresse du reseau
-"
 ```
+Jenkins met environ 15 secondes a se lancer. Il demandera un token d'administration, il est present dans les logs du conteneur jenkins
 
 #### GitLab
 
