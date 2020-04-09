@@ -13,6 +13,7 @@
 - [Phpmyadmin](#Phpmyadmin)
 - [Prometheus et graphana](#Prometheus-et-graphana)
 - [Jenkins](#Jenkins)
+- [Gitlab](#Gitlab)
 
 #### What is docker compose?
 
@@ -565,6 +566,8 @@ prom:
 
 ### Jenkins 
 
+Attention a bien creer chaque directory, present dans les volumes, sur la machine hote.
+
 ```
 version: '3'
 services:
@@ -594,7 +597,57 @@ networks:
      config:
        - subnet: 192.168.168.0/24                   | <-- on peut configurer la plage d'adresse du reseau
 "
+```
 
+#### GitLab
+
+```
+version: '3.0'
+services:
+  gitlab:
+   image: 'gitlab/gitlab-ce:latest'
+   container_name: gitlab
+   hostname: 'gitlab.example.com'                             | <-- important pour le fonctionnement
+   environment:
+     GITLAB_OMNIBUS_CONFIG: |                                 |
+       external_url 'https://gitlab.example.com'              | <-- url qui permet l'acces au gitlab
+   expose: 
+   - 5000
+   ports:
+   - 80:80
+   - 443:443
+   - 5000:5000
+   volumes:
+   - gitlab_config:/etc/gitlab/
+   - gitlab_logs:/var/log/gitlab/
+   - gitlab_data:/var/opt/gitlab/
+   networks:
+   - generator     
+volumes:
+  gitlab_data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: srv/gitlab/data
+  gitlab_logs:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: srv/gitlab/logs
+  gitlab_config:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: srv/gitlab/config
+networks:
+  generator:
+   driver: bridge
+   ipam:
+     config:
+       - subnet: 192.168.168.0/24
 
 
 
