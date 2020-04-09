@@ -377,3 +377,63 @@ Un exemple de page du dashboard, enormément d'options sont disponibles :
 <img src=https://github.com/sirbrowser/astroworld/blob/master/images/portainer3.png><br>
 
 #### Stack wordpress/mysql
+The *docker-compose.yml* is :
+```
+version: '3.3'
+
+services:
+  db:
+    container_name: mysql
+    image: mysql:5.7
+    volumes:
+      - wp_db:/var/lib/mysql/		--> where mysql store data
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    networks:
+      - wp
+
+  wordpress:
+    depends_on:
+      - db				--> start only if db is already running
+    container_name: wordpress
+    image: wordpress:latest
+    volumes:
+      - wp_statics:/var/www/html
+    ports:
+      - 8000:80
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db:3306	--> default port of mysql
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+    networks:
+      - wp
+
+networks:
+  wp:
+
+volumes:
+  wp_db:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /srv/wordpress/db
+  wp_statics:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /srv/wordpress/statics
+```
+Then we need to create or directory that we specified in volumes (/srv/wordpress/db & /srv/wordpress/statics)<br>
+
+We can then go on port 8000 which is the interface of wordpres to setup configuration of it.
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/wordpress.png><br>
+
+And we have the dashboard of wordpress:<br>
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/wordpress1.png><br>
