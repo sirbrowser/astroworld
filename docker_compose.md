@@ -12,6 +12,7 @@
 - [Stack wordpress/mysql](#stack-wordpressmysql)
 - [Phpmyadmin](#Phpmyadmin)
 - [Prometheus et graphana](#Prometheus-et-graphana)
+- [Jenkins](#Jenkins)
 
 #### What is docker compose?
 
@@ -561,6 +562,39 @@ prom:
       type: none
       device: /srv/wordpress/grafana_data
 ```
+
+### Jenkins 
+
+```
+version: '3'
+services:
+  jenkins:
+    image: 'jenkins/jenkins:lts'
+    container_name: jenkins
+    user: 0:0
+    ports:
+      - '8080:8080'
+      - '443:8443'
+      - '50000:50000'
+    volumes:
+      - 'jenkins_data:/var/jenkins_home/'
+    networks:
+     - generator
+volumes:
+  jenkins_data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: srv/jenkins/                          | --< il faut creer ce dossier sur la machine hote
+networks:
+  generator:
+   driver: bridge
+   ipam:
+     config:
+       - subnet: 192.168.168.0/24                   | <-- on peut configurer la plage d'adresse du reseau
+"
+
 
 
 
