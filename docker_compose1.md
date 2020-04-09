@@ -11,6 +11,7 @@
 - [Portainer](#portainer)
 - [Stack wordpress/mysql](#stack-wordpressmysql)
 - [Phpmyadmin](#Phpmyadmin)
+- [Prometheus et graphana](#Prometheus-et-graphana)
 
 #### What is docker compose?
 
@@ -442,8 +443,8 @@ And we have the dashboard of wordpress:<br>
 
 #### Phpmyadmin
 
-
-```phpmyadmin:
+```
+phpmyadmin:
      depends_on:
        - db							| <-- nom du service qui porte le conteneur de la base de donnees
      container_name: phpmyadmin
@@ -461,15 +462,15 @@ And we have the dashboard of wordpress:<br>
       - "traefik.port=80"					|
      networks:
      - wp							| <-- meme reseau de la base de donnees et le service web
-     - webgateway						| <-- on peut specifier le reseau de traefik si on l'utilise ```
-
-
+     - webgateway						| <-- on peut specifier le reseau de traefik si on l'utilise 
+```
 
 #### Prometheus et graphana
 
 Pour utiliser traeafik avec prometheus , il faut l'instance le service comme ceci
 
-```traefik:
+```
+traefik:
      image: traefik:v1.7.16
      container_name: traefik
      command: --web --web.metrics.prometheus --web.metrics.prometheus.buckets="0.1,0.3,1.2,5.0" --docker --docker.domain=docker.localhost --logLevel=DEBUG	| <-- les metrics de prometheus + buckets
@@ -481,11 +482,14 @@ Pour utiliser traeafik avec prometheus , il faut l'instance le service comme cec
        - /var/run/docker.sock:/var/run/docker.sock
        - /dev/null:/etc/traefik/traefik.toml
      networks:
-       - webgateway```
+       - webgateway
+       
+```
 
 Pour prometheus :
 
-``` prometheus:
+``` 
+prometheus:
      image: quay.io/prometheus/prometheus:v2.0.0
      container_name: prometheus
      volumes:
@@ -500,12 +504,15 @@ Pour prometheus :
       - "traefik.frontend.rule=Host:prometheus.localhost"	|
       - "traefik.port=9090"					|
      networks:
-      - webgateway						| Le reseau de traefik```
+      - webgateway						| Le reseau de traefik
+     
+```
 
 
 Pour graphana :
 
-```grafana:
+```
+grafana:
      image: grafana/grafana
      container_name: grafana
      ports:
@@ -521,19 +528,20 @@ Pour graphana :
      networks:
       - webgateway						| Le reseau de traefik
      depends_on:
-      - prometheus```
-
+      - prometheus
+```
 
 ##### Ne pas oublier les volumes 
 
 Il faut s'assurer que chaque directory present dans la section device est bien cree sur la machine hote
 
-```prom:
+```
+prom:
     driver: local
     driver_opts:
       o: bind
       type: none
-      device: /srv/wordpress/prometheus				| 
+      device: /srv/wordpress/prometheus		
   prom_data:
     driver: local
     driver_opts:
@@ -551,7 +559,8 @@ Il faut s'assurer que chaque directory present dans la section device est bien c
     driver_opts:
       o: bind
       type: none
-      device: /srv/wordpress/grafana_data```
+      device: /srv/wordpress/grafana_data
+```
 
 
 
