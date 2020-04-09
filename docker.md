@@ -28,7 +28,9 @@
 `docker run ... --env <MYVARIABLE>="1234"` --> set an environment variable in a docker<br>
 `docker run ... --env-file <variable_file>`<br>
 `docker run ... --hostname <hostname>` --> set an hostname for the docker<br>
-    
+
+Pour debuger on peut utiliser :
+`docker logs <container_name>`<br>    
 #### Volumes
 `docker run ... -v <local_path_to_share>:<docker_path>` --> share local volume to docker<br>
     
