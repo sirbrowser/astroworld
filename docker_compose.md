@@ -569,7 +569,11 @@ prom:
 
 ### Jenkins 
 
-Attention a bien creer chaque directory, present dans les volumes, sur la machine hote.
+"Jenkins est un outil logiciel d’intégration continu. Il s’agit d’un logiciel open source, développé à l’aide du langage de programmation Java. Il permet de tester et de rapporter les changements effectués sur une large base de code en temps réel. En utilisant ce logiciel, les développeurs peuvent détecter et résoudre les problèmes dans une base de code et rapidement. Ainsi les tests de nouveaux builds peuvent être automatisés, ce qui permet d’intégrer plus facilement des changements à un projet, de façon continue. L’objectif de Jenkin est en effet d’accélérer le développement de logiciels par le biais de l’automatisation. Jenkins permet l’intégration de toutes les étapes du cycle de développement." (cf. https://www.lebigdata.fr/jenkins-definition-avantages)
+Tutoriel utilisation Jenkins : https://www.ionos.fr/digitalguide/sites-internet/developpement-web/tutoriel-jenkins/
+
+
+**Attention a bien creer chaque directory, present dans les volumes, sur la machine hote.**
 
 ```
 version: '3'
@@ -655,6 +659,7 @@ networks:
 
 #### Postgresql
 
+"PostgreSQL is a powerful, open source object-relational database system" --> more informations here : https://www.postgresql.org/
 ```
 version: '3.0'
 services:
@@ -689,6 +694,8 @@ networks:
 On peut acceder au command prompt du service avec la commande `psql -h <ip_du_conteneur> -U <nom_user_cree> <nom_de_la_base_creee>`
 
 #### Cassandra
+
+"Apache Cassandra est un système de gestion de base de données (SGBD) de type NoSQL conçu pour gérer des quantités massives de données sur un grand nombre de serveurs, assurant une haute disponibilité en éliminant les points individuels de défaillance. Il permet une répartition robuste sur plusieurs centres de données, avec une réplication asynchrone sans master et une faible latence pour les opérations de tous les clients"
 
 ```
 version: '3'
