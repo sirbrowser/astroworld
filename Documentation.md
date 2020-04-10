@@ -10,6 +10,7 @@
 - [Advanced Backdoor](https://github.com/sirbrowser/astroworld/tree/master/advanced_backdoor)
 - [Basic Authentication bruteforcer](https://github.com/sirbrowser/astroworld/tree/master/basic_authentication_bruteforcer)
 - [Docker](https://github.com/sirbrowser/astroworld/blob/master/docker.md)
+- [Docker compose](https://github.com/sirbrowser/astroworld/blob/master/docker_compose.md)
 
 
 
