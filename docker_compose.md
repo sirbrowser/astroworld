@@ -15,6 +15,9 @@
 - [Jenkins](#Jenkins)
 - [Gitlab](#Gitlab)
 - [Postgresql](#Postgresql)
+- [Cassandra](#Cassandra)
+
+
 #### What is docker compose?
 
 **Why ?**
@@ -685,6 +688,38 @@ networks:
 
 On peut acceder au command prompt du service avec la commande `psql -h <ip_du_conteneur> -U <nom_user_cree> <nom_de_la_base_creee>`
 
+#### Cassandra
+
+```
+version: '3'
+services:
+  cassandra:
+    image: bitnami/cassandra:latest
+    container_name: cassandra
+    volumes:
+    - cassandra_data:/bitnami
+    ports:
+    - 9042:9042 # cqlsh
+    - 7199:7199 # jmx
+    - 7000:7000 # internode communication
+    - 7001:7001 # tls internode
+    - 9160:9160 # client api
+    networks:
+    - generator
+volumes:
+  cassandra_data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /srv/cassandra/                               
+networks:
+  generator:
+   driver: bridge
+   ipam:
+     config:
+       - subnet: 192.168.168.0/24
+```
 
 
 
