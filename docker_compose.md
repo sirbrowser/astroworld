@@ -722,7 +722,7 @@ networks:
 ```
 
 Pour se connecter au command prompt de cassandra : `docker exec -ti cassandra cqlsh -u cassandra -p cassandra`.
-Cassandra/Cassendra est l'utilisateur par defaut a la creation.
+cassandra/cassendra est l'utilisateur par defaut a la creation.
 
 
 
