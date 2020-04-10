@@ -524,15 +524,15 @@ grafana:
      ports:
       - 3000:3000
      volumes:
-      - graf_data:/var/lib/grafana				| Les datas de graphana
-      - graf:/etc/grafana/provisioning/				| L'approvisionnement de grapaha
+      - graf_data:/var/lib/grafana				                    | <-- Les datas de graphana
+      - graf:/etc/grafana/provisioning/			          	      | <-- Configuration de graphana
      labels:
-      - "traefik.docker.network=traefik"			| Les labels obligatoires si on veut utiliser traefi
-      - "traefik.backend=grafana"				|
-      - "traefik.frontend.rule=Host:grafana.localhost"		|
+      - "traefik.docker.network=traefik"			                | <-- Les labels obligatoires si on veut utiliser traefi
+      - "traefik.backend=grafana"				                      | <--   
+      - "traefik.frontend.rule=Host:grafana.localhost"        | <--
       - "traefik.port=3000"
      networks:
-      - webgateway						| Le reseau de traefik
+      - webgateway						                                | <-- Le reseau de traefik
      depends_on:
       - prometheus
 ```
@@ -567,8 +567,47 @@ prom:
       type: none
       device: /srv/wordpress/grafana_data
 ```
+##### Et le reseau
 
-### Jenkins 
+```
+networks:
+  wp:
+  webgateway:
+    driver: bridge
+```
+
+##### Et le fichier de config de prometheus `prometheus.yml`, dans le repertoire /etc/prometheus/
+
+```
+global:
+  scrape_interval:     5s # By default, scrape targets every 15 seconds.
+  evaluation_interval: 5s # By default, scrape targets every 15 seconds.
+  # scrape_timeout is set to the global default (10s).
+
+  # Attach these labels to any time series or alerts when communicating with
+  # external systems (federation, remote storage, Alertmanager).
+  external_labels:
+    monitor: 'codelab-monitor'
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  # - "first.rules"
+  # - "second.rules"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+- job_name: 'node'
+  static_configs:
+  - targets: ['traefik:8080']                           | <-- ici on peut mettre soit une adresse ip ou directement le nom d'un                                                                       
+                                                              conteneur, ici on met treafik pour avoir les metriques      
+                                                              correspondants a traefik. Sinon on peut mettre l'ip de la gateway 
+                                                              docker sur la machine hote par exemple
+                                                               
+```
+
+
+#### Jenkins 
 
 "Jenkins est un outil logiciel d’intégration continu. Il s’agit d’un logiciel open source, développé à l’aide du langage de programmation Java. Il permet de tester et de rapporter les changements effectués sur une large base de code en temps réel. En utilisant ce logiciel, les développeurs peuvent détecter et résoudre les problèmes dans une base de code et rapidement. Ainsi les tests de nouveaux builds peuvent être automatisés, ce qui permet d’intégrer plus facilement des changements à un projet, de façon continue. L’objectif de Jenkin est en effet d’accélérer le développement de logiciels par le biais de l’automatisation. Jenkins permet l’intégration de toutes les étapes du cycle de développement." (cf. https://www.lebigdata.fr/jenkins-definition-avantages)
 Tutoriel utilisation Jenkins : https://www.ionos.fr/digitalguide/sites-internet/developpement-web/tutoriel-jenkins/
