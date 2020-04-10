@@ -597,7 +597,7 @@ networks:
      config:
        - subnet: 192.168.168.0/24                   | <-- on peut configurer la plage d'adresse du reseau
 ```
-Jenkins met environ 15 secondes a se lancer. Il demandera un token d'administration, il est present dans les logs du conteneur jenkins
+Le service jenkins met environ 15 secondes a se lancer. Il demandera un **token d'administration**, il est present dans les logs du conteneur jenkins
 
 #### GitLab
 
@@ -648,6 +648,44 @@ networks:
    ipam:
      config:
        - subnet: 192.168.168.0/24
+```
+
+#### Postgresql
+
+```
+version: '3.0'
+services:
+  postgres:
+   image: postgres:latest
+   container_name: postgres
+   environment:
+   - POSTGRES_USER=myuser                           | <-- 
+   - POSTGRES_PASSWORD=myuserpassword               | <-- on peut directement mettre des identifiants du compte root 
+   - POSTGRES_DB=mydb                               | <-- nom de la database
+   ports:
+   - 5432:5432
+   volumes:
+   - postgres_data:/var/lib/postgresql/
+   networks:
+   - generator     
+volumes:
+  postgres_data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: srv/postgres                          | <-- Attention a bien creer ce directory sur la machine hote
+networks:
+  generator:
+   driver: bridge
+   ipam:
+     config:
+       - subnet: 192.168.168.0/24                   | <-- On configure une plage reseau
+```
+
+On peut acceder au command prompt du service avec la commande `psql -h <ip_du_conteneur> -U <nom_user_cree> <nom_de_la_base_creee>`
+
+
 
 
 
