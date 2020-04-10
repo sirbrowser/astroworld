@@ -721,6 +721,8 @@ networks:
        - subnet: 192.168.168.0/24
 ```
 
+Pour se connecter au command prompt de cassandra : `docker exec -ti cassandra cqlsh -u cassandra -p cassandra`.
+Cassandra/Cassendra est l'utilisateur par defaut a la creation.
 
 
 
