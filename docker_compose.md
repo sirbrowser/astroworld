@@ -16,6 +16,7 @@
 - [Gitlab](#Gitlab)
 - [Postgresql](#Postgresql)
 - [Cassandra](#Cassandra)
+- [Mariadb](#Mariadb)
 
 
 #### What is docker compose?
@@ -730,6 +731,44 @@ networks:
 
 Pour se connecter au command prompt de cassandra : `docker exec -ti cassandra cqlsh -u cassandra -p cassandra`.
 cassandra/cassendra est l'utilisateur par defaut a la creation.
+
+#### Mariadb
+
+```
+version: '3'
+services:
+  mariadb:
+    container_name: mariadb
+    image: mariadb/server:latest
+    volumes:
+     - mariadb_data:/var/lib/mysql/                       | <-- la ou mariadb stock les datas
+    environment:
+      MYSQL_ROOT_PASSWORD: myrootpassword                 | <-- mot de passe root
+      MYSQL_DATABASE: mydatabase                          | <-- nom de la database que l'on cree
+      MYSQL_USER: myuser                                  | <-- nom du user
+      MYSQL_PASSWORD: myuserpassword                      | <-- password du user
+    ports:
+    - 3306:3306
+    networks:
+    - generator
+volumes:
+  mariadb_data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /srv/mariadb/                                                     
+networks:
+  generator:
+   driver: bridge
+   ipam:
+     config:
+       - subnet: 192.168.168.0/24
+```
+
+Pour se connecter a la database mariadb `mysql -h <ip_du_conteneur> -u <user> -p`
+
+
 
 
 
