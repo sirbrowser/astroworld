@@ -1,22 +1,22 @@
-#Information gathering
+# Information gathering
 
-##Indentify our target
+## Indentify our target
 
 https://www.bugcrowd.com <-- site pour les bug bounty
 
-##Email adress gathering
+## Email adress gathering
 
 Useful site : Hunter.io cf image
 
-##Breach parse 
+## Breach parse 
 
 Go to https://github.com/hmaverickadams/breach-parse. The script allows to search in a file of emails and passwords of the domaine.name you specify.
 The file is specific, to get it go to TOR and download this file that is specified in the README.md. (Be careful : 44Go)
 
  
-Hunting subdomains :
+## Hunting subdomains :
 
-Tool kali linux : sublist3r --> `sublist3r -d <domain(tesla.com?)>
+Tool kali linux : sublist3r --> `sublist3r -d <domain(tesla.com?)>`
 	
 Go to https://crt.sh and type the domain you looking for.	--> type `%.<domain(tesla.com?)>`
 	
