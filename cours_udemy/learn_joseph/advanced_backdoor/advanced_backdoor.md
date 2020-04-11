@@ -14,5 +14,8 @@ The *.exe file is in dist/
 In order to make a .ico go to --> `https://convertico.com/jpg-to-ico/` --> create the .ico
 
 # Bypass antiviruses
+Add random function in your script for example addition function 
+Add some random delay
 We can change bytes in `hexeditor <backdoor.exe>` but be careful to not change bytes that will crash the program.<br>
 We can change bytes of "This program cannot run in DOS mode", "text" and "data"
+We can add `--noupx` when we do our pynstaller compilation to exe file if the antivirus detects us.
