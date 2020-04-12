@@ -1,5 +1,13 @@
 # Information gathering
 
+## Index
+
+-[Indentify our target](#Indentify-our-target)
+-[Email adress gathering](#Email-adress-gathering)
+-[Breach parse](#Breach-parse)
+-[Hunting subdomains](#Hunting-subdomains)
+
+
 ## Indentify our target
 
 https://www.bugcrowd.com <-- site pour les bug bounty
@@ -14,7 +22,7 @@ Go to https://github.com/hmaverickadams/breach-parse. The script allows to searc
 The file is specific, to get it go to TOR and download this file that is specified in the README.md. (Be careful : 44Go)
 
  
-## Hunting subdomains :
+## Hunting subdomains
 
 Tool kali linux : sublist3r --> `sublist3r -d <domain(tesla.com?)>`
 	
