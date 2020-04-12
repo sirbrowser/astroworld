@@ -6,6 +6,8 @@
 - [Email adress gathering](#Email-adress-gathering)
 - [Breach parse](#Breach-parse)
 - [Hunting subdomains](#Hunting-subdomains)
+- [Wappalyzer](#Wappalyzer)
+- [Google Fu](#Google-Fu)
 
 
 ## Indentify our target
@@ -35,3 +37,14 @@ To get more subdomains download the Owasp Amass tool here --> https://github.com
 
 Tool : **httpprobe** (https://github.com/tomnomnom/httprobe) is a tool that allows to make sur that a subdomains is up (port 80 or 443). You pass the list of subdomains in arguments.
 Glone the github, and build the file main --> `go build main`, `mv main httprobe` and you can play with this tools (check the github for more details).
+
+## Wappalyzer
+
+`Wappalyzer` is a mozilla extension which gives some informations about the website technologies.
+
+## Google Fu
+
+Google Fu is a research method. Use operators when you looking for something in google.com.
+Search `Google search operators` and you will find all of these.
+For example you can type `site:tesla.com` to have all the subdomains of tesla.com.
+For example you can type `site:tesla.com -www` to have all the subdomains of tesla.com except `www.tesla.com`.
