@@ -23,7 +23,7 @@ d'amélioration du temps de réponse**<br>
 
 ## Reverse shell vs bind shell
 
-Reverse shell : l'attaquant ecoute sur un port pour recevoir la connection depuis la victime
+Reverse shell : l'attaquant ecoute sur un port pour recevoir la connection depuis la victime<br>
 Bind : l'attaquant fait en sorte que la victime ecoute sur un port pour pouvoir s'y connecter
 
 ## Staged payload
