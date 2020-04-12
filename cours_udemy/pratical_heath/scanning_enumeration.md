@@ -7,7 +7,7 @@
 - [Nikto](#Nikto)
 - [Dirbuster](#Dirbuster)
 - [Enumerating SMB](#Enumerating-SMB)
-- [Searchspolit](#Searchspolit)
+- [Searchsploit](#Searchspolit)
 - [Masscan](#Masscan)
 - [Scanning with metasploit](#Scanning-with-metasploit)
 - [Scanning with Nessus](#Scanning-with-Nessus)
@@ -35,7 +35,7 @@ Search for metasploit exploit.
 `smbclient \\\\<host>\\<share_name>` 
 
 
-### Searchspolit
+### Searchsploit
 
 `searchsploit>` is a database for exploit
 `searchsploit Samba 2` for example
