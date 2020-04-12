@@ -2,10 +2,10 @@
 
 ## Index
 
--[Indentify our target](#Indentify-our-target)
--[Email adress gathering](#Email-adress-gathering)
--[Breach parse](#Breach-parse)
--[Hunting subdomains](#Hunting-subdomains)
+- [Indentify our target](#Indentify-our-target)
+- [Email adress gathering](#Email-adress-gathering)
+- [Breach parse](#Breach-parse)
+- [Hunting subdomains](#Hunting-subdomains)
 
 
 ## Indentify our target
