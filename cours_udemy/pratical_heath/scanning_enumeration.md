@@ -25,5 +25,29 @@ Search for metasploit exploit.
 `smbclient \\\\<host>\\<share_name>` 
 
 
+### Searchspolit
+
+`searchsploit> is a database for exploit
+`searchsploit Samba 2` for example
+
+
+### Masscan
+
+`masscan` is an Internet-scale port scanner. It can scan the entire Internet in under 6 minutes, transmitting 10 million packets per second, from a single machine. It's integrate in Kali linux.
+github : https://github.com/robertdavidgraham/masscan 
+`masscan -p1-65535 --rate <nb_thread(1000)> <host>`
+
+### Scanning with metasploit
+
+Open `msfconsole` --> `search portscan` --> there is bunch of scanner available --> set the rights options --> `exploit`
+
+### Scanning with Nessus
+
+`nessus` is a vulnerability scanner
+go to `https://www.tenable.com/downloads/nessus` and download the .deb which corresponds to your architecture
+depackage the file, start nessus with systemd and go the url it gives you. Create an account.
+you have a bunch of specific scan. You can schedule the scan.
+there is a graphical resume of your scans...
+
 
 
