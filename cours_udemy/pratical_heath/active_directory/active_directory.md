@@ -22,6 +22,9 @@ Can be exploited wihtout ever attacking patchable exploits
 
 #### Physical AD Components
 
+-[Domain Controller](#Domain-Controller)
+-[AD DS data store](#AD-DS-data-store)
+
 ##### Domain Controller 
 
 It's the domain head honcho. 
@@ -41,6 +44,14 @@ The AD DS data store contains the database files and processes that store and ma
 --> The file is accessible only through the domain controller processes and protocols
 
 #### Logical AD Components
+
+- [The AD DS Schema](#The-AD-DS-Schema)
+- [Domains](#Domains)
+- [Trees](#Trees)
+- [Forests](#Forests)
+- [Organizational Units](#Organizational-Units)
+- [Trusts](#Trusts)
+- [Objects](#Objects)
 
 ##### The AD DS Schema
 
