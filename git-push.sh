@@ -1,4 +1,5 @@
 #!/usr/bin/sh
+echo Benjamin pd
 echo Commit message?
 read message
 git add .
