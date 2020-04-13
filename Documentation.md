@@ -11,6 +11,7 @@
 - [Basic Authentication bruteforcer](https://github.com/sirbrowser/astroworld/tree/master/basic_authentication_bruteforcer)
 - [Docker](https://github.com/sirbrowser/astroworld/blob/master/docker.md)
 - [Docker compose](https://github.com/sirbrowser/astroworld/blob/master/docker_compose.md)
+- [Python for pentest](https://github.com/sirbrowser/astroworld/blob/master/cours_udemy/python_pentest/reverse_http.md)
 
 
 
