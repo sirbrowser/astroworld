@@ -22,8 +22,8 @@ Can be exploited wihtout ever attacking patchable exploits
 
 #### Physical AD Components
 
--[Domain Controller](#Domain-Controller)
--[AD DS data store](#AD-DS-data-store)
+- [Domain Controller](#Domain-Controller)
+- [AD DS data store](#AD-DS-data-store)
 
 ##### Domain Controller 
 
