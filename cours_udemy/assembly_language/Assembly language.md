@@ -2,7 +2,7 @@
 
 ## Index
 
-- (Introduction)[#introduction]
+- Introduction [#introduction]
 
 
 
