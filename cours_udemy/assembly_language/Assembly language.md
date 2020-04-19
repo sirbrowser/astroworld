@@ -3,6 +3,8 @@
 ## Index
 
 - [Introduction](#introduction)
+- [The flags register](the-flags-register)
+- 
 
 
 
@@ -110,5 +112,28 @@ Does not accept constants, only variable and register and the size does not matt
 
 neg instruction multiply the destination by -1.
 
+#### The flags register
 
+6 status flags
 
+3 control flags
+
+To detect overflow in unsigned numbers we use the Carry Flag (CF), for signed numbers we use Overflow Flag (OF).
+
+`mov/xcg` --> No flag will be affected<br>
+
+`add/sub` --> All flags<br>
+
+`inc/dec` --> All except CF<br>
+
+`neg -(2)^n-1` --> overflow<br>
+
+ZF (Zero Flag) is raised when the value is 0.
+
+SF (Signed Flag) is raised when the value is negative.
+
+mov and xch instructions are not affected by the flags.
+
+inc and dec are not affected by OF and CF.
+
+PF (Parity Flag) is the number of 1 in binary in the lower part of a register. 
