@@ -4,7 +4,7 @@
 
 - [Introduction](#introduction)
 - [The flags register](the-flags-register)
-- 
+- [The branching & flow control instructions](#the-branching-flow-control-instructions)
 
 
 
@@ -137,3 +137,5 @@ mov and xch instructions are not affected by the flags.
 inc and dec are not affected by OF and CF.
 
 PF (Parity Flag) is the number of 1 in binary in the lower part of a register. 
+
+#### The branching & flow control instructions
