@@ -3,8 +3,8 @@
 ## Index
 
 - [Introduction](#introduction)
-- [The flags register](the-flags-register)
-- [The branching & flow control instructions](#the-branching-&-flow-control-instructions)
+- [The flags register](#the-flags-register)
+- [The branching & flow control instructions](#the-branching-flow-control-instructions)
 
 
 
