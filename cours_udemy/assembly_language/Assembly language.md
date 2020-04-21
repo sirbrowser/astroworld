@@ -5,7 +5,7 @@
 - [Introduction](#introduction)
 - [The flags register](#the-flags-register)
 - [The branching & flow control instructions](#the-branching--flow-control-instructions)
-
+- [Data types chars](#data-types-chars)
 
 
 #### Introduction
@@ -139,3 +139,136 @@ inc and dec are not affected by OF and CF.
 PF (Parity Flag) is the number of 1 in binary in the lower part of a register. 
 
 #### The branching & flow control instructions
+
+The branching :
+There are 2 types of branching : conditionnal and unconditionnal.<br>
+Conditionnal :
+`j<first letter of the flag> <name of label>` --> "jump if" the condition is verified<br>
+Unconditionnal:
+`jn<first letter of the flag> <name of label>` --> "jump if not" --> jump if the flag is not raised<br>
+
+```assembly
+.code
+
+main proc
+    
+    mov al,5
+    mov bl,5
+    sub al,bl
+    
+    jz label 	--> here if the zero flag is raised we jump to the instruction label
+    
+    mov cl,12	|
+    		| --> this is not executed by the program!!!
+    add cl,bl	|
+    
+    label: inc al --> we jumped here
+    
+    
+    main endp
+end
+```
+
+We can jump without verifying any condition --> `jmp <label_name>`<br>
+
+For unsigned numbers :
+```assembly
+ja	 	--> jump if >0 / "a" stands for above
+jae		--> jump if >=0 /"ae"-----------above or equal
+jb		--> jump if <0 / "b" -----------below
+jbe		--> jump if <=0 / "be"----------below or equal
+je		--> jump if =0 / "e" -----------equal
+```
+
+Example:
+```assembly
+.data 
+
+var1 db ?
+
+.code
+
+main proc
+    
+        mov ax,@data
+        mov ds,ax
+    
+        mov al,5
+        mov ah,6
+        
+        cmp al,ah  --> compare al to ah
+        
+        ja above   --> if comparison is positive we jump to above      
+        
+        mov var1,0
+        jmp endf
+        
+        above: mov var1,1
+       
+      endf:ret  
+    
+    main endp
+end
+```
+
+For signed numbers and unsigned numbers too:
+```assembly
+jg 		--> jump if greater(g)
+jge		--> greater or equal
+jl		--> lesser
+jle		--> lesser or equal
+je=jz		--> equal
+```
+
+#### Data types chars
+
+```assembly
+.data 
+
+<variable_name> db '<our character>' --> always db for characters!!! --> only one charcater not strings!!!!
+```
+
+To print in DOS screen a character :
+```assembly
+.code
+main proc
+
+mov ah,2 --> service code for interruption, needs to be in ah register
+mov dl,'1' --> the char that we want to print needs to be in dl register
+int 21h --> code instruction to interrupt the program and print out in DOS screen
+```
+
+To read a char from the keyboard :
+```assembly
+.code
+main proc
+
+mov ah,1 --> service code for reading keyboard entry
+int 21h
+```
+The result is in al register!
+
+Ask for an input and print in in DOS :
+```assembly
+.code 
+
+main proc
+
+    mov ah,1
+    int 21h	--> ask for keyboard input 
+    
+    mov ah,2
+    mov dl,al
+    int 21h	--> print the input in the DOS
+    
+    mov ah,4ch
+    int 21h	--> instruction to close DOS screen and go back to the system
+          
+    
+    main endp
+end   
+```
+
+Operations on the chars :
+
+We can use same instructions as numbers (inc, add, je ...)
