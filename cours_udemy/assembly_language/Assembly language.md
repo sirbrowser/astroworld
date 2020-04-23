@@ -320,4 +320,4 @@ CS --> Code segment (required)
 SS --> Stack segment (optional)
 DS --> Data segment (optional)
 ES --> Extra segment (optional)<br>
-<img src=https://github.com/sirbrowser/astroworld/tree/master/images/segment_registers><br>
+<img src=https://github.com/sirbrowser/astroworld/tree/master/images/segement_registers><br>
