@@ -271,4 +271,31 @@ end
 
 Operations on the chars :
 
-We can use same instructions as numbers (inc, add, je ...)
+We can use same instructions as unsigned numbers (inc, add, je ...)
+
+Print a message in DOS screen:
+```assembly
+.model small
+.data
+
+msg db 'Hello world !!!$' --> dollar always in the end of a string, we can add 'Hello',10,13,'world$': print hello\nworld
+
+.code
+
+main proc
+    
+    mov ax,@data
+    mov ds,ax
+    
+    mov ah,9 --> status code to print a string
+    lea dx,msg --> lea (load effective address), put the address of the variable in dx
+    int 21h
+    
+    mov ah,4ch --> close DOS screen
+    int 21h
+    ret
+    
+    main endp
+end
+```
+
