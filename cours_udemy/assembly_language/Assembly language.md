@@ -7,6 +7,7 @@
 - [The branching & flow control instructions](#the-branching--flow-control-instructions)
 - [Data types chars](#data-types-chars)
 - [for loop](#for-loop)
+- [The program segment](#the-program-segment)
 
 #### Introduction
 
@@ -315,9 +316,71 @@ main proc
 
 #### The program segment
 
-Segment registers:
+- Segment registers:
 CS --> Code segment (required)
 SS --> Stack segment (optional)
 DS --> Data segment (optional)
 ES --> Extra segment (optional)<br>
 <img src=https://github.com/sirbrowser/astroworld/tree/master/images/segement_registers><br>
+
+- The offset
+The offset is the number of rows before a variable in *.data*.<br>
+`mov [0],1` is the same as `mov var1,1` because var1 is the first variable declared in *.data*<br>
+
+- Memory models (.model):
+small --> code 1segment, data 1ssegment
+medium --> code s+, data 1s
+compact --> code 1s, data s+
+huge --> code s+, data s+
+
+Only mov instructions are allowed with segment registers
+
+#### Arrays with one dimension
+
+```assembly
+.data
+ marks db 5,6,?,5,9,8
+
+.code
+main proc
+	mov ax,@data
+	mov ds,ax
+	
+	mov al,marks --> marks=1st variable in the array, marks+2=2nd variable ...
+	main endp
+end
+```
+`marks db 10 dup(5)` --> define an array with 10 variables each set to value 5<br>
+
+- The sum of an array
+```assembly
+.data
+
+ array db 1,2,3,4,5,6
+ sum db ?
+
+.code
+
+main proc
+    
+        mov ax,@data
+        mov ds,ax
+        
+        mov cx,6 --> count for for loop
+        
+        mov si,array --> indexing the array (si,di) / read from array = si / write to array = di
+        
+        for:add dl,[si] 
+            inc si
+            loop for
+        
+        mov sum,dl
+        
+     main endp
+end
+```
+```assembly
+.data
+arr db 12,15,6,7,8
+	len=($-arr) --> store length of the array in the variable len --> number of bytes not number of element!!!!
+```
