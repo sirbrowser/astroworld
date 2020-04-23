@@ -6,7 +6,7 @@
 - [The flags register](#the-flags-register)
 - [The branching & flow control instructions](#the-branching--flow-control-instructions)
 - [Data types chars](#data-types-chars)
-
+- [for loop](#for-loop)
 
 #### Introduction
 
@@ -299,3 +299,25 @@ main proc
 end
 ```
 
+#### for loop
+
+```assembly
+main proc
+	mov ah,2
+	mov dl,'a'
+	
+	mov cx,26 --> number of iteration should be in cx
+	
+	for:int 21h
+	    inc dl
+	    loop for --> decrement cx and go back to for
+```
+
+#### The program segment
+
+Segment registers:
+CS --> Code segment (required)
+SS --> Stack segment (optional)
+DS --> Data segment (optional)
+ES --> Extra segment (optional)<br>
+<img src=https://github.com/sirbrowser/astroworld/tree/master/images/segment_registers><br>
