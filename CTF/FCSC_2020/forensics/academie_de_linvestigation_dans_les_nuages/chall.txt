@@ -1,0 +1,7 @@
+Le poste en cours d'analyse est connecté à un serveur web à l'adresse 10.42.42.132. Le serveur web est protégé par une authentification.
+
+Retrouvez le nom d'utilisateur et le mot de passe de cette connexion.
+
+Format du flag : FCSC{utilisateur:mot_de_passe}. Ce flag est sensible à la casse.
+
+Le fichier de dump à analyser est identique au challenge C'est la rentrée.

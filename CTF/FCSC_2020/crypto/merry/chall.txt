@@ -1,0 +1,8 @@
+Un serveur a été conçu pour utiliser un algorithme d'échange de clés avec ses clients.
+Cet algorithme génère et garde le même bi-clé pour plusieurs requêtes.
+Il notifie aussi ses clients quand l'échange a échoué et que la clé partagée n'est pas la même.
+Votre but est de retrouver la clé secrète du bi-clé généré par le serveur.
+
+Service : nc challenges1.france-cybersecurity-challenge.fr 2001
+
+Note : La version de Python utilisée par le serveur est 3.5.3 (default, Sep 27 2018, 17:25:39) [GCC 6.3.0 20170516]

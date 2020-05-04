@@ -1,0 +1,3 @@
+On vous demande d'évaluer la sécurité d'un serveur de stockage de données en cours de développement.
+
+Service : nc challenges1.france-cybersecurity-challenge.fr 2000

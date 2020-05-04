@@ -1,0 +1,5 @@
+Ce poste administre un serveur distant avec le protocole SSH à l'aide d'une authentification par clé (clé protégée par mot de passe). La clé publique a été utilisée pour chiffrer le message ci-joint (flag.txt.enc).
+
+Retrouvez et reconstituez la clé en mémoire qui permettra de déchiffrer ce message.
+
+Le fichier de dump à analyser est identique au challenge C'est la rentrée.

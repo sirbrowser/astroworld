@@ -1,0 +1,5 @@
+La première version de notre plateforme de recherche de cuisiniers présentait quelques problèmes de sécurité. Heureusement, notre développeur ne compte pas ses heures et a corrigé l'application en nous affirmant que plus rien n'était désormais exploitable. Il en a également profiter pour améliorer la recherche des chefs.
+
+Pouvez-vous encore trouver un problème de sécurité ?
+
+URL : http://challenges2.france-cybersecurity-challenge.fr:5007/

@@ -1,0 +1,3 @@
+Des agents ont réussi à exfiltrer un fichier en utilisant la LED du disque dur durant une copie de disque. Ils nous ont fourni l'image de la capture.
+
+Retrouvez le flag.

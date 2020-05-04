@@ -1,0 +1,4 @@
+On vous demande de lire le fichier flag présent sur le système.
+
+Service : nc challenges1.france-cybersecurity-challenge.fr 4000
+

@@ -1,0 +1,3 @@
+L'exercice n'est pas très risqué : retrouver simplement le contenu du fichier flag.
+
+Service : nc challenges1.france-cybersecurity-challenge.fr 4004

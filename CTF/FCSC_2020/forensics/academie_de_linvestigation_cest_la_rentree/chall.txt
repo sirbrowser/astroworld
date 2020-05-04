@@ -1,0 +1,5 @@
+Bienvenue à l'académie de l'investigation numérique ! Votre mission, valider un maximum d'étapes de cette série afin de démontrer votre dextérité en analyse mémoire GNU/Linux.
+
+Première étape : retrouvez le HOSTNAME, le nom de l'utilisateur authentifié lors du dump et la version de Linux sur lequel le dump a été fait.
+
+Format du flag : FCSC{hostname:user:x.x.x-x-amdxx}

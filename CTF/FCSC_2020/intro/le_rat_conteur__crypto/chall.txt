@@ -1,0 +1,3 @@
+Le fichier suivant a été chiffré en AES-128 en mode CTR, avec la clé de 128 bits 00112233445566778899aabbccddeeff et un IV nul.
+
+À vous de le déchiffrer pour obtenir le flag.

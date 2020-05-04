@@ -1,0 +1,3 @@
+On vous demande d’analyser a posteriori une page mémoire extraite d’une machine compromise.
+
+Beaucoup de données ont été effacées, mais il est primordial pour votre interlocuteur de récupérer un flag qu'il était sur le point de déchiffrer.

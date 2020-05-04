@@ -1,0 +1,3 @@
+Pourrez-vous deviner le secret aléatoire généré ?
+
+nc challenges2.france-cybersecurity-challenge.fr 6001

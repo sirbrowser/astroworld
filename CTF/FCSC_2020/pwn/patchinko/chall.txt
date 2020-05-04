@@ -1,0 +1,5 @@
+Venez tester la nouvelle version de machine de jeu Patchinko ! Les chances de victoire étant proches de zéro, nous aidons les joueurs. Prouvez qu'il est possible de compromettre le système pour lire le fichier flag.
+
+Note : le service permet de patcher le binaire donné avant de l'exécuter.
+
+Service : nc challenges1.france-cybersecurity-challenge.fr 4009

@@ -1,0 +1,3 @@
+Le bon vieux temps ! Pour trouver le flag, vous allez devoir inspecter un langage qui fait la base d'Internet.
+
+URL : http://challenges2.france-cybersecurity-challenge.fr:5000/

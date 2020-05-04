@@ -1,0 +1,7 @@
+Bienvenue en Mazopotamia ! Pour obtenir le flag, vous devrez vous échapper de plusieurs labyrinthes comme celui montré ci-dessous.
+
+<img=mazopotamia.png>
+
+Toutes les informations sont données ici :
+
+nc challenges2.france-cybersecurity-challenge.fr 6002

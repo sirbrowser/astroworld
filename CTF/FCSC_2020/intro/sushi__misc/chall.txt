@@ -1,0 +1,7 @@
+Connectez-vous à cette machine en SSH avec les identifiants mentionnés, et trouvez le flag.
+
+    Adresse : challenges2.france-cybersecurity-challenge.fr
+    Port : 6000
+    Utilisateur : ctf
+    Mot de passe : ctf
+

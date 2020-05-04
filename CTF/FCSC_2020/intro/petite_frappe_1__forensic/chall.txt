@@ -1,0 +1,5 @@
+Lors de l’investigation d’un poste GNU/Linux, vous analysez un fichier qui semble être généré par un programme d’enregistrement de frappes de clavier (enregistrement de l’activité de chaque touche utilisée).
+
+Retrouvez ce qui a bien pu être écrit par l’utilisateur de ce poste à l’aide de ce fichier !
+
+Format du flag : Pour valider ce challenge, vous devez insérer le contenu de ce qui a été écrit sur le clavier de ce poste dans la balise suivante FCSC{xxxxxx} puis soumettre votre réponse.

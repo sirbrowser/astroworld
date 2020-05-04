@@ -1,0 +1,3 @@
+Lors de l’investigation d’un poste GNU/Linux, vous analysez un nouveau fichier qui semble être généré par un programme d’enregistrement de frappes de clavier. Retrouvez ce qui a bien pu être écrit par l’utilisateur de ce poste à l’aide de ce fichier !
+
+Format du flag : FCSC{xxx}, où xxx est la chaîne que vous aurez trouvée.

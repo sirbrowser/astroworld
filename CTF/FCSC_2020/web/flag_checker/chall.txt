@@ -1,0 +1,3 @@
+Voici un service qui permet simplement de vérifier si le flag est correct.
+
+URL : http://challenges2.france-cybersecurity-challenge.fr:5005/

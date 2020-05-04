@@ -1,0 +1,9 @@
+Vous avez accès à une machine qui semble avoir un noyau Linux possédant un appel système #333 particulier.
+
+Une fois connecté via SSH, utilisez le wrapper pour lancer le challenge.
+
+    Adresse : challenges1.france-cybersecurity-challenge.fr
+    Port : 4001, 4002 ou 4003 (au choix)
+    Utilisateur : ctf
+    Mot de passe : ctf
+

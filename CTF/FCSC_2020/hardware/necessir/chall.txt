@@ -1,0 +1,5 @@
+Vous avez trouvé une télécommande infrarouge étrange dans une décharge. Visiblement, celle-ci a été modifiée par son précédent propriétaire. Curieux, vous avez enregistré le signal avec votre carte son et une vieille photodiode. Pour l'enregistrement, voici la commande tapée :
+
+arecord -D hw:1 -r192000 -t raw -f S16_BE -c1 ir-signal.raw
+
+Pouvez-vous en extraire quelque chose ?

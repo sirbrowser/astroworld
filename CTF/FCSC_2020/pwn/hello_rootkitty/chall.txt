@@ -1,0 +1,10 @@
+Une machine a été infectée par le rootkit Hello Rootkitty qui empêche la lecture de certains fichiers.
+
+Votre mission : aider la victime à récupérer le contenu des fichiers affectés. Une fois connecté en SSH, lancez le wrapper pour démarrer le challenge.
+
+    Adresse : challenges1.france-cybersecurity-challenge.fr
+    Port : 4006, 4007 ou 4008 (au choix)
+    Utilisateur : ctf
+    Mot de passe : ctf
+
+Note : Le flag est au format ECSC{...}.

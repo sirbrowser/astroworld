@@ -1,0 +1,7 @@
+Nous vous proposons l'étude des réseaux de XOR (Xoring Networks) et le problème XNP associé.
+
+Vous devez d'abord valider cette version avec des problèmes de petites dimensions avant de pouvoir accéder aux autres problèmes de plus grandes dimensions.
+
+Plus d'informations ici : Xoring Networks.
+
+nc challenges2.france-cybersecurity-challenge.fr 6007

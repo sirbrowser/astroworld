@@ -1,0 +1,9 @@
+Pour avancer dans l'analyse, vous devez retrouver :
+
+    Le nom de processus ayant le PID 1254.
+    La commande exacte qui a été exécutée le 2020-03-26 23:29:19 UTC.
+    Le nombre d'IP-DST unique en communications TCP établies (état ESTABLISHED) lors du dump.
+
+Format du flag : FCSC{nom_du_processus:une_commande:n}
+
+Le fichier de dump à analyser est identique au challenge C'est la rentrée.

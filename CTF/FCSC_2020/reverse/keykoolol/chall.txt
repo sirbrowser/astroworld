@@ -1,0 +1,3 @@
+On vous demande d'écrire un générateur d'entrées valides pour ce binaire, puis de le valider sur les entrées fournies par le service distant afin d'obtenir le flag.
+
+Service : nc challenges2.france-cybersecurity-challenge.fr 3000
