@@ -6,3 +6,5 @@ https://github.com/sMizaru/Write-ups/blob/master/FCSC/pwn/Why%20Not%20A%20Sandbo
 
 https://github.com/voydstack/FCSC2020/tree/master/pwn/Why%20not%20%20a%20sandbox
 
+https://sentrywhale.com/writeup/anssi-2020-why-not-a-sandbox-major-tom
+
