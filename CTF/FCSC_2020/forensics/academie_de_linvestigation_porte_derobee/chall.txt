@@ -1,0 +1,8 @@
+Un poste distant est connecté au poste en cours d'analyse via une porte dérobée avec la capacité d'exécuter des commandes.
+
+Quel est le numéro de port à l'écoute de cette connexion ?
+Quelle est l'adresse IP distante connectée au moment du dump ?
+Quel est l'horodatage de la création du processus en UTC de cette porte dérobée ?
+Format du flag : FCSC{port:IP:YYYY-MM-DD HH:MM:SS}
+
+Le fichier de dump à analyser est identique au challenge C'est la rentrée.
