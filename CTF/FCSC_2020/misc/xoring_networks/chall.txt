@@ -1,0 +1,10 @@
+Nous vous proposons l'étude des réseaux de XOR (Xoring Networks) et le problème XNP associé.
+
+Plus d'informations ici : Xoring Networks.
+
+Note : La dimension maximale des problèmes envoyés par le serveur atteint n = 16.
+
+Note 2 : Il n'y a que deux instances en dimension 16 à résoudre.
+
+nc challenges2.france-cybersecurity-challenge.fr 6004
+
