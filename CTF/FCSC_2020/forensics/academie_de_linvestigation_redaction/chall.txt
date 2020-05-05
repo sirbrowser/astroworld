@@ -1,0 +1,5 @@
+Le document note.docx vient d'être créé avec LibreOffice et enregistré avant le dump de la mémoire. Retrouvez son contenu !
+
+Format du flag : FCSC{xxx}, où xxx est la chaîne qui vous sera indiquée à la lecture du contenu du document.
+
+Le dump est identique au challenge C'est la rentrée.
