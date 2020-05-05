@@ -1,0 +1,7 @@
+Après avoir constaté que le serveur précédent était vulnérable à des attaques, les concepteurs ont modifié leur algorithme en limitant le nombre de requêtes autorisées. Il semblerait cependant que certaines valeurs ne soient pas convenablement générées cette fois.
+
+Service : nc challenges1.france-cybersecurity-challenge.fr 2002
+
+Aucun fichier joint pour cette épreuve.
+
+Note : La version de Python utilisée par le serveur est 3.5.3 (default, Sep 27 2018, 17:25:39) [GCC 6.3.0 20170516]
