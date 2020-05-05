@@ -4,3 +4,5 @@ https://github.com/0xSoEasY/FCSC2020/blob/master/Pwn%20-%20Why%20not%20a%20Sandb
 
 https://github.com/sMizaru/Write-ups/blob/master/FCSC/pwn/Why%20Not%20A%20Sandbox.md
 
+https://github.com/voydstack/FCSC2020/tree/master/pwn/Why%20not%20%20a%20sandbox
+
