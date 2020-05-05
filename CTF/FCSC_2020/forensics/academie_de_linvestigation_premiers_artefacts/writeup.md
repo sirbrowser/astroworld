@@ -1,1 +1,1 @@
-[https://www.onosh.ovh/ctf/fcsc2020/artefacts/]
+https://www.onosh.ovh/ctf/fcsc2020/artefacts/
