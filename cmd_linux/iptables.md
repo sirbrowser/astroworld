@@ -1,6 +1,6 @@
 # IPTABLES
 
-IPTABLES est un firewall qui peut faire :
+- IPTABLES est un firewall qui peut faire :
 	- filtrage ip
 	- filtrage ports
 	- filtrage protocole
