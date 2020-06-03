@@ -45,7 +45,7 @@
 
 -t --> type de tables (NAT, filter, mangle)
 
-- Type d'actions sur les chaines/règles (INPUT, OUTPUT, FORWARD)
+- Type d'actions sur les chaines/règles (INPUT, OUTPUT, FORWARD) :
 	-A : ajout de règle à une chaine (-A INPUT)
 	-D : suppression de règle (-D INPUT 1)
 	-R : remplace la règle (-R INPUT)
@@ -55,7 +55,7 @@
 	-X : drop de chaine
 	-P : définition de la policy d'une chaine (-P INPUT DROP)
 	
-- Caractéristiques 
+- Caractéristiques :
 	-p : protocole (-p tcp)
 	-s : la source (ip, réseau)
 	-j : action à faire (DROP/ACCEPT)
