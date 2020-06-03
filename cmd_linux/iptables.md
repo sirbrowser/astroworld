@@ -41,9 +41,9 @@
 		
 ## Principales options
 
--L --> lister les règles (--line-numbers : numéro des règles)
+- -L --> lister les règles (--line-numbers : numéro des règles)
 
--t --> type de tables (NAT, filter, mangle)
+- -t --> type de tables (NAT, filter, mangle)
 
 - Type d'actions sur les chaines/règles (INPUT, OUTPUT, FORWARD) :
 	- -A : ajout de règle à une chaine (-A INPUT)
