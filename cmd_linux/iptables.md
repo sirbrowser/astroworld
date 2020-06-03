@@ -10,7 +10,7 @@ IPTABLES est un firewall qui peut faire :
 ## IPTABLES --> 3 tables  
 
 ### La table NAT 
-	- translation de ports et d'ip
+- translation de ports et d'ip
 	- 2 locations :
 		- PREROUTING : amont firewall
 		- POSTROUTING : aval firewall
