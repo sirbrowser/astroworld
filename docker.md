@@ -42,6 +42,8 @@ Pour debuger on peut utiliser :
 #### Images
 `docker image ls` --> list pulled images<br>
 `docker commit <container_ID> <image_name>:<version>` --> create image from a docker<br>
+`docker save -o <output_name>.tar <image_name>:<version>` --> create a .tar file of an image, in addtition we can compress the file with gzip.
+`docker load < <file_name>.tar.gz` or `docker load --input <file_name>.tar` --> load an image from a .tar file or .tar.gz file 
 
 #### Dockerfile and Layers
 Dockerfile permets de : <br>
