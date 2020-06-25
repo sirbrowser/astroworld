@@ -53,4 +53,51 @@ networks:
 
 ```
 
-Pour vérifier que l'installation s'est bien déroulée : `curl -X GET "localhost:9200"` 
+Pour vérifier que l'installation s'est bien déroulée : `curl -X GET "localhost:9200"`
+Cette commande restera intéressante pour "ping" le service.
+
+## Création d'index et ajout de datas
+
+ElasticSearch est intérrogeable par requêtes HTTP. On va pouvoir utiliser `curl` pour cela avec plusieurs méthodes :
+  - GET : récupérer de la data
+  - PUT : création de la data
+  - POST : mise à jour
+  - bulk : enchainer les insertions
+  
+Un index peut être vu comme une database. Quand on créé un index, on doit ensuite créer son mapping (= la structure des données qu'il va contenir).
+Un type peut être vu comme une table.
+Une propriété peut être vu comme un champ.
+
+Depuis la version 7 d'Elastic, il n'y a plus de type.
+
+```
+curl -X PUT "localhost:9200/database1" -H 'Content-Type: application/json' -d'
+{
+    "mappings" : {
+        "properties" : {
+            "nom" : { "type" : "text" },
+            "prenom" : { "type" : "text" },
+            "ville" : { "type" : "text" }
+        }
+    }
+}
+'
+```
+Ici on va créer un index `database1` et on va créer son mapping en lui renseignant des champs et leurs types respectifs.
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
