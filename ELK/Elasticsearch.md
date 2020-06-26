@@ -68,7 +68,7 @@ Un index peut être vu comme une database. Quand on créé un index, on doit ens
 Un type peut être vu comme une table.
 Une propriété peut être vu comme un champ.
 
-Depuis la version 7 d'Elastic, il n'y a plus de type.
+**Depuis la version 7 d'Elastic, il n'y a plus de type**.
 
 ```
 curl -X PUT "localhost:9200/database1" -H 'Content-Type: application/json' -d'
@@ -84,9 +84,33 @@ curl -X PUT "localhost:9200/database1" -H 'Content-Type: application/json' -d'
 '
 ```
 Ici on va créer un index `database1` et on va créer son mapping en lui renseignant des champs et leurs types respectifs.
+
+Pour l'insertion de datas multiples, on utilise `_bulk` :
+
+```
+curl -X POST 'http://localhost:9200/_bulk' -H 'Content-Type: application/json' --data-binary '
+{ "create" : { "_index" : "database1", "_id": 1 } }
+{"nom": "Dupond", "prenom": "Jean", "ville" : "Caen"}
+{ "create" : { "_index" : "database1", "_id": 2 } }
+{"nom": "Michu", "prenom": "Paul", "ville" : "Lyon"}
+{ "create" : { "_index" : "database1", "_id": 3 } }
+{"nom": "Michalon", "prenom": "Pierre", "ville" : "Marseille"}'
+```
   
-  
-  
+Sinon on peut utiliser une requête POST simple :
+
+```
+curl -X POST 'http://localhost:9200/database1/_create/4' -H 'Content-Type: application/json' --data-binary '
+{"nom": "Boy", "prenom": "Billy", "ville" : "Paris"}'
+```
+
+Si on relance la même commande, il y aura conflit. Pour update des champs d'un même id, on utilise `_doc` au lieu de `_create`.
+```
+curl -X POST 'http://localhost:9200/database1/_doc/4' -H 'Content-Type: application/json' --data-binary '
+{"nom": "Boy", "prenom": "Billyboy", "ville" : "Paris"}'
+```
+
+Pour request de la data, on utilise la méthode `GET` : `curl -X GET 'http://localhost:9200/database1/_doc/4' -H 'Content-Type: application/json'`
   
   
   
