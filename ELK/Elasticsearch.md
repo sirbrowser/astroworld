@@ -112,7 +112,7 @@ curl -X POST 'http://localhost:9200/database1/_doc/4' -H 'Content-Type: applicat
 
 Pour request de la data, on utilise la méthode `GET` : `curl -X GET 'http://localhost:9200/database1/_doc/4' -H 'Content-Type: application/json'`
   
-## Recherche
+## Recherches
 
 ### Simples
 
@@ -165,7 +165,7 @@ curl -X GET 'http://127.0.0.1:9200/database1/_search' -H 'Content-Type: applicat
 ```
 
 On peut augmenter la pondération d'un properties :<br>
-Cela va jouer sur le score qu'a obtenu le match en question.<br>
+Cela va jouer sur le **score** qu'a obtenu le match en question.<br>
 ```
 curl -X GET 'http://127.0.0.1:9200/database1/_search' -H 'Content-Type: application/json' -d '
 {
@@ -177,7 +177,22 @@ curl -X GET 'http://127.0.0.1:9200/database1/_search' -H 'Content-Type: applicat
     }
 }' | jq
 ```
-  
+
+On peut limiter le nombre de properties en output :<br>
+```
+curl -X GET 'http://127.0.0.1:9200/database1/_search' -H 'Content-Type: application/json' -d '
+{
+    "query": {
+        "multi_match" : {
+            "query" : "paul+xavier",
+            "fields" : ["prenom^3", "nom"]
+        }
+    },
+    "_source": ["prenom", "nom"]
+}' | jq
+```
+
+### Mettre en place des clusters
   
   
   
