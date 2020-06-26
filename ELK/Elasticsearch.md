@@ -53,8 +53,9 @@ networks:
 
 ```
 
-Pour vérifier que l'installation s'est bien déroulée : `curl -X GET "localhost:9200"`
-Cette commande restera intéressante pour "ping" le service.
+Pour vérifier que l'installation s'est bien déroulée : `curl -X GET "localhost:9200"`. Cette commande restera intéressante pour "ping" le service.<br>
+
+La [doc d'ElasticSearch](https://www.elastic.co/guide/en/elastic-stack-get-started/current/get-started-docker.html) propose un docker-compose très bien aussi pour commencer. 
 
 ## Création d'index et ajout de datas
 
