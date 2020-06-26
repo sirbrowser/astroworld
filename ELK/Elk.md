@@ -55,7 +55,7 @@ Sa qualité de recherche repose sur deux éléments :
   - TF (Terme Frequency) : fréquence des mots
   - IDF (Inverse Difference Frequency) : moins un mot est commun, plus il a de poids dans la recherche 
   
-Pour plus d'informations sur ElasticSearch voir [ElasticSearch.md](ElasticSearch.md)
+Pour plus d'informations sur ElasticSearch voir [ElasticSearch.md](Elasticsearch.md)
 
 
   
