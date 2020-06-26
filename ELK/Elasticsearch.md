@@ -195,10 +195,10 @@ curl -X GET 'http://127.0.0.1:9200/database1/_search' -H 'Content-Type: applicat
 ## Mettre en place des clusters
 
 On peut avoir différents types de serveur :
-	- data node : stock les datas, recherche, agrégation
-	- master node : en charge du cluster (configuration...)
-	- client node : transmet les requêtes (master et noeuds de datas)
-	- ingest node : preprocessing
+  - data node : stock les datas, recherche, agrégation
+  - master node : en charge du cluster (configuration...)
+  - client node : transmet les requêtes (master et noeuds de datas)
+  - ingest node : preprocessing
 
 Un serveur peut être de plusieurs types.
 
