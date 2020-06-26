@@ -112,8 +112,71 @@ curl -X POST 'http://localhost:9200/database1/_doc/4' -H 'Content-Type: applicat
 
 Pour request de la data, on utilise la méthode `GET` : `curl -X GET 'http://localhost:9200/database1/_doc/4' -H 'Content-Type: application/json'`
   
-  
-  
+## Recherche
+
+### Simples
+
+On utilise le paramètre `_search` pour fait des recherches dans la database que l'on souhaite : 
+
+On spécifie l'index dans lequel on va vouloir rechercher les datas (ici `database1`), si on veut requêter toutes les datas de l'index  :<br>
+`curl -X GET "localhost:9200/database1/_search" | jq`
+ 
+On peut ajouter le paramètre `q` qui fait office de filtre :<br>
+`curl -X GET "localhost:9200/database1/_search?q=Michu" | jq` 
+
+On peut ajouter plusieurs filtres :<br>
+`curl -X GET "localhost:9200/database1/_search?q=Michu+Boy" | jq`
+
+On peut aussi pousser le filtre sur un champ en particulier :<br>
+`curl -X GET "localhost:9200/database1/_search?q=nom:Michu" | jq`
+
+On peut aussi rechercher dans plusieurs indexs :<br>
+`curl -X GET "localhost:9200/database1,database2/_search?q=nom:Michu" | jq`<br>
+`curl -X GET "localhost:9200/_all/_search?q=nom:Michu" | jq`<br>
+
+On utilise la commande `jq` pour **présenter** le résultat en json.
+
+### Complexes
+
+On peut faire des recherches plus complexes en passant des données sous formats json :<br>
+Le cas d'un match simple sur une properties :<br>
+``` 
+curl -X GET "localhost:9200/database1/_search" -H 'Content-Type: application/json' -d '
+{
+  "query" :{
+     "match" :{
+        "prenom" : "BillyBoy+blog"
+     }
+  }
+}' | jq
+```
+
+Sur plusieurs properties :<br>
+```
+curl -X GET 'http://127.0.0.1:9200/database1/_search' -H 'Content-Type: application/json' -d '
+{
+    "query": {
+        "multi_match" : {
+            "query" : "paul+xavier",
+            "fields" : ["prenom", "nom"]
+        }
+    }
+}' | jq
+```
+
+On peut augmenter la pondération d'un properties :<br>
+Cela va jouer sur le score qu'a obtenu le match en question.<br>
+```
+curl -X GET 'http://127.0.0.1:9200/database1/_search' -H 'Content-Type: application/json' -d '
+{
+    "query": {
+        "multi_match" : {
+            "query" : "paul+xavier",
+            "fields" : ["prenom^3", "nom"]
+        }
+    }
+}' | jq
+```
   
   
   
