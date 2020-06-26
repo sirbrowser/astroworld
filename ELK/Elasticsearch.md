@@ -192,10 +192,49 @@ curl -X GET 'http://127.0.0.1:9200/database1/_search' -H 'Content-Type: applicat
 }' | jq
 ```
 
-### Mettre en place des clusters
-  
-  
-  
+## Mettre en place des clusters
+
+On peut avoir différents types de serveur :
+	- data node : stock les datas, recherche, agrégation
+	- master node : en charge du cluster (configuration...)
+	- client node : transmet les requêtes (master et noeuds de datas)
+	- ingest node : preprocessing
+
+Un serveur peut être de plusieurs types.
+
+On installe ElasticSearch (7.8.0) sur 2 machines distinctes (2 Debian 10): <br>
+``` 
+apt-get install -y default-jre apt-transport-https
+wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.8.0-amd64.deb
+dpkg -i elasticsearch-7.8.0-amd64.deb
+```
+Avant de lancer le service, changeons la configuration :
+
+### elasticsearch.yml
+
+On aura au minimun :
+```
+cluster.name: <nom_du_cluster>
+node.name: <nom_de_la_machine>
+path.data: /var/lib/elasticsearch
+path.logs: /var/log/elasticsearch
+discovery.seed_hosts: ["<IP_machine>", "<IP_machine2>", ....]
+network.bind_host: 0.0.0.0                                      | <-- Pour que le service écoute sur tous les interfaces
+node.master: true                 
+node.data: true
+network.host: <IP_machine>
+```
+
+### jvm.options
+
+On peut fixer une limite (ici 500Mo) à la mémoire allouée pour elastic (1Go par défaut) :<br>
+```
+-Xms500m
+-Xmx500m
+``` 
+
+On peut s'assurer de la bonne configuration du cluster avec la commande : `curl <node_IP>:9200/_cluster/health | jq` qui retourne un certain nombre d'informations.
+
   
   
   
