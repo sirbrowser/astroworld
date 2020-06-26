@@ -235,8 +235,56 @@ On peut fixer une limite (ici 500Mo) à la mémoire allouée pour elastic (1Go p
 
 On peut s'assurer de la bonne configuration du cluster avec la commande : `curl <node_IP>:9200/_cluster/health | jq` qui retourne un certain nombre d'informations.
 
+## Définitions d'architecture
+
+**Cluster** : ensemble de serveurs (noeuds ayant elasticsearch / même id de cluster)
+  - communication via port 9300
+  - haute dispo : perfomance et redondance
+
+**Noeuds** : serveur ayant un service elastic
+  - différents types : master, data, client...
+
+**Index** : une instance de base de données 
+  - un à plusieurs par serveur (et cluster) 
   
+**Shards** : découpage logique d'un index (un à plusieurs shards)
+  - répartition des shards sur plusieurs noeuds (répartir un index)
+  - joue sur les performances
+	- ajout d'un noeud = réaffectation des shards
+	- important pour déterminer nb max de noeuds
   
+**Réplicas** : réplicas de shards d'un index
+  - redondance
+	- mais aussi performance (interrogeables)
+  
+**Requête** : via API et somme des résultats de tous les shards
+
+## Définitions d'index
+
+**Type** (table) : regroupement de documents
+	- structure n'est pas fixe mais évolutive
+	- on peut la définir par un mapping
+
+**mapping** : définition de les propriétés du type
+  - par exemple : les noms des champs, leur caractéristiques
+
+**Document** : élément le plus fin (équivaut à une ligne en sql)
+  - un objet d'un type
+	- composé des propriétés du type
+  
+## Plug-in Elastic
+
+Pour installer des plug-in ElasticSearch :<br>
+`/usr/share/elasticsearch/bin/elasticsearch-plugin install list`
+
+Le plug-in elastic-hq permet d'avoir une interface graphique d'elastic très pratique pour la gestion de cluster. <br>
+Il est disponible avec docker (à faire sur la machine qui fait tourner un service elastic) :
+`docker run -d -p 5000:5000 elastichq/elasticsearch-hq`
+
+
+
+
+
   
   
   
