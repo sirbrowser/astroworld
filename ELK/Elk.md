@@ -39,9 +39,7 @@ LOGSTASH >> ELASTICSEARCH << KIBANA
 
 On peut avoir des variation avant Logstash avec des beats (filebeat, metricbeat...)
 
-## Installation d'ElasticSearch
-
-### Théorie
+## Installation ElasticSearch
 
 ElasticSearch utilise NoSQL qui facilite l'utilisation d'un système distribué.
 
@@ -55,10 +53,35 @@ Sa qualité de recherche repose sur deux éléments :
   - TF (Terme Frequency) : fréquence des mots
   - IDF (Inverse Difference Frequency) : moins un mot est commun, plus il a de poids dans la recherche 
   
-Pour plus d'informations sur ElasticSearch voir [ElasticSearch.md](Elasticsearch.md)
+Pour plus d'informations sur ElasticSearch et son installation --> [ElasticSearch.md](Elasticsearch.md)
 
+## Installation Kibana 
 
-  
+Kibana permet la visualisation et l'exploitation des datas d'ElasticSearch.
+
+```
+wget https://artifacts.elastic.co/downloads/kibana/kibana-7.8.0-amd64.deb     | <-- dernière version le 06/27/2020
+dpkg -i kibana-7.8.0-amd64.deb
+```
+Dans /etc/kibana/kibana.yml on spécifie (installation simple) :
+```
+server.host: "0.0.0.0"                                | <-- écouter sur toutes les interfaces
+elasticsearch.hosts: ["http://localhost:9200"]        | <-- si elasticsearch est présent sur la même machine, sinon changer l'IP (déjà par défaut)
+
+elasticsearch.username: "<username>"                  | <-- On peut spécifier un
+elasticsearch.password: "<password>"                  | <-- user/pwd pour se connecter à l'interface kibana
+```
+
+Kibana écoute sur le port `5601`.
+
+## Installation Logstash
+
+```
+apt-get install openjdk-11-jdk-headless
+sudo wget https://artifacts.elastic.co/downloads/logstash/logstash-7.8.0.deb      | <-- dernière version le 06/27/2020
+dpkg -i logstash-7.8.0.deb
+```
+
 
 
 
