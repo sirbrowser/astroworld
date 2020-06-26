@@ -234,7 +234,8 @@ On peut fixer une limite (ici 500Mo) à la mémoire allouée pour elastic (1Go p
 -Xmx500m
 ``` 
 
-On peut s'assurer de la bonne configuration du cluster avec la commande : `curl <node_IP>:9200/_cluster/health | jq` qui retourne un certain nombre d'informations.
+On peut s'assurer de la bonne configuration du cluster avec la commande : `curl <node_IP>:9200/_cluster/health | jq` qui retourne un certain nombre d'informations.<br>
+On peut aussi voir l'état du cluster (même chose avec elasticsearch-hq) avec la commande : `curl -X GET "localhost:9200/_cat/nodes?v&pretty"`
 
 ## Définitions d'architecture
 
