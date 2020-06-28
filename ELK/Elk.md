@@ -175,7 +175,7 @@ output.logstash:
   hosts: ["<IP_ELK>:5044"]          | <-- Le port par défaut sur lequel logstash recoit les logs est 5044
 ```
 
-Sur l'ELK, on a un fichier `/etc/logstash/conf.d/nginx.conf` comme celui ci (pour les configurations de filter et ouput voir [Monitoring de fichiers locaux](#Monitoring-de-fichiers-locaux)):
+Sur l'ELK, on a un fichier `/etc/logstash/conf.d/nginx.conf` comme celui ci (pour les configurations supplémentaires voir [Monitoring de fichiers locaux](#Monitoring-de-fichiers-locaux)):
 ```
 input {
   beats {                 | <-- input de type beat
@@ -195,3 +195,89 @@ output {
   }
 }
 ```
+
+On redémarre logstash `service logstash restart` sur l'ELK et Filebeat sur la machine Nginx `service nginx restart`.<br>
+Avec l'interface Kibana, on voit qu'un index ElasticSearch a été créé. Il faut en créer un pour Kibana comme expliqué à la fin de la partie [Monitoring de fichiers locaux](#Monitoring-de-fichiers-locaux).
+
+## Filebeat - Input de type log
+
+On peut configurer plus spécifiquement les input de types logs avant des les envoyer à Logstash. Il existe plusieurs champs de configurations qui sont disponibles sur la [doc ElasticSearch](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-log.html).<br>
+On peut les rajouter dans le fichier `/etc/filebeat/filebeat.yml` :
+```
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /var/log/nginx/access*.log
+  exclude_lines: ["^127.0.0.1"]     | <-- exclut les lignes qui commence par "127.0.0.1"
+  exclude_files: [".gz$"]           | <-- exclut les fichiers qui finissent par ".gz" (non intéressant dans cette configuration)
+  ignore_older: 24h                 | <-- ignore les fichiers qui ont été modifié il y a plus de 24h
+  tags: ["log"]                     | <-- rajoute "log" dans le champ "tag" déjà présent dans ElasticSearch
+  fields:
+    env: prod                       | <-- ajout d'un champ fields.env qui contiendra "prod"
+    api: front                      | <-- ajout d'un champ fields.api qui contiendra "front"
+```
+Voici quelques exemples mais il en existe plein d'autres qui sont très intéressant voir la [doc ElasticSearch](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-log.html).
+
+## Filebeat - Input Container
+
+On peut configurer plus spécifiquement les input de types containers avant des les envoyer à Logstash. Il existe plusieurs champs de configurations qui sont disponibles sur la [doc ElasticSearch](https://www.elastic.co/guide/en/beats/filebeat/master/filebeat-input-container.html).<br>
+On peut modifier le fichier `/etc/filebeat/filebeat.yml` :
+```
+filebeat.inputs:
+- type: container 
+  paths: 
+    - '/var/lib/docker/containers/*/*.log'
+```
+Les logs de tous les conteneurs sont présent dans le répertoire `/var/lib/docker/containers/`. On peut créer un nouveau IFO (input/filter/output) sur l'ELK dans `/etc/logstash/conf.d/` (par exemple `docker_nginx.conf`) -- Imaginons que c'est un conteneur nginx :
+```
+input {
+  beats {
+    port => 5044
+  }
+}
+filter {
+    grok {
+      patterns_dir => "/etc/logstash/pattern"
+      match => { "message" => "%{IPORHOST:clientip} %{NGUSER:ident} %{NGUSER:auth} \[%{HTTPDATE:timestamp}\] \"%{WORD:verb} %{URIPATHPARAM:request} HTTP/%{NUMBER:httpversion}\" %{NUMBER:response}" }
+    }
+}
+output {
+  elasticsearch {
+      hosts => ["127.0.0.1:9200"]
+      index => "docker-nginx-%{+YYYY.MM.dd}"        | <-- on crée un nouvel index Elastic-Search
+  }
+}
+```
+Il faudra créer un nouvel index Kibana à partir de celui d'ElasticSearch puis on pourra visualiser les logs du/des conteneurs.<br>
+
+## Filebeat - Input TCP
+
+On peut configurer plus spécifiquement les input de types TCP avant des les envoyer à Logstash. Il existe plusieurs champs de configurations qui sont disponibles sur la [doc ElasticSearch](https://www.elastic.co/guide/en/logstash/current/plugins-inputs-tcp.html).<br>
+On peut modifier le fichier `/etc/filebeat/filebeat.yml` :
+```
+filebeat.inputs:
+- type: tcp         
+  max_message_size: 10MiB             
+  host: "<IP>:<port>"                         | <-- Interface et port d'écoute (par exemple localhost:9000)              
+```
+On peut créer un nouveau IFO (input/filter/output) sur l'ELK dans `/etc/logstash/conf.d/` (par exemple `tcp.conf`) :
+```
+input {
+  beats {
+    port => 5044
+  }
+}
+filter {
+    grok {
+      match => { "message" => "%{WORD:champs1} %{WORD:champs2} %{WORD:champs3}" }   | <-- juste pour l'exemple qui va suivre, mais on pourrait mettre n'importe quoi 
+    }
+}
+output {
+    elasticsearch {
+      hosts => ["localhost:9200"]
+      index => "tcp-%{+YYYY.MM.dd}"
+    }
+}
+```
+Si Filebeat écoute sur localhost:9000, lors d'un `echo "pierre paul jacques" | nc 127.0.0.1 9000`, on devrait pouvoir le visualiser sur Kibana mais avant il faudra créer un nouvel index Kibana à partir de celui d'ElasticSearch.<br>
