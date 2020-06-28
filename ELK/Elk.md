@@ -82,6 +82,51 @@ sudo wget https://artifacts.elastic.co/downloads/logstash/logstash-7.8.0.deb    
 dpkg -i logstash-7.8.0.deb
 ```
 
+## Fichiers locaux
+
+Imaginons qu'un nginx tourne sur la même machine que notre ELK, on va vouloir monitorer notre fichier `access.log`. <br>
+Tout d'abord, il faut que logstash est le droit de lecture sur ce fichier : `usermod -aG adm logstash`.<br>
+On doit créer un repertoire où seront stockés tous nos patterns : `mkdir /etc/logstash/pattern`, `chmod 755 -R /etc/logstash/pattern`.<br>
+Ici nous devons créer un pattern pour nginx(`/etc/logstash/pattern/nginx`), cela nous permet de récupérer un user dans un log nginx:<br>
+```
+NGUSERNAME [a-zA-Z\.\@\-\+_%]+
+NGUSER %{NGUSERNAME}
+```
+
+Si on fait un `curl 127.0.0.1:80`, voici le log nginx : `127.0.0.1 - - [28/Jun/2020:12:22:06 +0200] "GET / HTTP/1.1" 200 612 "-" "curl/7.64.0"`<br>
+Il faut maintenant travailler cette ligne de log avec grok pour faire correspondre un champ à une variable. Le site [grok_debug](https://grokdebug.herokuapp.com/) est très utile pour cela. Dans notre cas, cette ligne de log est associé au pattern suivant :
+```
+%{IPORHOST:clientip} %{NGUSER:ident} %{NGUSER:auth} \[%{HTTPDATE:timestamp}\] \"%{WORD:verb} %{URIPATHPARAM:request} HTTP/%{NUMBER:httpversion}\" %{NUMBER:response}
+```
+
+Maintenant il faut créer le fichier de conf `/etc/logstash/conf.d/nginx.conf` :
+```
+input {
+  file {                                            | <-- type "file" puisque l'on est en local 
+    path => "/var/log/nginx/access.log"             
+    start_position => "beginning"                   | <-- on commence au début du fichier quoi qu'il arrive
+    sincedb_path => "/dev/null"
+  }
+}
+filter {
+    grok {
+      patterns_dir => "/etc/logstash/pattern"       
+      match => { "message" => "%{IPORHOST:clientip} %{NGUSER:ident} %{NGUSER:auth} \[%{HTTPDATE:timestamp}\] \"%{WORD:verb} %{URIPATHPARAM:request} HTTP/%{NUMBER:httpversion}\" %{NUMBER:response}" }
+    }
+}
+output {
+  elasticsearch {                                   | <-- type elasticsearch
+      hosts => ["127.0.0.1:9200"]                   | <-- l'elasticsearch est en local
+      index => "nginx-%{+YYYY.MM.dd}"               | <-- création d'un index nginx en rajoutant un suffixe qui est la date
+  }
+}
+```
+
+On redémarre logstash `service logstash restart`.<br>
+On se rend sur l'interface Kibana sur le port `5601`.<br>
+On va créer un index Kibana à partir de celui qu'on a créer sur ElasticSearch. Pour cela, on se rend dans la partie "Management" -> "Stack Management". On peut voir dans la partie ElasticSearch --> "Index Management" que l'index a bien été créé. On se rend dans la partie Kibana -> "Index Pattern" et on créé un index à partir de celui créer avec ElasticSearch.<br>
+On peut désormais voir dans la partie "Discover" de Kibana que l'index "nginx" est créer et on peut voir les logs.
+
 
 
 
