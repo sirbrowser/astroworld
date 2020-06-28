@@ -280,4 +280,6 @@ output {
     }
 }
 ```
-Si Filebeat écoute sur localhost:9000, lors d'un `echo "pierre paul jacques" | nc 127.0.0.1 9000`, on devrait pouvoir le visualiser sur Kibana mais avant il faudra créer un nouvel index Kibana à partir de celui d'ElasticSearch.<br>
+Si Filebeat écoute sur localhost:9000, lors d'un `echo "pierre paul jacques" | nc 127.0.0.1 9000`, on devrait pouvoir le visualiser sur Kibana mais avant il faudra créer un nouvel index Kibana à partir de celui d'ElasticSearch. Trois champs custom seront donc créer : champ1, champ2 et champ3 avec leur valeur respective : pierre, paul et jacques.
+
+
