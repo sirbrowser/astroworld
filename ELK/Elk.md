@@ -128,6 +128,29 @@ On va créer un index Kibana à partir de celui qu'on a créer sur ElasticSearch
 On peut désormais voir dans la partie "Discover" de Kibana que l'index "nginx" est créer et on peut voir les logs.
 
 
+## Installation Filebeat + Module Nginx
 
+L'utilisation de Filebeat va permettre l'injection de data directement dans ElasticSearch (on passe par les modules pour le filtering). Il a donc une interaction avec ElasticSearch pour injecter ces data mais aussi avec Kibana puisqu'il peut directement créer des indexs dans ce dernier (correspondant au module activé).
 
+Pour installer Filebeat sur une machine Linux :
+```
+curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.8.0-amd64.deb
+dpkg -i filebeat-7.8.0-amd64.deb
+
+```
+On se rend dans le fichier de configuration `/etc/filebeat/filebeat.yml` et on met à jour au moins 2 informations cruciale :
+```
+setup.kibana:
+  host: "<IP_ELK>:5601"
+  
+output.elasticsearch:
+  hosts: ["<IP_ELK>:9200"]
+```
+
+Sur l'interface Kibana, on peut retrouver dans la partie "Home" -> "Observability", les différents domaines que l'on peut monitorer (logs, métrics...).<br>
+Sur la machine où est installé Nginx et Filebeat, on doit activé le module nginx : `filebeat modules enable nginx`.<br>
+On peut lister tous les modules déjà existants : `filebeat modules list`. <br>
+Pour activer les dashboards de Kibana : `filebeat setup`.<br>
+Et on restart le service Filebeat : `service filebeat restart`.<br>
+On peut voir directement en rafraîchissant Kibana, que le module est en place, que l'index ElasticSearch et Kibana a été créé et on peut voir les logs dans le tab "Discover" de Kibana.
 
