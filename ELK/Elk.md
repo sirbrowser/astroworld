@@ -82,7 +82,7 @@ sudo wget https://artifacts.elastic.co/downloads/logstash/logstash-7.8.0.deb    
 dpkg -i logstash-7.8.0.deb
 ```
 
-## Fichiers locaux
+## Monitoring de fichiers locaux
 
 Imaginons qu'un nginx tourne sur la même machine que notre ELK, on va vouloir monitorer notre fichier `access.log`. <br>
 Tout d'abord, il faut que logstash est le droit de lecture sur ce fichier : `usermod -aG adm logstash`.<br>
@@ -152,5 +152,46 @@ Sur la machine où est installé Nginx et Filebeat, on doit activé le module ng
 On peut lister tous les modules déjà existants : `filebeat modules list`. <br>
 Pour activer les dashboards de Kibana : `filebeat setup`.<br>
 Et on restart le service Filebeat : `service filebeat restart`.<br>
-On peut voir directement en rafraîchissant Kibana, que le module est en place, que l'index ElasticSearch et Kibana a été créé et on peut voir les logs dans le tab "Discover" de Kibana.
+On peut voir directement en rafraîchissant Kibana, que le module est en place, que les indexs d'ElasticSearch et de Kibana ont été créés. On retrouve les logs dans le tab "Discover" de Kibana.
 
+## Filebeat - Input files Output Logstash
+
+On va utiliser des logs nginx pour l'exemple. On reprend donc les mêmes configurations que précédemment.<br>
+
+Si le module nginx de filebeat est activé, on le désactive : `filebeat modules disable nginx`. Justement on cherche une méthode intermédiaire aux modules.<br>
+Tout d'abord, on modifie le fichier /etc/filebeat/filebeat.yml :
+```
+filebeat.inputs:
+- type: log
+  enabled: true                     | <-- false par défaut 
+  paths:
+    - /var/log/nginx/access*.log    | <-- on veut envoyer le fichier access.log à logstash
+    
+--- 
+Mettre en commentaire la partie sur l'ElasticSearch output puisque l'on veut envoyer des logs à Logstash 
+---
+
+output.logstash:
+  hosts: ["<IP_ELK>:5044"]          | <-- Le port par défaut sur lequel logstash recoit les logs est 5044
+```
+
+Sur l'ELK, on a un fichier `/etc/logstash/conf.d/nginx.conf` comme celui ci (pour les configurations de filter et ouput voir [Monitoring de fichiers locaux](#Monitoring-de-fichiers-locaux)):
+```
+input {
+  beats {                 | <-- input de type beat
+    port => 5044          | <-- on fait écouter logstash sur le port 5044
+  }
+}
+filter {
+    grok {
+      patterns_dir => "/etc/logstash/pattern"
+      match => { "message" => "%{IPORHOST:clientip} %{NGUSER:ident} %{NGUSER:auth} \[%{HTTPDATE:timestamp}\] \"%{WORD:verb} %{URIPATHPARAM:request} HTTP/%{NUMBER:httpversion}\" %{NUMBER:response}" }
+    }
+}
+output {
+  elasticsearch {
+      hosts => ["127.0.0.1:9200"]
+      index => "nginx-%{+YYYY.MM.dd}"
+  }
+}
+```
