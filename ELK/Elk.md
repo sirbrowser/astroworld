@@ -413,8 +413,9 @@ subjectAltName = IP: <IP_Logstash>
 Ensuite il faudra créer un certificat à partir de se fichier de configuration : 
 ```
 mkdir /etc/ssl/logstash/    | <-- pour stocker le certificat et la clé privée
-openssl req -x509 -batch -nodes -days 3650 -newkey rsa:2048 -keyout /etc/ssl/logstash.key -out /etc/ssl/logstash.crt -config /tmp/custssl.conf | <-- génére le certificat avec la config
+openssl req -x509 -batch -nodes -days 3650 -newkey rsa:2048 -keyout /etc/ssl/logstash/logstash.key -out /etc/ssl/logstash/logstash.crt -config /tmp/custssl.conf | <-- génére le certificat avec la config
 chown -R logstash /etc/ssl/logstash/ 
+chgrp -R logstash /etc/ssl/logstash/ 
 chmod -R 500 /etc/ssl/logstash/logstash.*
 ```
 Dans les IFO de logstash dans `/etc/logstash/conf.d/*`, chaque input devra comporté trois paramètres en plus : 
