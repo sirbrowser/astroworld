@@ -441,7 +441,7 @@ output.logstash:
 ```
 On peut restart filebeat : `systemctl restart filebeat`.
 
-## Metricbeats - Module System
+## Metricbeats Module System
 
 On peut gérer les metrics system d'un hôte. Il faut télécharger Metricbeat et l'installer : 
 ```
@@ -477,6 +477,6 @@ On peut lancer la commande `metricbeat setup` pour mettre en place les indexs El
 
 ## Metricbeats - Module Docker
 
-On peut monitorer les metrics de conteneurs docker de la même manière que pour le [module system](#Metricbeats - Module System).
+On peut monitorer les metrics de conteneurs docker de la même manière que pour le [module system](#Metricbeats-Module-System).
 
 
