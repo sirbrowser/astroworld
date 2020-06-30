@@ -441,7 +441,7 @@ output.logstash:
 ```
 On peut restart filebeat : `systemctl restart filebeat`.
 
-## Metricbeats | Module System
+## Metricbeats Module System
 
 On peut gérer les metrics system d'un hôte. Il faut télécharger Metricbeat et l'installer : 
 ```
