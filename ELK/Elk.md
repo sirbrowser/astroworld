@@ -477,6 +477,6 @@ On peut lancer la commande `metricbeat setup` pour mettre en place les indexs El
 
 ## Metricbeats - Module Docker
 
-On peut monitorer les metrics de conteneurs docker de la même manière que pour le [module system](#Metricbeats-|-Module-System).
+On peut monitorer les metrics de conteneurs docker de la même manière que pour le [module system](#Metricbeats-Module-System).
 
 
