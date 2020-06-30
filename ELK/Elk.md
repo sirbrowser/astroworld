@@ -362,3 +362,81 @@ output {
 }
 ```
 Pour les logs syslog, on peut directement activer le module system et activer l'output directement vers elasticsearch, puis `filebeat setup` pour créer directement les index et les dashboards.<br>
+
+## Filebeat - Output type log
+
+On peut directement créer un output de type log avec filebeat, on doit éditer le fichier de configuration filebeat `/etc/filebeat/filebeat.yml` :
+```
+filebeat.inputs:
+- type: container
+  paths:
+    - '/var/lib/docker/containers/*/*.log'
+
+output.file:
+  path: "/tmp/toto"                         | <-- si le répertoire n'est pas créer, il va se créer automatiquement
+  filename: "toto"                          | <-- fichier qui répertorie les logs de l'input
+
+processors:
+  - add_host_metadata: ~                    | <-- pour avoir des métadata de l'hôte dans chaque log
+  - add_cloud_metadata: ~
+  - add_docker_metadata: ~                  | <-- pour avoir des métadata du conteneur docker dans chaque log
+  - add_kubernetes_metadata: ~
+``` 
+## Filebeat - Output type console
+
+On peut directement créer un output de type console avec filebeat, on doit éditer le fichier de configuration filebeat `/etc/filebeat/filebeat.yml` :
+On doit d'abord stopper le service filebeat : `systemctl stop filebeat`.
+```
+filebeat.inputs:
+- type: container
+  paths:
+    - '/var/lib/docker/containers/*/*.log'
+
+output.console:
+  pretty: true                              | <-- mettre en format json (pareil qu'avec la commande "jq")
+
+processors:
+  - add_host_metadata: ~
+  - add_docker_metadata: ~
+```
+Si on lance la commande `filebeat -e`, on va avoir accès à la console filebeat en foreground et les logs vont apparaître au fur et à mesure.
+
+## Filebeat - Communiquer en TLS avec Logstash
+
+La communication TLS entre Filebeat et Logstash permet d'éviter les injections de systèmes qui n'aurait pas le bon certificat (un attaquant par exemple).<br>
+Sur le serveur logstash, on va créer un nouveau fichier identique au fichier `/etc/ssl/openssl.cnf`, on peut faire un `cp /etc/ssl/openssl.cnf /tmp/custssl.conf`.<br>
+On va lui rajouter l'adresse IP du serveur logstash en dessous de la catégorie `[ v3_ca ]` :
+```
+[ v3_ca ]
+subjectAltName = IP: <IP_Logstash>
+```
+Ensuite il faudra créer un certificat à partir de se fichier de configuration : 
+```
+mkdir /etc/ssl/logstash/    | <-- pour stocker le certificat et la clé privée
+openssl req -x509 -batch -nodes -days 3650 -newkey rsa:2048 -keyout /etc/ssl/logstash.key -out /etc/ssl/logstash.crt -config /tmp/custssl.conf | <-- génére le certificat avec la config
+chown -R logstash /etc/ssl/logstash/ 
+chmod -R 500 /etc/ssl/logstash/logstash.*
+```
+Dans les IFO de logstash dans `/etc/logstash/conf.d/*`, chaque input devra comporté trois paramètres en plus : 
+```
+input {
+  beats {
+    port => 5044
+    ssl => true
+    ssl_certificate => "/etc/ssl/logstash/logstash.crt"
+    ssl_key => "/etc/ssl/logstash/logstash.key"
+  }
+}
+```
+On peut restart logstash : `systemctl restart logstash`.<br>
+Sur la machine avec Filebeat, on copie le même certificat qui a été généré précédemment. Gérer aussi les droits sur ce fichier (si c'est root qui lance Filebeat, `chown root /etc/ssl/filebeat/logstash.crt` ...). <br>
+On peut dès à présent voir si la configuration est bonne en lancant la commande `curl -v --cacert /etc/ssl/filebeat/logstash.crt https://<IP_Logstash>:5044` depuis la machine avec le service Filebeat.<br>
+Maintenant pour l'intégrer à output logstash, il faut modifier le fichier /etc/filebeat/filebeat.yml :
+```
+output.logstash:
+  hosts: ["<IP_Logstash>:5044"]
+  ssl:
+    certificate_authorities: ["/etc/ssl/filebeat/logstash.crt"]     | <-- intégration du certificat
+```
+On peut restart filebeat : `systemctl restart filebeat`.
+
