@@ -282,4 +282,83 @@ output {
 ```
 Si Filebeat écoute sur localhost:9000, lors d'un `echo "pierre paul jacques" | nc 127.0.0.1 9000`, on devrait pouvoir le visualiser sur Kibana mais avant il faudra créer un nouvel index Kibana à partir de celui d'ElasticSearch. Trois champs custom seront donc créer : champ1, champ2 et champ3 avec leur valeur respective : pierre, paul et jacques.
 
+## Logstash - Multi Input et Multi Index
 
+On peut avoir différents inputs filebeat sur une même machine, par exemple si on veut envoyer les logs docker et les logs syslog. <br>
+Dans le fichier `/etc/filebeat/filebeat.yml` :
+```
+filebeat.inputs:
+- type: container
+  paths:
+    - '/var/lib/docker/containers/*/*.log'
+  tags: ["docker"]
+
+- type: syslog
+  protocol.udp:
+    host: "localhost:9000"
+```
+Il faut activer le module syslog : `filebeat modules enable system`.<br>
+Il faut aussi modifier le fichier de configuration du module : `/etc/filebeat/modules.d/system.yml[...]`. <br>
+```
+- module: system
+  syslog:
+    enabled: true
+    var.paths: ["/var/log/syslog"]
+  auth:
+    enabled: false
+    var.paths: ["/var/log/auth.log"]
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+
+setup.template.settings:
+  index.number_of_shards: 1
+```
+On aura aussi les configurations de Kibana et Logstash mais pas d'ElasticSearch.<br>
+Dans `/etc/logstash/conf.d/multibeats.conf`, on aura :
+```
+input {
+  beats {
+    port => 5044
+  }
+}
+filter {
+  if [fileset][name] == "syslog" {            | <-- Pour reconnaitre le log syslog
+    grok {
+      match => { "message" => "%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} %{DATA:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{GREEDYDATA:syslog_message}" }
+      add_field => [ "received_at", "%{@timestamp}" ]
+      add_field => [ "received_from", "%{host}" ]
+    }
+    syslog_pri { }
+    date {
+      match => [ "syslog_timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
+    }
+    mutate {
+      add_tag => ["syslog"]
+    }
+  }
+
+  if [input][type] == "container" {           | <-- Pour reconnaitre le log docker
+    grok {
+      patterns_dir => "/etc/logstash/pattern"
+      match => { "message" => "%{IPORHOST:clientip} %{NGUSER:ident} %{NGUSER:auth} \[%{HTTPDATE:timestamp}\] \"%{WORD:verb} %{URIPATHPARAM:request} HTTP/%{NUMBER:httpversion}\" %{NUMBER:response}" }
+    }
+  }
+}
+output {
+  if "syslog" in [tags] {     
+    elasticsearch {
+      hosts => ["localhost:9200"]
+      index => "syslog-%{+YYYY.MM.dd}"
+    }
+  }
+  if "docker" in [tags] {
+    elasticsearch {
+      hosts => ["localhost:9200"]
+      index => "docker-%{+YYYY.MM.dd}"
+    }
+
+  }
+}
+```
+Pour les logs syslog, on peut directement activer le module system et activer l'output directement vers elasticsearch, puis `filebeat setup` pour créer directement les index et les dashboards.<br>
