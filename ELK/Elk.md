@@ -498,19 +498,19 @@ output {
 ```
 On peut rajouter les paramètres suivants :
 ```
-id => "<id>"      | <-- pour différencier les inputs (par exemple id => "hugo")
-delimiter => "<delimiter>"    | <-- chaque message ne sera plus délimité par un saut de ligne mais par le delimiter qu'on chosit (par exemple delimiter => ";")
-mode => "<read,tail>"         | <-- Soit Logstash est en mode "read" et dès qu'il a finit de lire il ferme le fichier et réouvre etc, soit il reste à l'écoute avec "tail"
-close_older => "<time>"       | <-- Logstash ferme le fichier au bout d'un certain temps (par exemple close_older => "1 hour")
-stat_interval => "<time>"     | <-- Gère la fréquence entre les check des fichiers (par exemple stat_interval => "1 second") en sachant qu'il a déjà une valeur par défaut
-discover_interval => "<time>" | <-- Gère la fréquence entre la découverte de fichiers (par exemple discover_interval => "10") en sachant qu'il a déjà une valeur par défaut
-exclude => "<path>"        | <-- Permet d'exclure le check de certains fichiers (par exemple exclude => "/var/log/syslog.log*" pour exclure les logrotate)
+id => "<id>"                          | <-- pour différencier les inputs (par exemple id => "hugo")
+delimiter => "<delimiter>"            | <-- chaque message ne sera plus délimité par un saut de ligne mais par le delimiter qu'on chosit (par exemple delimiter => ";")
+mode => "<read,tail>"                 | <-- Soit Logstash est en mode "read" et dès qu'il a finit de lire il ferme le fichier et réouvre etc, soit il reste à l'écoute avec "tail"
+close_older => "<time>"               | <-- Logstash ferme le fichier au bout d'un certain temps (par exemple close_older => "1 hour")
+stat_interval => "<time>"             | <-- Gère la fréquence entre les check des fichiers (par exemple stat_interval => "1 second") en sachant qu'il a déjà une valeur par défaut
+discover_interval => "<time>"         | <-- Gère la fréquence entre la découverte de fichiers (par exemple discover_interval => "10") en sachant qu'il a déjà une valeur par défaut
+exclude => "<path>"                   | <-- Permet d'exclure le check de certains fichiers (par exemple exclude => "/var/log/syslog.log*" pour exclure les logrotate)
 
-file_completed_action => "delete"   | <-- 
-start_position => "beginning"       | <-- EN MODE READ SEULEMENT, permet de supprimer un fichier dès que Logstash l'a traité
+file_completed_action => "delete"     | <-- 
+start_position => "beginning"         | <-- EN MODE READ SEULEMENT, permet de supprimer un fichier dès que Logstash l'a traité
 
-sincedb_path => "<path>"            | <-- localisation du fichier où Logstash stocke son pointeur de fichier, en sachant qu'il a déjà une valeur par défaut
-sincedb_clean_after => "<time>"     | <-- fréquence de néttoyage des timestamp
+sincedb_path => "<path>"              | <-- localisation du fichier où Logstash stocke son pointeur de fichier, en sachant qu'il a déjà une valeur par défaut
+sincedb_clean_after => "<time>"       | <-- fréquence de néttoyage des timestamp
 add_field => { "<field>" => "value" } | <-- permet d'ajouter un champ (par exemple add_field => { "env" => "prod" }
 codec => "plain"                      | <-- permet de ne pas générer l'output en json mais en plain text
 type => "<type>"                      | <-- permet de créer des types qui sont réutilisable pour la partie filter... (par exemple type => "apache") 
