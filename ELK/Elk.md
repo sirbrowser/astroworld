@@ -441,3 +441,42 @@ output.logstash:
 ```
 On peut restart filebeat : `systemctl restart filebeat`.
 
+## Metricbeats - Module System
+
+On peut gérer les metrics system d'un hôte. Il faut télécharger Metricbeat et l'installer : 
+```
+curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.8.0-amd64.deb     | <-- dernière version le 06/30/2020
+dpkg -i metricbeat-7.8.0-amd64.deb
+```
+Il faudra modifier le fichier de configuration `/etc/metricbeat/metricbeat.yml` :
+```
+setup.kibana:
+  host: "<IP_Kibana>:5601"
+output.elasticsearch:
+  hosts: ["<IP_ElasticSearch>:9200"]
+```
+On peut modifier le fichier `/etc/metricbeat/modules.d/system.yml` :
+```
+- module: system
+  period: 10s                 |     <-- periode d'envoi des metrics à ElasticSearch
+  metricsets:
+    - cpu                     |     <--
+    - load                    |     <--
+    - memory                  |     <--
+    - network                 |     <--
+    - process                 |     <--
+    - process_summary         |     <--   À commenter ou décommenter selon ce que l'on veut monitorer
+    - socket_summary          |     <--   Attention, certains systèmes ne sont pas capables de remonter 
+    #- entropy                |     <--   certains metrics ce qui fait planter metricbeat
+    #- core                   |     <--
+    #- diskio                 |     <--
+    #- socket                 |     <--
+    #- service                |     <--
+```
+On peut lancer la commande `metricbeat setup` pour mettre en place les indexs ElasticSearch et Kibana et les Dashboards, puis lancer le service metricbeats : `systemctl start metricbeat`.
+
+## Metricbeats - Module Docker
+
+On peut monitorer les metrics de conteneurs docker de la même manière que pour le [module system](#Metricbeats---Module System).
+
+
