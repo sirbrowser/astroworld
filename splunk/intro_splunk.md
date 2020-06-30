@@ -74,11 +74,11 @@ Before configuring splunk you need to ask the following questions :
   
 #### Some useful search commands
 
-'sourcetype=<source> | top limit=20 <field>' --> show top values of a field.<br>
-'sourcetype=<source> | table _time,process,user' --> create a table with 3 fields<br>
-'""""""""""""""""""" | chat count by dest-port time chart count (<>) by <>'<br>
-'iplocation' and 'geostats'  --> data visualization geo ip.<br>
-'eval' --> replace values.<br>
-'rename' --> rename fields in table.<br>
+`sourcetype=<source> | top limit=20 <field>` --> show top values of a field.<br>
+`sourcetype=<source> | table _time,process,user` --> create a table with 3 fields<br>
+`""""""""""""""""""" | chat count by dest-port time chart count (<>) by <>`<br>
+`iplocation` and `geostats`  --> data visualization geo ip.<br>
+`eval` --> replace values.<br>
+`rename` --> rename fields in table.<br>
   
 
