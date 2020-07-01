@@ -85,7 +85,7 @@ dpkg -i logstash-7.8.0.deb
 ## Monitoring de fichiers locaux
 
 Imaginons qu'un nginx tourne sur la même machine que notre ELK, on va vouloir monitorer notre fichier `access.log`. <br>
-Tout d'abord, il faut que logstash ai le droit de lecture sur ce fichier : `usermod -aG adm logstash`.<br>
+Tout d'abord, il faut que logstash ait le droit de lecture sur ce fichier : `usermod -aG adm logstash`.<br>
 On doit créer un repertoire où seront stockés tous nos patterns : `mkdir /etc/logstash/pattern`, `chmod 755 -R /etc/logstash/pattern`.<br>
 Ici nous devons créer un pattern pour nginx(`/etc/logstash/pattern/nginx`), cela nous permet de récupérer un user dans un log nginx:<br>
 ```
@@ -124,8 +124,8 @@ output {
 
 On redémarre logstash `service logstash restart`.<br>
 On se rend sur l'interface Kibana sur le port `5601`.<br>
-On va créer un index Kibana à partir de celui qu'on a créer sur ElasticSearch. Pour cela, on se rend dans la partie "Management" -> "Stack Management". On peut voir dans la partie ElasticSearch --> "Index Management" que l'index a bien été créé. On se rend dans la partie Kibana -> "Index Pattern" et on créé un index à partir de celui créer avec ElasticSearch.<br>
-On peut désormais voir dans la partie "Discover" de Kibana que l'index "nginx" est créer et on peut voir les logs.
+On va créer un index Kibana à partir de celui qu'on a créé sur ElasticSearch. Pour cela, on se rend dans la partie "Management" -> "Stack Management". On peut voir dans la partie ElasticSearch --> "Index Management" que l'index a bien été créé. On se rend dans la partie Kibana -> "Index Pattern" et on créé un index à partir de celui créé avec ElasticSearch.<br>
+On peut désormais voir dans la partie "Discover" de Kibana que l'index "nginx" est créé et on peut voir les logs.
 
 
 ## Installation Filebeat + Module Nginx
@@ -148,7 +148,7 @@ output.elasticsearch:
 ```
 
 Sur l'interface Kibana, on peut retrouver dans la partie "Home" -> "Observability", les différents domaines que l'on peut monitorer (logs, métrics...).<br>
-Sur la machine où est installé Nginx et Filebeat, on doit activé le module nginx : `filebeat modules enable nginx`.<br>
+Sur la machine où est installé Nginx et Filebeat, on doit activer le module nginx : `filebeat modules enable nginx`.<br>
 On peut lister tous les modules déjà existants : `filebeat modules list`. <br>
 Pour activer les dashboards de Kibana : `filebeat setup`.<br>
 Et on restart le service Filebeat : `service filebeat restart`.<br>
@@ -217,11 +217,11 @@ filebeat.inputs:
     env: prod                       | <-- ajout d'un champ fields.env qui contiendra "prod"
     api: front                      | <-- ajout d'un champ fields.api qui contiendra "front"
 ```
-Voici quelques exemples mais il en existe plein d'autres qui sont très intéressant voir la [doc ElasticSearch](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-log.html).
+Voici quelques exemples mais il en existe plein d'autres qui sont très intéressants voir la [doc ElasticSearch](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-log.html).
 
 ## Filebeat - Input Container
 
-On peut configurer plus spécifiquement les input de types containers avant des les envoyer à Logstash. Il existe plusieurs champs de configurations qui sont disponibles sur la [doc ElasticSearch](https://www.elastic.co/guide/en/beats/filebeat/master/filebeat-input-container.html).<br>
+On peut configurer plus spécifiquement les inputs de types containers avant des les envoyer à Logstash. Il existe plusieurs champs de configurations qui sont disponibles sur la [doc ElasticSearch](https://www.elastic.co/guide/en/beats/filebeat/master/filebeat-input-container.html).<br>
 On peut modifier le fichier `/etc/filebeat/filebeat.yml` :
 ```
 filebeat.inputs:
@@ -253,7 +253,7 @@ Il faudra créer un nouvel index Kibana à partir de celui d'ElasticSearch puis 
 
 ## Filebeat - Input TCP
 
-On peut configurer plus spécifiquement les input de types TCP avant des les envoyer à Logstash. Il existe plusieurs champs de configurations qui sont disponibles sur la [doc ElasticSearch](https://www.elastic.co/guide/en/logstash/current/plugins-inputs-tcp.html).<br>
+On peut configurer plus spécifiquement les inputs de type TCP avant des les envoyer à Logstash. Il existe plusieurs champs de configurations qui sont disponibles sur la [doc ElasticSearch](https://www.elastic.co/guide/en/logstash/current/plugins-inputs-tcp.html).<br>
 On peut modifier le fichier `/etc/filebeat/filebeat.yml` :
 ```
 filebeat.inputs:
@@ -280,7 +280,7 @@ output {
     }
 }
 ```
-Si Filebeat écoute sur localhost:9000, lors d'un `echo "pierre paul jacques" | nc 127.0.0.1 9000`, on devrait pouvoir le visualiser sur Kibana mais avant il faudra créer un nouvel index Kibana à partir de celui d'ElasticSearch. Trois champs custom seront donc créer : champ1, champ2 et champ3 avec leur valeur respective : pierre, paul et jacques.
+Si Filebeat écoute sur localhost:9000, lors d'un `echo "pierre paul jacques" | nc 127.0.0.1 9000`, on devrait pouvoir le visualiser sur Kibana mais avant il faudra créer un nouvel index Kibana à partir de celui d'ElasticSearch. Trois champs custom seront donc créés : champ1, champ2 et champ3 avec leur valeur respective : pierre, paul et jacques.
 
 ## Logstash - Multi Input et Multi Index
 
@@ -361,7 +361,7 @@ output {
   }
 }
 ```
-Pour les logs syslog, on peut directement activer le module system et activer l'output directement vers elasticsearch, puis `filebeat setup` pour créer directement les index et les dashboards.<br>
+Pour les logs syslog, on peut directement activer le module system et activer l'output directement vers elasticsearch, puis `filebeat setup` pour créer directement les indexs et les dashboards.<br>
 
 ## Filebeat - Output type log
 
@@ -410,7 +410,7 @@ On va lui rajouter l'adresse IP du serveur logstash en dessous de la catégorie 
 [ v3_ca ]
 subjectAltName = IP: <IP_Logstash>
 ```
-Ensuite il faudra créer un certificat à partir de se fichier de configuration : 
+Ensuite il faudra créer un certificat à partir de ce fichier de configuration : 
 ```
 mkdir /etc/ssl/logstash/    | <-- pour stocker le certificat et la clé privée
 openssl req -x509 -batch -nodes -days 3650 -newkey rsa:2048 -keyout /etc/ssl/logstash/logstash.key -out /etc/ssl/logstash/logstash.crt -config /tmp/custssl.conf | <-- génére le certificat avec la config
