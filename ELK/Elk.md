@@ -604,5 +604,55 @@ On peut rajouter différents paramètre à l'input (cf [doc de Logstash](https:/
 
 ## Logstash Input ElasticSearch
 
+On peut directement prendre des informations d'un ElasticSearch avec l'input "elasticsearch" :
+```
+input {
+  elasticsearch {
+    hosts => "<IP_Elastic>"       
+    index => "<index>"            | <-- index(s) à prendre en compte (par exemple index => "metricbeat*")
+    docinfo => true               | <-- récupérer les metadata de chaque doc (index,type,id,...) !!! très important !!!
+  }
+}
+output {
+  ....
+}
+```
+On peut rajouter des paramètre à l'input "elasticsearch" (cf [doc de Logstash](https://www.elastic.co/guide/en/logstash/current/plugins-inputs-elasticsearch.html)). Voici quelques uns :
+```
+docinfos_fileds => ["<field>",...]      | <-- permet de filter les informations de "docinfo"
+schedule => "<type cron>"               | <-- permet de gérer l'intervalle de temps avec un cron (type linux)
+size => <nombre>                        | <-- nombre de documents ramenés
+add_field / tags / type ...
+```` 
 
+### Input/Output ElasticSearch
+
+Attention pour un output de type `file`, Logstash ne reconnait pas où il s'est arrêté. De ce fait, il va refaire les requêtes entières et il y aura des doublons à chaque intervalle de temps donnés.
+Pour un output de type elasticsearch, on va pouvoir récupérer les données d'un elasticsearch avec l'input et le réinjecter dans le même ou un autre elasticsearch. Cela peut être intéressant par exemple lorsqu'on veut faire de la redondance. On peut filtrer ces données pour créer un nouvel index à partir de celui qu'on récupère pour en créer un autre qui contiendra donc des données filtrées. Voici un exemple :
+```
+input {
+  elasticsearch {
+    hosts => "127.0.0.1"
+    index => "metricbeat*"
+    codec => "json"                        | <-- pas nécessaire car c'est la valeur par défaut
+    query => '{
+      "query":{
+        "match":{
+          "system.process.cgroup.cpuacct.id" : "docker.service"
+        }
+      }
+    }'
+    size => 1000
+    docinfo => true
+  }
+}
+output {
+  elasticsearch {
+    hosts => "127.0.0.1"                                        | <-- Ip de l'elasticsearch dans lequel on va réinjecter les données
+    index => "extract-metricbeat.%{[@metadata][_index]}"        | <-- Indice à partir de celui qu'on retrouve dans "docinfo"
+    document_type => "%{[@metadata][_type]}"                    | <-- Type de document à partir de celui qu'on retrouve dans "docinfo"
+    document_id => "%{[@metadata][_id]}"                        | <-- ID de document à partir de celui qu'on retrouve dans "docinfo"
+  }
+}
+```
 
