@@ -695,3 +695,76 @@ curl -H "content-type: application/json" -d '{"champs1": "test1",champs2": "test
 curl -H "content-type: application/json" -d '{"champs1": "test3",champs2": "test4"}' <IP_Logstash>:<port2>/...
 ```
 
+## Logstash Filter
+
+Le principe du filter Logstash est de processer de la data (venant de l'input) donc de la manipuler, de la mettre dans une forme souhaitée, de la compléter...<br>
+Le bloc `filter` se trouve au milieu de la pipeline, entre l'input et l'output (INPUT >> FILTER >> OUTPUT).<br>
+Les filters permettent beaucoup de choses dont voici les principales :
+  - parser les éléments => à partir d'une ligne, extraire des champs
+  - conversion de type => spécifié qu'un champ va être d'un type particulier (<champ1> -> date, <champ2> -> interger,...), pratique avec un ElasticSearch en output par exemple car chaque champ va être vu comme une "string".
+  - extraire/checker des IPs
+  - répliquer des lignes/événements
+  - parser selon des délimiteurs (ou non), pratique avec un format csv par exemple
+  - géolocalisation
+  - erichissement de datas via d'autres sources
+  - faire du parsing connus : csv, json, xml, ...
+  - faire de l'aggrégation
+  - faire des modification
+  - ...
+
+## Logstash Filter CSV
+
+La documentation sur le filter de type `csv` est disponible sur la [doc de Logstash](https://www.elastic.co/guide/en/logstash/current/plugins-filters-csv.html).
+Dans un cas tout simple, on peut avoir de type de fichier (`/etc/logstash/conf.d/csv.conf`) :
+``` 
+input {
+  file {
+    path => "/tmp/input.log"
+  }
+}
+filter {
+  csv {
+    columns => ["prénom", "nom", "age"]         | <-- va reconnaitre 3 champs 
+    separator => ";"                            | <-- qui doivent être tous les 3 séparés par un ";"
+    remove_field => [ "message" ]               | <-- falculatif mais pratique pour éviter d'avoir un doublon d'infos puisque les infos seront déjà dans leurs champs respectifs
+  }
+}
+output {
+  file {
+      path => "/tmp/output.log
+  }
+}
+```
+On peut donc tester cette configuration, par exemple, avec un fichier `/tmp/input.log` comme ceci :
+```
+jean;dupond;25
+marie;dubois;30
+patrick;le gall;35
+```
+Il peut être intéressant d'envoyer ces datas dans ElasticSearch après avoir fait des modification grâce au filter, voici un exemple de fichier de configuration Logstash :
+```
+input {
+  file {
+    path => "/tmp/input.log"
+  }
+}
+filter {
+  csv {
+    columns => ["prénom", "passion", "fonction", "ville", "age"]
+    separator => ";"
+    convert => {
+      "age" => "integer"                                          | <-- on converti l'âge en interger.
+    }
+    add_field => {"env" => "production"}
+    add_field => {"dc" => "paris"}
+    remove_field => [ "message" ]
+  }
+}
+output {
+  elasticsearch {
+      hosts => ["localhost:9200"]
+      index => "csv-%{+YYYY.MM.dd}"
+  }
+}
+
+``` 
