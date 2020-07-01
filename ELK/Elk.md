@@ -85,7 +85,7 @@ dpkg -i logstash-7.8.0.deb
 ## Monitoring de fichiers locaux
 
 Imaginons qu'un nginx tourne sur la même machine que notre ELK, on va vouloir monitorer notre fichier `access.log`. <br>
-Tout d'abord, il faut que logstash est le droit de lecture sur ce fichier : `usermod -aG adm logstash`.<br>
+Tout d'abord, il faut que logstash ai le droit de lecture sur ce fichier : `usermod -aG adm logstash`.<br>
 On doit créer un repertoire où seront stockés tous nos patterns : `mkdir /etc/logstash/pattern`, `chmod 755 -R /etc/logstash/pattern`.<br>
 Ici nous devons créer un pattern pour nginx(`/etc/logstash/pattern/nginx`), cela nous permet de récupérer un user dans un log nginx:<br>
 ```
