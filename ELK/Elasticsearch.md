@@ -200,6 +200,21 @@ curl -X GET 'http://127.0.0.1:9200/database1/_search' -H 'Content-Type: applicat
 }' | jq
 ```
 
+On peut aussi mettre le filtre dans un fichier, par exemple on a la requête suivante :<br>
+`curl -XGET 127.0.0.1:9200/metricbeat*/_search -H 'Content-Type: application/json' -d "@query.json"`<br>
+Et on a le fichier `query.json` :
+```
+{
+    "query":{
+        "match":{
+          "system.process.cgroup.cpuacct.id" : "docker.service"
+      }
+    }
+}
+
+```
+On va rechercher tous les documents contenu dans l'/les index(s) `metricbeat*` qui contiennent la valeur `docker.service` dans la propriété `system.process.cgroup.cpuacct.id`.
+
 ## Mettre en place des clusters
 
 On peut avoir différents types de serveur :
