@@ -133,11 +133,11 @@ On peut aussi pousser le filtre sur un champ en particulier :<br>
 
 On peut aussi rechercher dans plusieurs indexs :<br>
 `curl -X GET "localhost:9200/database1,database2/_search?q=nom:Michu" | jq`<br>
-`curl -X GET "localhost:9200/_all/_search?q=nom:Michu" | jq`<br>
+`curl -X GET "localhost:9200/_all/_search?q=nom:Michu" | jq`
 
 On peut rechercher des données puis filtrer l'ouput pour n'avoir que certaines properties, voici des exemples :<br>
-`curl localhost:9200/database1/_search?_source_includes=messages | jq`
-`curl localhost:9200/database1/_search?_source_includes=@timestamp | jq` 
+`curl localhost:9200/database1/_search?_source_includes=messages | jq`<br>
+`curl localhost:9200/database1/_search?_source_includes=@timestamp | jq`
 
 On peut retrouver tous les indices d'ElasticSearch :<br>
 `curl 127.0.0.1:9200/_cat/indices`<br>
