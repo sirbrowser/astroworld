@@ -662,32 +662,36 @@ L'input HTTP peut aussi être intéressant :
 ```
 input {
   http {
-    host => "0.0.0.0"
-    port => 8888
+    host => "<IP>"                  | <-- "0.0.0.0" pour écouter sur toutes les interfaces
+    port => <port1>
     tags => ["TypeA"]
   }
   http {
-    host => "0.0.0.0"
-    port => 8889
+    host => "<IP>"                  | <-- "0.0.0.0" pour écouter sur toutes les interfaces
+    port => <port2>
     tags => ["TypeB"]
   }
 }
 output {
   if "TypeA" in [tags] {
     elasticsearch {
-      hosts => ["localhost:9200"]
+      hosts => ["<IP_Elastic>:9200"]
       index => "typea-%{+YYYY.MM.dd}"
     }
   }
   if "TypeB" in [tags] {
     elasticsearch {
-      hosts => ["localhost:9200"]
+      hosts => ["<IP_Elastic>:9200"]
       index => "typeb-%{+YYYY.MM.dd}"
     }
   }
 }
 
 ```
-On peut rajouter beaucoup de paramètre à l'input comme le response code, les response headers, chiffré la commnication avec tls, max_content_lenght... (cf [doc de Logstash](https://www.elastic.co/guide/en/logstash/current/plugins-inputs-http.html))
-
+On peut rajouter beaucoup de paramètre à l'input comme le response code, les response headers, chiffré la commnication avec tls, max_content_lenght... (cf [doc de Logstash](https://www.elastic.co/guide/en/logstash/current/plugins-inputs-http.html)).<br>
+On peut tester la configuration avec simplement par exmple :
+```
+curl -H "content-type: application/json" -d '{"champs1": "test1",champs2": "test2"}' <IP_Logstash>:<port1>/<path1>/<path2>/...
+curl -H "content-type: application/json" -d '{"champs1": "test3",champs2": "test4"}' <IP_Logstash>:<port2>/...
+```
 
