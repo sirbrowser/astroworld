@@ -139,7 +139,7 @@ On peut rechercher des données puis filtrer l'ouput pour n'avoir que certaines 
 `curl localhost:9200/database1/_search?_source_includes=messages | jq`<br>
 `curl localhost:9200/database1/_search?_source_includes=@timestamp | jq`
 
-On peut retrouver tous les indices d'ElasticSearch :<br>
+On peut retrouver tous les indexes d'ElasticSearch :<br>
 `curl 127.0.0.1:9200/_cat/indices`<br>
 
 On utilise la commande `jq` pour **présenter** le résultat en json.
