@@ -766,5 +766,42 @@ output {
       index => "csv-%{+YYYY.MM.dd}"
   }
 }
+```
 
-``` 
+## Logstash Filter Date
+
+Le filter date permet d'analyser un champ qui correspond à une date et à l'utiliser comme timestamp de l'évènement (cf [doc de Logstash](https://www.elastic.co/guide/en/logstash/current/plugins-filters-date.html#plugins-filters-date-timezone)).<br>
+Par exmple on pourrait avoir un fichier `/tmp/input.log` comme ceci :
+```
+12/07/1998;1ere coupe du monde
+15/07/2018;2eme coupe du monde
+```
+Avec un `/etc/logstash/conf.d/date.conf` :
+```
+input {
+  file {
+    path => "/tmp/input.log"
+  }
+}
+filter {
+  csv {
+    columns => ["mydate", "action"]
+    separator => ";"
+    }
+  date {
+    match => [ "mydate", "dd/MM/yyyy" ]     | <-- remplace le timestamp par la date qui a été prise au format "dd/MM/yyyy" dans le champ mydate. Attention voir la doc pour les différents formats
+    timezone => "UTC"
+  }
+}
+output {
+  file {
+    path => "/tmp/output.log"
+  }
+}
+```
+On aura donc un output.log comme ceci :
+```
+{"@version":"1","@timestamp":"1998-07-12T00:00:00.000Z","action":"1ere coupe du monde","host":"elas1","mydate":"12/07/1998","path":"/tmp/input.log","message":"12/07/1998;1ere coupe du monde"}
+{"@version":"1","@timestamp":"2018-07-15T00:00:00.000Z","action":"2eme coupe du monde","host":"elas1","mydate":"15/07/2018","path":"/tmp/input.log","message":"15/07/2018;2eme coupe du monde"}
+```
+Si on injecte ces données dans un ElasticSearch, le timestamp de l'évenement sera bien égal à la date mentionnée dans le `@timestamp`.
