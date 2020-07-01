@@ -79,6 +79,15 @@ Before configuring splunk you need to ask the following questions :<br>
   --> makes corrrelation of possible and practical sources.<br>
   --> for example a source field can be named differently (SRC, source, ip_source, ...).<br>
   
+- splunkd<br>
+  --> manage indexers, search heads forwarders and browser interface.<br>
+  
+- Ports<br>
+  --> 8089 : splunkd (search commands, communication with license and deployment servers, REST API, CLI.<br>
+  --> 8000 : splunk web<br>
+  --> 8065 : application server<br>
+  --> 8191 : KVStore<br>
+  
 #### Splunk roles
 
 - Admin : can install apps and create knowledge objects for all users.<br>
