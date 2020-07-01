@@ -3,6 +3,7 @@
 ## Index :
 - [Splunk terminology](#splunk-terminology)
 - [Splunk infrastructure](#splunk-infrastructure)
+- [Splunk roles](#splunk-roles)
 - [Some useful search commands](#some-useful-search-commands)
 
 #### Splunk terminology
@@ -29,19 +30,25 @@ All splunk terminology is available on splunk website (it is callled "splexicon"
   --> product csv human redabled.<br>
   --> for example in a log we can have a code 404 and transform it to display "error" for reports to non-technical people.<br>
   
+- Onboarding<br>
+  --> collect, parsing and sending logs to indexers.
+  
+- Transforming command<br>
+  --> commands that create statistics and visualizations.<br>
+  
 -------------------------------------------------
 
-https://splunkbase.splunk.com/ --> splunk marketplace for add-ons to integrate into splunk.
+https://splunkbase.splunk.com/ --> splunk marketplace for add-ons to integrate into splunk.<br>
 
 -------------------------------------------------
 
-Before configuring splunk you need to ask the following questions :
-- What index should store this data?
-- What is the desired retention period?
-- Who should have access to that data?
-- Is there a sample log to review? == to test before prod.
+Before configuring splunk you need to ask the following questions :<br>
+- What index should store this data?<br>
+- What is the desired retention period?<br>
+- Who should have access to that data?<br>
+- Is there a sample log to review? == to test before prod.<br>
 
-'/opt/splunk/bin/splunk btool inputs list --debug' --> find conf file to edit or troubleshoot.
+'/opt/splunk/bin/splunk btool inputs list --debug' --> find conf file to edit or troubleshoot.<br>
 
 #### Splunk infrastructure
 
@@ -72,6 +79,12 @@ Before configuring splunk you need to ask the following questions :
   --> makes corrrelation of possible and practical sources.<br>
   --> for example a source field can be named differently (SRC, source, ip_source, ...).<br>
   
+#### Splunk roles
+
+- Admin : can install apps and create knowledge objects for all users.<br>
+- Power : can create and store knowledge objects for users of an app and do realtime searches.<br>
+- User : Will only see their own knowledge objects and those shared with them.<br>
+  
 #### Some useful search commands
 
 `sourcetype=<source> | top limit=20 <field>` --> show top values of a field.<br>
@@ -80,5 +93,14 @@ Before configuring splunk you need to ask the following questions :
 `iplocation` and `geostats`  --> data visualization geo ip.<br>
 `eval` --> replace values.<br>
 `rename` --> rename fields in table.<br>
+`dedup` --> remove duplicated values of a field.<br>
   
+---------------------------------------------
+
+How does the storage works?<br>
+
+--> hot bucket : newest ones open for writing (readable)<br>
+--> warm bucket : recent data, buckets are closed (read-only)<br>
+--> cold bucket : oldest data still in the index (read-only)<br>
+--> frozen bucket : deletion is the default action, not searchable<br>
 
