@@ -401,7 +401,7 @@ processors:
 ```
 Si on lance la commande `filebeat -e`, on va avoir accès à la console filebeat en foreground et les logs vont apparaître au fur et à mesure.
 
-## Filebeat - Communiquer en TLS avec Logstash
+## Filebeat Communiquer en TLS avec Logstash
 
 La communication TLS entre Filebeat et Logstash permet d'éviter les injections de systèmes qui n'aurait pas le bon certificat (un attaquant par exemple).<br>
 Sur le serveur logstash, on va créer un nouveau fichier identique au fichier `/etc/ssl/openssl.cnf`, on peut faire un `cp /etc/ssl/openssl.cnf /tmp/custssl.conf`.<br>
@@ -515,3 +515,94 @@ add_field => { "<field>" => "value" } | <-- permet d'ajouter un champ (par exemp
 codec => "plain"                      | <-- permet de ne pas générer l'output en json mais en plain text
 type => "<type>"                      | <-- permet de créer des types qui sont réutilisable pour la partie filter... (par exemple type => "apache") 
 ```
+
+## Logstash Input Beat
+
+Logstash peut être en écoute de producteur de data de type beat :
+  - filebeat		: fichiers
+  - metricbeat	: métriques
+  - packetbeat	: réseau
+  - winlogbeat	: évènements windows
+  - auditbeat		: données d'audit (login...)
+  - heartbeat 	: disponibilité
+  - ...
+  
+Logstash écoute sur un choisi port en attendant de recevoir des data de type beat.<br>
+Le modèle de base se présente comme ceci : 
+```
+input {
+  beats {
+    port => 5044      | <-- champ obligatoire, logstash écoute sur le port 5044
+  }
+}
+output {
+   file {
+      path => "/tmp/output.log"
+   }
+}
+```
+
+On peut rajouter différents paramètre à l'input (cf [doc de Logstash](https://www.elastic.co/guide/en/logstash/current/plugins-inputs-beats.html), voici quelques exemples :
+```
+host => "<IP>"                            | <-- IP en écoute (par défaut "0.0.0.0")
+add_field => { "<field>" => "<value>" }   | <-- permet d'ajouter un champ (par exemple add_field => { "env" => "prod" }
+id => "<id>"                              | <-- permet d'ajouter un ID. Cela peut être pratique quand on a plusieurs ID de même type, pour les différencier.
+type => "<type>"                          | <-- permet l'ajout d'un type Logstash (par exemple type => "mybeat")
+tags => ["<tag1>","<tag2>",...]
+```
+On peut aussi rajouter du [ssl entre beats et logstash](#Filebeat-Communiquer-en-TLS-avec-Logstash)
+
+## Logstash Input Stdin
+
+On peut ajouter un input de type `stdin` qui va pouvoir récupérer des messages de la console quand on lance la commande logstash `/usr/share/logstash/bin/logstash` en foreground. On peut rajouter différents paramètre à l'input (cf [doc de Logstash](https://www.elastic.co/guide/en/logstash/current/plugins-inputs-stdin.html)).
+
+## Logstash Input Exec
+
+On peut lancer des scripts à des intervalles de temps donné afin de récupérer l'output :
+```
+input {
+   exec {
+     command => "/tmp/test.sh"
+     interval => "10"
+   }
+}
+output {
+  ....
+}
+```
+On peut rajouter différents paramètre à l'input (cf [doc de Logstash](https://www.elastic.co/guide/en/logstash/current/plugins-inputs-exec.html)).
+
+## Logstash Input TCP
+
+On peut écouter sur une interface réseau et un port et logger tous les messages qui y passent avec l'input tcp.<br>
+Il existe deux modes :
+  - "serveur" --> Logstash va écouter sur un port spécifique de sa machine
+  ```
+  input {
+    tcp {
+      mode => "server"      | <-- écoute sur toutes ses interfaces (sinon rajouter le paramètre "host => "<IP>" pour écouter sur une interface en particulier)
+      port => <port>        | <-- écoute sur le port spécifié 
+   }
+  ouput {
+    ....
+  }
+  ``` 
+  - "client"  --> Logstash va écouter sur un port spécifique d'un hôte distant
+  ```
+  input {
+    tcp {
+      mode => "client"          | <-- écoute sur une interface distante
+      host => "<IP_distante>    | <-- écoute sur cette interface
+      port => <port>            | <-- écoute sur le port spécifié 
+   }
+  ouput {
+    ....
+  }
+  ```
+Pour tester chaque mode, on peut faire un `nc <IP_Logstash> <port_écoute>` puis envoyer des messages.<br>
+On peut rajouter différents paramètre à l'input (cf [doc de Logstash](https://www.elastic.co/guide/en/logstash/current/plugins-inputs-tcp.html)).
+
+## Logstash Input ElasticSearch
+
+
+
