@@ -656,3 +656,38 @@ output {
 }
 ```
 
+## Logstash Input HTTP
+
+L'input HTTP peut aussi être intéressant :
+```
+input {
+  http {
+    host => "0.0.0.0"
+    port => 8888
+    tags => ["TypeA"]
+  }
+  http {
+    host => "0.0.0.0"
+    port => 8889
+    tags => ["TypeB"]
+  }
+}
+output {
+  if "TypeA" in [tags] {
+    elasticsearch {
+      hosts => ["localhost:9200"]
+      index => "typea-%{+YYYY.MM.dd}"
+    }
+  }
+  if "TypeB" in [tags] {
+    elasticsearch {
+      hosts => ["localhost:9200"]
+      index => "typeb-%{+YYYY.MM.dd}"
+    }
+  }
+}
+
+```
+On peut rajouter beaucoup de paramètre à l'input comme le response code, les response headers, chiffré la commnication avec tls, max_content_lenght... (cf [doc de Logstash](https://www.elastic.co/guide/en/logstash/current/plugins-inputs-http.html))
+
+
