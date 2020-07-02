@@ -805,3 +805,68 @@ On aura donc un output.log comme ceci :
 {"@version":"1","@timestamp":"2018-07-15T00:00:00.000Z","action":"2eme coupe du monde","host":"elas1","mydate":"15/07/2018","path":"/tmp/input.log","message":"15/07/2018;2eme coupe du monde"}
 ```
 Si on injecte ces données dans un ElasticSearch, le timestamp de l'évenement sera bien égal à la date mentionnée dans le `@timestamp`.
+
+## Logstash Filter Mutate
+
+Le filter mutate permet de renommer, supprimer, remplacer et modifier les datas en input, voici les paramètres que l'on peut passer :
+  - coerce
+  - rename
+  - update
+  - replace
+  - convert
+  - gsub
+  - uppercase
+  - capitalize
+  - lowercase
+  - strip
+  - remove
+  - split
+  - join
+  - merge
+  - copy
+  
+Par exemple on peut avoir un fichier de test `/tmp/input.log` :
+```
+02/07/2020;github - c'est - la - frappe ?;github.astroworld.com;MAJUSCULE;champ1;champ2;;billyr00t;null
+```
+Et un fichier de configuration `/etc/logstash/conf.d/config.conf` comme ceci :
+```
+input{
+  file {
+    path => "/tmp/input.log"
+  }
+}
+
+filter {
+  csv {
+    columns => ["mydate", "action", "split","minuscule","merge1","merge2","coerce","rename","replace"]
+    separator => ";"
+    remove_field => [ "message" ]
+  }
+  date {
+    match => [ "mydate", "dd/MM/yyyy" ]
+  }
+  mutate {
+    copy => { "[@timestamp]" => "mydate" }                | <-- copie le champ "@timestamp" dans le champ "mydate"
+    gsub => ["action", "[?-]", ""]                        | <-- remplace soit les caractère "?" et "-" par rien dans le champ "action"
+    split => { "split" => "." }                           | <-- split les différents champs dans un array en fonction du caractère "."
+    lowercase => [ "minuscule" ]                          | <-- remplace toutes les majuscules par des minuscules
+    merge => { "merge1" => "merge2" }                     | <-- merge dans un array la valeur du champ merge1 avec celle du champ merge2
+    coerce => { "coerce" => "default_value" }             | <-- si il y une valeur nulle dans le champ "coerce", "default_value" est inscrit dans ce dernier 
+    rename => { "rename" => "apres_rename" }              | <-- renomme le nom du champ "rename" par "apres_rename"
+    replace => { "replace" => "%{host}" }                 | <-- remplace la valeur du champ "remplace" par la valeur contenu dans le champ "host"
+  }
+}
+output {
+  file {
+    path => "/tmp/output.log"
+  }
+}
+```
+On aura donc un fichier de sortie comme celui ci :
+```
+{"merge1":["champ1","champ2"],"mydate":"2020-07-01T22:00:00.000Z","@version":"1","host":"elas1","path":"/tmp/input.log","split":["github","astroworld","com"],"@timestamp":"2020-07-01T22:00:00.000Z","minuscule":"majuscule","merge2":"champ2","coerce":"default_value","replace":"elas1","apres_rename":"billyr00t","action":"github  c'est  la  frappe "}
+```
+Plus d'infos sur la [doc de Logstash](https://www.elastic.co/guide/en/logstash/current/plugins-filters-mutate.html).
+
+## Logstash Filter Aggregate 
