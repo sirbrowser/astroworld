@@ -52,4 +52,28 @@
 - Scientific Working Group on Imaging Technology (SWGIT)
 - Association of Chief Police Officers (ACPO)
 
-Digital evidence comprises physical devices such as computer systems, mobile phones, flash drives, memory cards, routers, switches, modems, etc., and the electronic information stored in these devices.<br>
+**Digital evidence** comprises physical devices such as computer systems, mobile phones, flash drives, memory cards, routers, switches, modems, etc., and the electronic information stored in these devices.<br>
+There are four characterisics of digital evidence :
+- Latent/Hidden
+- Crosses jurisdictionnal borders quickly and easily
+- Can be altered, damaged, or destroyed easily
+- Can be time sensitive
+
+**Write blockers** are devices that are used for acquisition of information on a drive without creating the possibility of accidentally damaging or wiping the drive contents. They only allow read commands to pass and block any write commands.<br>
+There are two types of write blockers :
+- Native : uses the same interface on for both input and output (IDE to IDE write block for example)
+- Tailgate : uses a different interface for each side (Firewire to SATA write block for example)
+
+**Forensic triage** is the process of collecting, assembling, analyzing, and **prioritizing** digital evidence.<br>
+
+**Chain of custody** refers to the documentation of a piece of evidence throughout its life cycle. Maitaining a proper chain of custody is very important. Any break can lead to a piece of evidence being excluded in the court.<br>
+The following must be included in a chain of custody form :
+- a list of all devices that were secured from the crime scene for further investigation
+- accurate information about the devices that has been copied, transferred, and collected
+- timestamp of all the collected evidence
+- who processed the item?
+- who is the owner of the item?
+- where was it taken or seized from?
+- all electronic evidence that was collected from the crime scene must be properly documented each time that evidence is viewed
+- such documentation must be made available, if requested by the client, throughout the pre-trial discovery phase
+
