@@ -15,3 +15,16 @@ L'Arduino envoie du courant, ou non, par les connexions numétotées de 1 à 13 
 <img src="https://github.com/sirbrowser/astroworld/blob/master/images/Arduino2.png"><br>
 
 La LED "L" s'allume quand on dit à l'Arduino d'envoyer du courant dans la connexion 13.
+
+Le code est toujours de la forme suivante :<br>
+```arduino
+void setup() {
+  // put your setup code here, to run once:
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+}
+```
