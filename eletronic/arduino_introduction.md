@@ -59,3 +59,25 @@ void loop() {
 
 }
 ```
+
+Un programme pour afficher des choses dans la console Arduino (la petite loupe en haut a gauche) :<br>
+```C
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);  
+  Serial.println("Communication initialisée");
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  Serial.println("Je suis dans la boucle!");
+}
+```
+Le 9600 dans les parenthèses de l'initialisation correspond à un nombre de caractères par seconde qu'on appelle des bauds. L'Arduino peut donc envoyer un maximum de 9600 caractères par seconde à l'ordinateur dans cette configuration.<br>
+A ne pas confondre avec l'unité bps qui signifie bits par seconde. Un caractère pour l'Arduino c'est 8 bits.<br>
+
+REMARQUE : <br>
+Le moniteur série (console) utilise les connexions 0 et 1 de l'Arduino (0 pour la diode RX et 1 pour TX lors de l'utilisation en communication). Si on utilise le port série, il ne faut pas utiliser les connexions 0 et 1 pour d'autres choses dans le projet.<br>
+
+connexion = pin !!
+
