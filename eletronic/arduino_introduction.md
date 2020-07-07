@@ -28,3 +28,34 @@ void loop() {
 
 }
 ```
+
+Pour allumer la diode L continuellement on code :<br>
+```C
+void setup() {
+
+  pinMode(13,OUTPUT);  // on dit a la connexion 13 qu'elle peut ENVOYER du courant
+  digitalWrite(13,HIGH); //HIGH=1 et LOW=0 ou HIGH=+5V et LOW=0V
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+}
+```
+
+Pour allumer la led 1 seconde et l'éteindre 1 seconde à l'infini :<br>
+```C
+void setup() {
+  pinMode(13,OUTPUT);
+
+}
+
+void loop() {
+  digitalWrite(13,HIGH);
+  delay(1000);  //en ms
+  digitalWrite(13,LOW);
+  delay(1000);  // en ms
+
+}
+```
