@@ -6,15 +6,6 @@
 #### Introduction to cyber forensics
 
 ###### Forensic investigation process :<br>
-- Incident
-- Identification
-- Seizure
-- Imaging
-- Hashing
-- Analysis
-- Reporting
-- Preservation
-
 - Incident : Occurence of a cybercrime instance where digital devices like computers, mobile, ect, have been used to commit a crime.<br>
 
 - Identification : scope of actions before starting a forensic examination. (who are the prime suspects? what are the best sources of potential digital evidence that will be further investigated?).
