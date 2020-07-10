@@ -82,3 +82,16 @@ Le moniteur série (console) utilise les connexions 0 et 1 de l'Arduino (0 pour 
 
 connexion = pin !!
 
+#### Electricité
+
+L'arduino UNO propose à ses bornes (pin 0 à 13) une tension de +5V qui sort. Il utilise un courant continue (c'est toujours du +5V qui sort).<br>
+On peut fournir à l'Arduino son alimentation de 3 façcons principales :
+- via le cable USB car l'ordinateur fournit un courant de +5V par ce câble.
+- via une pile 9V (entre 7V et 12v en réalité) via la prise ronde de l'arduino. Arduino transforme ensuite ces 9V en 5V.
+- via un transformateur à la prise ronde (attention il faut que la connectique du transformateur soit correcte et qu'il fournisse bien la tension demandée (9V).
+
+Le transformateur se branche sur du 220V, mais à l'intérieur du boitier il y a deux bobines qui transforment ces 220V en 9V, puis un redresseur de courant qui permet de transformer l'alternatif en courant continu.<br>
+Rappel : pour la tension on a la [loi des mailles](https://fr.wikiversity.org/wiki/Loi_de_Kirchhoff/Loi_des_mailles) qui s'applique.<br>
+
+L'intensité est la quantité de courant qui passe dans un endroit du circuit. elle est mesurée en Ampère (A).<br>
+Rappel : pour l'intensité on a la [loi des noeuds](https://fr.wikipedia.org/wiki/Lois_de_Kirchhoff) qui s'applique.<br>
