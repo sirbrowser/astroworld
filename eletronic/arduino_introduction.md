@@ -100,3 +100,57 @@ Rappel : la loi d'ohm --> U = R * I <br>
 
 Une LED est un dipôle qui ne laisse passer le courant que dans **un seul sens**. C'est appelé un semi-conducteur.<br>
 <img src=https://github.com/sirbrowser/astroworld/blob/master/images/LED.PNG><br>
+Pour brancher la LED on doit brancher la patte la plus longue (anode ou +) du coté du 5V et la patte la plus courte (cathode ou -) du coté du 0V ou *ground*.<br>
+Symboles représentant le ground et le +5V :<br>
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/ground.PNG><br>
+
+Sur l'arduino il y a 3 pins gnd, 1 pin 3.3V et 1 pin 5V :<br>
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/pins.PNG><br>
+Connecter directement la LED du 3.3V ou du 5V vers le ground sans résistance reste un risque pour la LED.<br>
+Schéma de branchement de la LED :<br>
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/LED2.PNG><br>
+
+Schéma de la breadboard:<br>
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/breadboard.PNG><br>
+Les trous colorés sont connectés entre eux.<br>
+Les deux grandes lignes servent souvent à relier les Vin(+5V) et les grounds (Gnd) entre eux :<br>
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/breadboard2.PNG><br>
+
+#### Calcul de la bonne valeur de résistance pour une LED
+Tout matériel électronique est accompagné d'une fiche de spécifications techniques (datasheet).<br>
+En lisant celle de la LED il faut retenir qu'une LED produit une chute de tension entre 1V et 4V (ca dépend des couleurs).<br>
+Appelons la tensionde la LED "Uled" et la fixer à 1,8V par exemple. La tension fournie par l'arduino est de 5V, nous l'appelerons Ugen. La tension aux bornes de la resistance sera Ures. :<br>
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/LED3.PNG><br>
+D'après la loi des mailles on a : Ugen = Uled+Ures <==> Ures = Ugen - Uled = 5-1.8 = 3.2V --> la tension aux bornes de la résistance.<br>
+Dans le datasheet on a aussi "l'intesité qui traverse la LED doit etre aux environs de 20mA soit 0.02A.<br>
+
+Sur l'arduino la sortie 5V délivre un courant de 0.5A (500mA) et les pins de 0 à 13 produisent du 0.04A (40mA) et un max de 0.2A pour les 13 pins cumulés.<br>
+
+Avec la loi d'Ohm : U=R*I <==> R=U/I =3.2/0.02 = 160ohm (en réalité on peut utiliser des résistances entre 100 et 1000ohms).<br>
+
+!!!! [**Le code couleurs des résistances**](https://www.apprendre-en-ligne.net/crypto/passecret/resistances.pdf)!!!<br>
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/LED4.PNG><br>
+
+------------------------------------------------
+La sortie 5V fournit du courant continuellement tandis que les pins de 1 à 13 ne fournissent du courant que par programmation.<br>
+
+Connecter une LED sur un pin :<br>
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/LED5.PNG><br>
+```C
+int pinLed=13; //variable pour le numéro de pin utilisé
+void setup() {
+  pinMode(pinLed,OUTPUT); //pin 13 en mode sortie de courant
+}
+
+void loop() {
+  digitalWrite(pinLed,HIGH); //on passe le pin à +5V
+  delay(1000);
+  digitalWrite(pinLed,LOW); //on passe le pin à 0V
+  delay(1000);
+
+}
+```
+Autre méthode pour ménager la carte arduino :
+L'exemple précédent utilise le pin 13 pour fournir du courant qui s'enfuit ensuite vers le Gnd. Cette méthode de branchement est correcte, mais elle demande de l'énergie à l'arduino, elle préfère absorber du courant qu'en fournir.<br>
+Il faut donc monter le circuit à l'envers : on part du +5V de l'arduino puis on connecte la résistance et la LED puis on relie le tout au pin 13 (sans oublier la patte + de la LED vers le 5V)<br>
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/LED6.PNG><br>
