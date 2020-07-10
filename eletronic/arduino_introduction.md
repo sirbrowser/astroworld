@@ -95,3 +95,8 @@ Rappel : pour la tension on a la [loi des mailles](https://fr.wikiversity.org/wi
 
 L'intensité est la quantité de courant qui passe dans un endroit du circuit. elle est mesurée en Ampère (A).<br>
 Rappel : pour l'intensité on a la [loi des noeuds](https://fr.wikipedia.org/wiki/Lois_de_Kirchhoff) qui s'applique.<br>
+
+Rappel : la loi d'ohm --> U = R * I <br>
+
+Une LED est un dipôle qui ne laisse passer le courant que dans **un seul sens**. C'est appelé un semi-conducteur.<br>
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/LED.PNG><br>
