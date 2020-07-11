@@ -154,3 +154,61 @@ Autre méthode pour ménager la carte arduino :
 L'exemple précédent utilise le pin 13 pour fournir du courant qui s'enfuit ensuite vers le Gnd. Cette méthode de branchement est correcte, mais elle demande de l'énergie à l'arduino, elle préfère absorber du courant qu'en fournir.<br>
 Il faut donc monter le circuit à l'envers : on part du +5V de l'arduino puis on connecte la résistance et la LED puis on relie le tout au pin 13 (sans oublier la patte + de la LED vers le 5V)<br>
 <img src=https://github.com/sirbrowser/astroworld/blob/master/images/LED6.PNG><br>
+
+##### Objcetif : projet "Blink a trois"
+
+description du programme :
+- les trois LED sont étieintes
+- les trois LED s'allument une seconde
+- après une brève extinction de toutes les LED, les deux premières restent éteintes et la troisième s'allume une seconde
+- extinction brève, puis LED 1 et LED3 éteintes, LED 2 allumée une seconde
+- extinction brève, LED 1 allumée et LED 2 et LED 3 éteintes une seconde
+- on retourne au début, mais le programme recommence avec un temps d'allumage de 0.8s puis 0.6s puis 0.4s puis 0.2
+- le programme recommence au début
+
+Le montage ressemble a ceci :<br>
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/blink.PNG><br>
+```C
+int pled1, pled2, pled3;
+void setup() {
+  pled1=6;
+  pled2=5;
+  pled3=4;
+
+  pinMode(pled1,OUTPUT);
+  pinMode(pled2,OUTPUT);
+  pinMode(pled3,OUTPUT);
+
+  digitalWrite(pled1,LOW);
+  digitalWrite(pled2,LOW);
+  digitalWrite(pled3,LOW);
+}
+
+void loop() {
+  digitalWrite(pled1,HIGH);
+  digitalWrite(pled2,HIGH); 
+  digitalWrite(pled3,HIGH);
+  delay(1000);
+
+  digitalWrite(pled1,LOW);
+  digitalWrite(pled2,LOW);
+  digitalWrite(pled3,LOW);
+  delay(100);
+
+  for(int i=1000;i>=200;i=i-200){
+    digitalWrite(pled1,HIGH);
+    delay(i);
+    digitalWrite(pled1,LOW);
+    delay(100);
+    digitalWrite(pled2,HIGH);
+    delay(i);
+    digitalWrite(pled2,LOW);
+    delay(100);
+    digitalWrite(pled3,HIGH);
+    delay(i);
+    digitalWrite(pled3,LOW);
+    delay(100);
+  }
+}
+```
+
