@@ -212,3 +212,39 @@ void loop() {
 }
 ```
 
+Un pin est soit en sortie (`digitalWrite(pin,état)`) soit en entrée (`digitalRead(pin)`) mais pas les deux.<br>
+Il est donc important de bien définir si le pin va se comporter en entrée ou en sortie :<br>
+- `pinMode(pin,OUTPUT)` --> pour indiquer à la carte que le pin doit être en mode écriture, cad qu'il peut envoyer ou non du courant. C'est donc une sortie.<br>
+- `pinMode(pin,INPUT)` --> pour indiquer que le pin est en mode lecture. Il ne pilote pas le courant mais il va être à l'écoutedu courant qui va lui arriver.<br>
+
+Avec la commande `digitalRead(pin)` on récupère ce que le pin entend en terme de courant.<br>
+
+##### Le bouton poussoir
+Le principe du bouton poussoir est que lorsque l'on appuie, le courant passe, et lorsque l'on relache le courant ne passe plus.<br>
+Contrairement à un interrupteur, il ne garde pas la position (il faut garder le doigt dessus pour qu'il fasse contact).<br>
+
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/poussoir.PNG><br>
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/poussoir2.PNG><br>
+
+Comment utiliser un bouton par programmation?
+Tout simplement en le reliant à un pin qui est en mode lecture.<br>
+L'arduino va pouvoir lire une valeur de +5V ou de 0V. Donc en théorie si on envoie le +5V sur un poussoir, quand il est baissé, il laisse passer le courant et l'Arduino reçoit +5V, il indique donc HIGH. Si le poussoir est ouvert, l'Arduino devrait ne rien recevoir, donc être à 0V et indiquer LOW.<br>
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/poussoir3.PNG><br>
+```C
+int pinBouton;
+void setup()
+{
+    Serial.begin(9600);
+    pinBouton=10;
+    pinMode(pinBouton,INPUT);
+}
+void loop()
+{
+    boolean etatBouton=digitalRead(pinBouton);
+    Serial.println(etatBouton);
+}
+```
+Ce programme ne marche pas. On voit bien s'afficher des 0, puis lorsque l'on appuie sur le bouton, on voit des 1 et en rela^chant ca reste à 1.<br>
+Si on observe bien, le pin 10, quand le bouton est levé, n'est finalement connecté à rien. Le résultat lu par l'Arduino est donc peu interprétable. Il existe un moyen de forcer l'Arduino à lire quelque chose, tout simplement avec l'ajout d'une résistance...<br>
+
+##### Résistance pull-down
