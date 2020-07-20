@@ -248,3 +248,104 @@ Ce programme ne marche pas. On voit bien s'afficher des 0, puis lorsque l'on app
 Si on observe bien, le pin 10, quand le bouton est levé, n'est finalement connecté à rien. Le résultat lu par l'Arduino est donc peu interprétable. Il existe un moyen de forcer l'Arduino à lire quelque chose, tout simplement avec l'ajout d'une résistance...<br>
 
 ##### Résistance pull-down
+L'éléctricité est paresseuse : elle va toujours choisir le chemin qui lui résiste le moins, mais si ellen'a pas le choix, elle passe tout de même la ou ça résiste.<br>
+Nous allons donc ajouter une résistance à notre circuit. Une assez forte pour que le courant ne passe que s'il y est obligé (souvent de l'ordre de 10kΩ).<br>
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/pull-down.PNG><br>
+Que se passe-t-il dans ce circuit?<br>
+Si le poussoir est baissé, le courant va du +5V au pin de l'Arduino. Il ne prendra pas le chemin du ground car la résistance lui demande un effort. Le pin de l'Arduino recevra du +5V et indiquera HIGH.<br>
+Si le poussoir est levé le très faible courant résiduel qui sortira du pin de l'Arduinosera absorb par le Gnd, le pin sera donc bien en LOW.<br>
+Ce montage est à connaître car quel que soit le type de contacteur (i.e poussoir) que vous placerez en lecture sur le pin, il vous faudra prévor ce comportement erratique.<br>
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/pull-down2.PNG><br>
+
+##### Résistance pull-up
+Il est possible dans d'autres cas de monter la résistance, non pas vers le ground, mais vers le +5V. Il faut penser à connecter le poussoir au ground (et non plus au +5V) pour que tout fonctionne.<br>
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/pull-up.PNG><br>
+Quand le poussoir est ouvert, le +5V nourrit le pin de l'Arduino, qui donnera HIGH.<br>
+Quand le poussoir est fermé, le +5V et le pin sont absorbés par le ground, le pin donnera LOW.<br>
+Le fonctionnement en pull-up donne en lecture l'opposé du fonctionnement en pull-do<n.<br>
+
+##### Le mode INPUT_PULLUP
+La carte Arduino propose par défaut un mode qui permet d'activer une résistance de 20KΩ qui est dans la carte pour en faire une résistance pull-up. Pas besoin de se prendre la tête avec une résistance en plus, il suffit de connecter correctement le bouton poussoir en mode pull-up.<br>
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/input_pull-up.PNG><br>
+Pour activer la résistance : `pinMode(pin,INPUT_PULLUP)`<br>
+
+**!!!** Attention, pour le pin 13, il est déconseillé d'utiliser le mode INPUT_PUULUP. Si vous devez vous servir du pin 13 comme pin de lecture, préférez un montage avec une résistance externe en pull-up ou pull-do<n. L'explication se trouve dans le fait que le pin 13 est aussi lié à une LED et une résistance. Il ne fournira donc pas du +5V, mais du +1.7V à cause de la LED et de la résistance en série qui baissent la tension. De ce fait la lecture sera toujoursà LOW. **!!!**<br>
+
+##### Programme jour/nuit
+- le montage contient un poussoir connecté au pin 2 avec une résistance montée en pull-down.
+- Une LED (LED1) connecté au pin 4 (pensez à la résistance).
+- Une LED (LED2) connectée au pin 6 
+- Lorsque le bouton est levé, la LED1 est allumé, la LED2 est éteinte
+- Lorsque le bouton est appuyé, la LED1 est éteinte et la LED2 allumée.
+
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/jour-nuit.PNG><br>
+```C
+int pinBouton;
+int pled1, pled2;
+
+void setup() {
+  pinBouton=2;
+  pled1=4;
+  pled2=6;
+
+  pinMode(pinBouton,INPUT);
+  pinMode(pled1,OUTPUT);
+  pinMode(pled2,OUTPUT);
+
+}
+
+void loop() {
+  boolean etatBouton = digitalRead(pinBouton);
+
+  if(etatBouton==HIGH){
+    digitalWrite(pled1,LOW);
+    digitalWrite(pled2,HIGH);
+  } else {
+    digitalWrite(pled1,HIGH);
+    digitalWrite(pled2,LOW);
+  }
+  delay(100);
+
+}
+```
+
+##### Programme interrupteur
+- Le bouton poussoir est connecté au pin 2 en mode INPUT_PULLUP ;
+- Une LED est connectée au pin 4 ;
+- Quand on appuie une fois sur le bouton, la LED s'allume (et reste allumée) ;
+- Lorsqu'on appuie à nouveau, la LED s'éteint (et reste éteinte).
+
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/interrupteur.PNG><br>
+```C
+int pinBouton;
+int pled;
+boolean etatBouton;
+
+void setup() {
+  pinBouton=2;
+  pled=4;
+
+  pinMode(pinBouton,INPUT_PULLUP);
+  pinMode(pled,OUTPUT);
+  etatBouton=0;
+}
+
+void loop() {
+  if (etatBouton){
+    digitalWrite(pled,HIGH);
+  } else {
+    digitalWrite(pled,LOW);
+  }
+
+  boolean etatPinBouton = digitalRead(pinBouton);
+  if(!etatPinBouton){
+    if (etatBouton){
+      etatBouton=0;
+    } else {
+      etatBouton=1;
+    }
+  }
+  delay(200);
+
+}
+```
