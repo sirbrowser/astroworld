@@ -2,7 +2,7 @@
 
 Each MIPS instruction is 32 bits<br>
 
-The main difference between x86/ARM and x64/ARM64 is that the pointer to the stack is now 64-bits.<br>
+The main difference between x86/ARM and x64/ARM64 is that the pointer to the stack is now 64-bits.
 
 Differences between intel syntax and AT&T syntax :<br>
   - In AT&T source and destination are in opposite order :<br>
