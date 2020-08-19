@@ -121,4 +121,28 @@ int main(){
 When we execute this the result in the screen will be `1, 2, 3` but we did not set any variables in f2().  
 These are "ghosts" values, which are still in the stack.  
 
-Let's load the example into OllyDbg:
+##### Exercises :
+
+- challenge #52 :  
+    What does this code do?
+```assembly
+$SG3103    DB    '%d', 0aH, 00H
+
+_main      PROC  
+           push  0
+           call  DWORD PTR __imp__time64
+           push  edx
+           push  eax
+           push  OFFSET $SG3103 ; '%d'
+           call  DWORD PTR __imp__printf
+           add   esp, 16
+           xor   eax, eax
+           ret   0
+_main      ENDP
+```
+Additional question: why MSVC replaced time() with time64()? Is it correct? Dangerous? What printf() will print after year 2038?  
+
+*This prints the number of seconds elapsed since midnight, January 1, 1970 (UTC).  
+time() is the old 32-bit time --> this is not recommended as the end in size of 32-bit time is January 18, 2038. The use of 32-bit time is not allowed on 64-bit platforms.*  
+
+### Chapter 6 : printf() with several arguments
