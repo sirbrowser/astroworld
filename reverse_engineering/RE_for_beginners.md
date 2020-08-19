@@ -100,5 +100,25 @@ A typical stack layout in a 32-bit environment at the start of a function, befor
 
 ##### Noise in stack
 
+Noise valueds in the stack refers to what was left in there after other function's executions. For example :  
+```C
+#include <stdio.h>
 
-    
+void f1(){
+    int a=1, b=2, c=3;
+};
+
+void f2(){
+    int a, b, c;
+    printf("%d, %d, %d\n", a, b, c);
+};
+
+int main(){
+    f1();
+    f2();
+};
+```
+When we execute this the result in the screen will be `1, 2, 3` but we did not set any variables in f2().  
+These are "ghosts" values, which are still in the stack.  
+
+Let's load the example into OllyDbg:
