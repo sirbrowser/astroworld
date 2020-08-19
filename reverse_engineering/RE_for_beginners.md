@@ -12,7 +12,7 @@ Differences between intel syntax and AT&T syntax :<br>
   
   #### Chapter 4 : Function prologue and epilogue
   
-  A function prologue is a sequence of instructions at the start of the function. It often looks like this :
+  A function prologue is a sequence of instructions at the start of the function. It often looks like this
   
   csbqcbujqs
   
