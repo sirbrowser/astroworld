@@ -45,3 +45,25 @@ The STMFA/LDMFA, STMEA/LDMEA (A=Ascending) is the opposite process (grows upward
 ##### What is the stack used for?
 
 - Save the function's return address
+    - x86 : the CALL instruction is equivalent to : PUSH <address_after_call> / JMP <operand> instruction pair.  
+      RET fetches a value from the stack and jumps to it, equivalent to : POP <tmp> / JMP <tmp> instruction pair.  
+
+    - ARM : the RA (Return Address) is saved ot the LR (Link Register). If one needs to call another function and use the LR register one more time, its value has to be saved. Usually it is saved in the function prologue. Often, we see instructions like `PUSH  R4-R7, LR` along with this instruction in epilogue `POP  R4-R7, PC`, thus register values to be used in the function are saved in the stack including LR.  
+
+    If a function never calls another function, in RISC it is called a *leaf function*. So, leaf functions do not save the LR register. If such function is small and uses a small number of registers, it may not use the stack at all.
+
+- Passing function arguments
+    - the most popular way to pass parmeters in x86 is called `cdecl` :
+    ```assembly
+    push  arg3
+    push  arg2
+    push  arg1
+    call  f
+    add   esp, 12 ; 4*3=12
+    ```  
+    Callee functions get their arguments via the stack pointer.  
+
+    This is how the argument values are located in the stack before the execution of the f() function's very first instruction :
+| ESP | return address |
+| ESP+4 | arguments#1, marked in IDA as arg_0 |
+
