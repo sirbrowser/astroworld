@@ -63,7 +63,39 @@ The STMFA/LDMFA, STMEA/LDMEA (A=Ascending) is the opposite process (grows upward
     ```  
     Callee functions get their arguments via the stack pointer.  
 
-    This is how the argument values are located in the stack before the execution of the f() function's very first instruction :
-| ESP | return address |
-| ESP+4 | arguments#1, marked in IDA as arg_0 |
+    This is how the argument values are located in the stack before the execution of the f() function's very first instruction :  
+    ESP --> return address  
+    ESP+4 --> argument#1, marked in IDA as arg_0  
+    ESP+8 --> argument#2, marked in IDA as arg_4  
+    ESP+0xC --> argument#3, marrket in IDA as arg_8  
+   
+- Local variable storage
+  A function could allocate space in the stack for its local variable just by decreasing the stack pointer towards the stack bottom
+  
+- x86 : alloca() function
+    This function works like malloc(), but allocates memory directly on the stack.  
+    The allocated memory chunk does not need to be freed via a free() function call, since the function epilogue returns ESP back toits initial state and the allocated memory is just dropped.  
+    
+- (Windows) SEH (Structured Exception Handling)
+    SEH records are also stored on the stack (if they are present).  
+    
+- Buffer overflow protection
 
+- Automatic deallocation of data in stack
+    Perhaps, the reason for storing local variables and SEH records in the stack is that they are freed automatically upon function exit, using just one instruction to correct the stack pointer (it is often ADD). Function arguments, as we could say, are also deallocated automatically at the end of the function. In contrast, everything stored in heap (usually, a big chunk of memory provided by the OS so that aplications can divide it by themselves as they wish | malloc()/free() work with the heap) must be deallocated manually.  
+    
+##### A typical stack layout
+
+A typical stack layout in a 32-bit environment at the start of a function, before the first instruction execution looks like this :  
+| ...  | ...   |
+|ESP-0xC   |local variable #2, marked in IDA as var_8   |
+|ESP-8   |local variable #1, marked in IDA as var_4   |
+|ESP-4   |saved value of EBP   |
+|ESP   |return address   |
+|ESP+4   |argument#1, marked in IDA as arg_0   |
+|ESP+8   |argument#2, marked in IDA as arg_4   |
+|ESP+0xC   |argument#3, marked in IDA as arg_8   |
+| ...   |...   |
+
+
+    
