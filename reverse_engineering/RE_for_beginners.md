@@ -87,15 +87,16 @@ The STMFA/LDMFA, STMEA/LDMEA (A=Ascending) is the opposite process (grows upward
 ##### A typical stack layout
 
 A typical stack layout in a 32-bit environment at the start of a function, before the first instruction execution looks like this :  
-| ...  | ...   |
-|ESP-0xC   |local variable #2, marked in IDA as var_8   |
-|ESP-8   |local variable #1, marked in IDA as var_4   |
-|ESP-4   |saved value of EBP   |
-|ESP   |return address   |
-|ESP+4   |argument#1, marked in IDA as arg_0   |
-|ESP+8   |argument#2, marked in IDA as arg_4   |
-|ESP+0xC   |argument#3, marked in IDA as arg_8   |
-| ...   |...   |
+| ...     | ...                                       |
+|---------|-------------------------------------------|
+| ESP-0xC | local variable #2, marked in IDA as var_8 |
+| ESP-8   | local variable #1, marked in IDA as var_4 |
+| ESP-4   | saved value of EBP                        |
+| ESP     | return address                            |
+| ESP+4   | argument#1, marked in IDA as arg_0        |
+| ESP+8   | argument#2, marked in IDA as arg_4        |
+| ESP+0xC | argument#3, marked in IDA as arg_8        |
+| ...     | ...                                       |
 
 
     
