@@ -146,3 +146,86 @@ Additional question: why MSVC replaced time() with time64()? Is it correct? Dang
 time() is the old 32-bit time --> this is not recommended as the end in size of 32-bit time is January 18, 2038. The use of 32-bit time is not allowed on 64-bit platforms.*  
 
 ### Chapter 6 : printf() with several arguments
+
+- In MSVC the first 4 arguments has to be passed through the RCX, RDX, R8, R9 registers in Win64, while all the rest via the stack.  
+
+- In GCC, the first 6 arguments are passed through RDI(EDI), RSI, RDX, RCX, R8, R9 registers and all the rest via the stack.  
+
+- In ARM, the first 4 arguments are passed through R0-R3 registers and all the rest via the stack.  
+
+Typical behavior of printf() with several arguments :  
+
+- x86 :
+```assembly
+...
+PUSH  3rd argument
+PUSH  2nd argument
+PUSH  1st argument
+CALL  function
+; modify stack pointer (if needed)
+```
+
+- x64 (MSVC) :
+```assembly
+MOV RCX, 1st argument
+MOV RDX, 2nd argument
+MOV R8, 3rd argument
+MOV R9, 4th argument
+...
+PUSH 5th, 6th argument, etc (if needed)
+CALL function
+; modify stack pointer (if needed)
+```
+
+- x64 (GCC) :
+```assembly
+MOV RDI, 1st argument
+MOV RSI, 2nd argument
+MOV RDX, 3rd argument
+MOV RCX, 4th argument
+MOV R8, 5th argument
+MOV R9, 6th argument
+...
+PUSH 7th, 8th argument, etc (if needed)
+CALL function
+; modify stack pointer (if needed)
+```
+
+- ARM :
+```assembly
+MOV R0, 1st argument
+MOV R1, 2nd argument
+MOV R2, 3rd argument
+MOV R3, 4th argument
+; pass 5th, 6th argument, etc, in stack (if needed)
+BL function
+; modify stack pointer (if needed)
+```
+
+- ARM64 :
+```assembly
+MOV X0, 1st argument
+MOV X1, 2nd argument
+MOV X2, 3rd argument
+MOV X3, 4th argument
+MOV X4, 5th argument
+MOV X5, 6th argument
+MOV X6, 7th argument
+MOV X7, 8th argument
+; pass 9th, 10th argument, etc, in stack (if needed)
+BL CALL function
+; modify stack pointer (if needed)
+```
+
+- MIPS (O32 calling convention) :
+```assembly
+LI $4, 1st argument ; AKA $A0
+LI $5, 2nd argument ; AKA $A1
+LI $6, 3rd argument ; AKA $A2
+LI $7, 4th argument ; AKA $A3
+; pass 5th, 6th argument, etc, in stack (if needed)
+LW temp_reg, address of function ; LW=Load Word(32-bit)
+JALR temp_reg ; JALR=Jump And Link Register
+```
+
+### Chapter 7 : scanf()
