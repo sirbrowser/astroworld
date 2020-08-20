@@ -8,7 +8,7 @@
 - [Chapter 7 : scanf()](#chapter-7--scanf)
 - [Chapter 8 : accessing passed arguments](#chapter-8--accessing-passed-arguments)
 - [Chapter 12 : conditionnal jumps](#chapter-12--conditionnal-jumps)
-- [Chapter 15 : simple c-strings processing](#chapter-15--simple-cstrings-processing)
+- [Chapter 15 : simple C-strings processing](#chapter-15--simple-c-strings-processing)
 
 Each MIPS instruction is 32 bits<br>
 
