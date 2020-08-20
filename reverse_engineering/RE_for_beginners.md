@@ -229,3 +229,81 @@ JALR temp_reg ; JALR=Jump And Link Register
 ```
 
 ### Chapter 7 : scanf()
+
+In x86, the address is represented as a 32-bit number (4 bytes), while in x86-64 it is a 64-bit number (8 bytes).  
+Internally in the compiled code, there is no information about pointer types at all.  
+
+##### Exercises
+
+challenge #53 :
+This code, compiled in Linux x86-64 using GCC is crashing while execution(segmentation fault). It's also crashed if compiled by MinGW for win32. However, it works in Windows environment if compiled by MSVC 2010 x86. Why?  
+```C
+#include <string.h>
+#include <stdio.h>
+
+void alter_string(char *s)
+{
+        strcpy (s, "Goodbye!");
+        printf ("Result: %s\n", s);
+};
+
+int main()
+{
+        alter_string ("Hello, world!\n");
+};
+```
+
+*The code is modifying a string constant, which GCC tends to put in a read-only memory seglent (.rodata) in the resultant executable. Writing a read-only memory segment will cause a segmentation fault. MSVC puts string constants in a writable segment, so this would work just fine.*  
+
+### Chapter 8 : accessing passed arguments
+
+We figured out that the caller function is passing arguments to the callee via the stack. But how does the callee access them?  
+For example in C :
+```C
+#include <stdio.h>
+
+int f (int a, int b, int c){
+  return a*b+c;
+};
+
+int main(){
+  printf("%d\n", f(1, 2, 3));
+  return 0;
+};
+```  
+
+We get this after compilation with MSVC 2010 Express :
+```assembly
+_TEXT SEGMENT
+_a$ = 8 ; size = 4
+_b$ = 12 ; size = 4
+_c$ = 16 ; size = 4
+_f  PROC
+    push ebp
+    mov ebp, esp
+    mov eax, DWORD PTR _a$[ebp]
+    imul eax, DWORD PTR _b$[ebp]
+    add eax, DWORD PTR _c$[ebp]
+    pop ebp
+    ret 0
+_f  ENDP
+
+_main PROC
+      push ebp
+      mov ebp, esp
+      push 3 ; 3rd argument
+      push 2 ; 2nd argument
+      push 1 ; 1st argument
+      call _f
+      add esp, 12
+      push eax
+      push OFFSET $SG2463 ; '%d', 0aH, 00H
+      call _printf
+      add esp, 8
+      ; return 0
+      xor eax, eax
+      pop ebp
+      ret 0
+_main ENDP
+```  
+
