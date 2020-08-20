@@ -3,6 +3,8 @@
 ## Index
 
 - [Chapter 4 : Function prologue and epilogue](#chapter-4--function-prologue-and-epilogue)
+- [Chapter 5 : Stack](#chapter-5--stack)
+- [Chapter 6 : printf() with several arguments](#chapter-6--printf-with-several-arguments)
 
 Each MIPS instruction is 32 bits<br>
 
