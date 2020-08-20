@@ -7,7 +7,7 @@
 - [Chapter 6 : printf() with several arguments](#chapter-6--printf-with-several-arguments)
 - [Chapter 7 : scanf()](#chapter-7--scanf)
 - [Chapter 8 : accessing passed arguments](#chapter-8--accessing-passed-arguments)
-- [Chapter 10 : pointers](#chapter-10--pointers)
+- [Chapter 12 : conditionnal jumps](#chapter-12--conditionnal-jumps)
 
 Each MIPS instruction is 32 bits<br>
 
@@ -316,4 +316,31 @@ _main PROC
 _main ENDP
 ```  
 
-### Chapter 10 : pointers
+### Chapter 12 : conditionnal jumps
+
+Typical behavior :  
+
+- x86 :
+```assembly
+CMP register, register/value
+Jcc true ; cc=condition code
+false:
+... some code to be executed if comparison result is false ...
+JMP exit
+true:
+... some code to be executed if comparison result is true ...
+exit:
+```
+
+- ARM :
+```assembly
+CMP register, register/value
+Bcc true ; cc=condition code
+false:
+... some code to be executed if comparison result is false ...
+JMP exit
+true:
+... some code to be executed if comparison result is true ...
+exit:
+```
+
