@@ -410,7 +410,7 @@ The FPU is a device within the main CPU (Central Porcessing Unit), specially des
 
 A number in the IEEE 754 format consists of a *sign*, *significand* (also called *fraction*) and an *exponent*.  
 
-- x86 :
+- x86 :  
 It is worth looking into [stack machines](https://en.wikipedia.org/wiki/Stack_machine) or learning the basics of the [Forth language](https://en.wikipedia.org/wiki/Forth_(programming_language)), before studying the FPU in x86.  
 
 In the past (before the 80486 CPU) the coprocessor was a separate chip and it was not always pre-installed on the motherboard. It was possible to buy it separately and install it. Starting with the 80486 DX CPU, the FPU is integrated in the CPU.  
@@ -419,10 +419,10 @@ The FWAIT instruction reminds us that it switches the CPU to a waiting state, so
 
 The FPU has a stack capable of holding 8 80-bit registers, and each register can hold a number in the [IEEE 754](https://en.wikipedia.org/wiki/IEEE_754-2008_revision) format. They are ST(0)..ST(7). For brievity, IDA and OllyDbg show ST(0) as ST, which is reprented in some textbooks and manuals as "*Stack Top*".  
 
-- ARM, MIPS, x86/x64 SIMD
+- ARM, MIPS, x86/x64 SIMD  
 In ARM and MIPS the FPU is not a stack, but a set of registers. The same ideology is used in the SIMD extensions of x86/x64 CPUs.  
 
-- C/C++
+- C/C++  
 The standard C/C++ languages offer at least two floating number types, *float* ([single-precision](https://en.wikipedia.org/wiki/Single-precision_floating-point_format), 32 bits) and *double* ([double-precision](https://en.wikipedia.org/wiki/Double-precision_floating-point_format), 64 bits).  
 GCC also supports the *long double* type ([extended precision](https://en.wikipedia.org/wiki/Extended_precision), 80 bits), which MSVC doesn't.  
 
