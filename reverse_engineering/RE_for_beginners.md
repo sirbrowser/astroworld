@@ -426,3 +426,17 @@ In ARM and MIPS the FPU is not a stack, but a set of registers. The same ideolog
 The standard C/C++ languages offer at least two floating number types, *float* ([single-precision](https://en.wikipedia.org/wiki/Single-precision_floating-point_format), 32 bits) and *double* ([double-precision](https://en.wikipedia.org/wiki/Double-precision_floating-point_format), 64 bits).  
 GCC also supports the *long double* type ([extended precision](https://en.wikipedia.org/wiki/Extended_precision), 80 bits), which MSVC doesn't.  
 
+The *float* type requires the same number of bits as the *int* type in 32-bit environments, but the number representation is completely different.  
+
+Example :  
+```C
+#include <stdio.h>
+double f (double a, double b)
+{
+return a/3.14 + b*4.1;
+};
+int main()
+{
+printf ("%f\n", f(1.2, 3.4));
+};
+```
