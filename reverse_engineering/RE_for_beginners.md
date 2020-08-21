@@ -700,3 +700,16 @@ That's the stack layout while the control is in main():
 |ESP+4  |80 bytes allocated for a [20] array|
 |ESP+84 |saved EBP value                    |
 |ESP+88 |return address                     |
+
+*a[19]=something* statement writes the last *int* in the bounds of the array.  
+*a[20]=something* statement writes *something* to the place where the value of EBP is saved.  
+
+Let's take a look at the register state at the moment of the crash. In our case, 20 was written in the 20th element. At the function end, the function epilogue restores the original EBP value. (20 in decimal is 0x14 in hexadecimal). Then RET gets executed, which is effectively equivalent to POP EIP instruction.  
+
+The RET instruction takes the return address from the stack (that is the address in CRT (C Runtime Library), which was called main()), and 21 is stored there (0x15 in hexa). The CPU traps at address 0x15, but there is no executable code there, so exception gets raised.  
+
+Welcome! It is clled a buffer overflow!  
+
+Replace the *int* array with a string (char array), create a long string deliberately and pass it to the program, to the function, which does not check the legth of the string and copies it in a short buffer, and you'll able to point the program to an address to which it must jump. It is not that simple in reality, but that is how it emerged.  
+
+##### Multidimensional arrays
