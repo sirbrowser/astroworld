@@ -346,3 +346,69 @@ exit:
 ```
 
 ### Chapter 15 : simple C-strings processing
+
+Example strlen() :
+```C
+int my_strlen (const char * str)
+{
+const char *eos = str;
+while( *eos++ ) ;
+return( eos - str - 1 );
+}
+int main()
+{
+// test
+return my_strlen("hello!");
+};
+```
+Compiling in x86 :
+```assembly
+_eos$ = -4 ; size = 4
+_str$ = 8 ; size = 4
+_strlen PROC
+  push ebp
+  mov ebp, esp
+  push ecx
+  mov eax, DWORD PTR _str$[ebp] ; place pointer to string from "str"
+  mov DWORD PTR _eos$[ebp], eax ; place it to local variable "eos"
+$LN2@strlen_:
+  mov ecx, DWORD PTR _eos$[ebp] ; ECX=eos
+
+  ; take 8-bit byte from address in ECX and place it as 32-bit value to EDX with sign extension
+
+  movsx edx, BYTE PTR [ecx] ; movsx stand for mov with sign-extend
+  mov eax, DWORD PTR _eos$[ebp] ; EAX=eos
+  add eax, 1 ; increment EAX
+  mov DWORD PTR _eos$[ebp], eax ; place EAX back to "eos"
+  test edx, edx ; EDX is zero?
+  je SHORT $LN1@strlen_ ; yes, then finish loop
+  jmp SHORT $LN2@strlen_ ; continue loop
+$LN1@strlen_:
+  
+  ; here we calculate the difference between two pointers
+
+  mov eax, DWORD PTR _eos$[ebp]
+  sub eax, DWORD PTR _str$[ebp]
+  sub eax, 1 ; subtract 1 and return result
+  mov esp, ebp
+  pop ebp
+  ret 0
+_strlen_ ENDP
+```
+We get two new instructions here: MOVSX and TEST.  
+
+MOVSX takes a byte from an address in memory ans stores the value in a 32-bit register. MOVSX stands for MOV with Sign-Extend. MOVSX sets the rest of the bits, from the 8th to the 32st, to 1 if the source bytes is negative or to 0 if it is positive.  
+
+By default, the char type is signed in MSVC and GCC. If we have two values of which one is char and the other is int, and if the first value contain -2 (coded as 0xFE) and we just copy this byte into the int container, it makes 0x000000FE, and this from the point of signed int view is 254, but not -2. In signed int, -2 is coded as 0xFFFFFFFE. So if we need to transfer 0xFE from a variable of char type to int, we need to identify its sign and extend it. That is what MOVSX does.  
+
+Then we see TEST EDX, EDX. Here this instruction just checks if the value in EDX equals to 0.  
+
+### Chapter 17 : Floating Point Unit
+
+The FPU is a device within the main CPU (Central Porcessing Unit), specially designed to deal with floating point numbers. It was called "coprocessor" in the past and it stays somewhat aside of the main CPU.  
+
+A number in the IEEE 754 format consists of a sign, asignificand (also called fraction) and an exponent.  
+
+- x86 :
+It is woth looking into [stack machines](https://en.wikipedia.org/wiki/Stack_machine) or learning the basics of the [Forth language](https://en.wikipedia.org/wiki/Forth_(programming_language)), before studying the FPU in x86.  
+
