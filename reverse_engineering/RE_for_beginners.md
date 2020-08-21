@@ -625,3 +625,77 @@ END
 ```
 The code prints this result : *a[20]=1638280*  
 It is just something that was lying in the stack near to the array, 80 bytes away from its first element.  
+
+Let's try to find out where did this value come from, using OllyDbg. Let's load and find the value located right after the last array element :  
+<img src="https://github.com/sirbrowser/astroworld/blob/master/images/olly1.PNG">  
+Judging by the stack layout, this is the saved value of the EBP register.  
+
+Let's trace further and see how it gets resolved:  
+<img src="https://github.com/sirbrowser/astroworld/blob/master/images/olly2.PNG">  
+Indeed, how it could be different? The compiler may generate some additionnal code to check the index value to be always in the array's bounds (like in higher-level programming languages) but this makes the code slower.  
+
+##### Writing beyond array bounds
+
+We succesfully read some values from the stack illegaly, but what if we could write something to it?  
+Here is what we got in C:  
+```C
+#include <stdio.h>
+
+int main(){
+  int a[20];
+  int i;
+  
+  for(i=0; i<30; i++){
+    a[i]=i;
+  }
+  
+  return 0;
+};
+```
+ And what we get in MSVC :
+ ```assembly
+ _TEXT SEGMENT
+_i$ = -84 ; size = 4
+_a$ = -80 ; size = 80
+_main PROC
+  push ebp
+  mov ebp, esp
+  sub esp, 84
+  mov DWORD PTR _i$[ebp], 0
+  jmp SHORT $LN3@main
+$LN2@main:
+  mov eax, DWORD PTR _i$[ebp]
+  add eax, 1
+  mov DWORD PTR _i$[ebp], eax
+$LN3@main:
+  cmp DWORD PTR _i$[ebp], 30 ; 0000001eH
+  jge SHORT $LN1@main
+  mov ecx, DWORD PTR _i$[ebp]
+  mov edx, DWORD PTR _i$[ebp] ; that instruction is obviously redundant
+  mov DWORD PTR _a$[ebp+ecx*4], edx ; ECX could be used as second operand here instead
+  jmp SHORT $LN2@main
+$LN1@main:
+  xor eax, eax
+  mov esp, ebp
+  pop ebp
+  ret 0
+_main ENDP
+ ```
+ The compiled program crashes after running. No wonder. Let's see where exactly does it crash.  
+ Let's load it into OllyDbg, and trace until all 30 elements are written:  
+ <img src="https://github.com/sirbrowser/astroworld/blob/master/images/olly3.PNG">  
+
+Trace until the function end:  
+<img src="https://github.com/sirbrowser/astroworld/blob/master/images/olly4.PNG">  
+
+Now keep our eyes on the registers.  
+
+EIP is 0x15 now. It is not a legal address for code (at least for win32 code). We got there somehow against our will. It is also interesting that the EBP register contain 0x14, ECX and EDX 0x1D.  
+
+After the control flow was passed to main(), the value in the EBP register was saved on the stack. Then, 94 bytes were allocated for the array and the i variable. That's (20+1)*sizeof(int). ESP now points to the _i variable in the local stack and after the execution of the next PUSH something, something is appearing next to _i.  
+
+That's the stack layout while the control is in main():  
+|ESP    |4 bytes allocated for i variable   |
+|ESP+4  |80 bytes allocated for a [20] array|
+|ESP+84 |saved EBP value                    |
+|ESP+88 |return address                     |
