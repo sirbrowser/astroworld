@@ -350,16 +350,14 @@ exit:
 
 Example strlen() :
 ```C
-int my_strlen (const char * str)
-{
-const char *eos = str;
-while( *eos++ ) ;
-return( eos - str - 1 );
-}
-int main()
-{
+int my_strlen (const char * str){
+  const char *eos = str;
+  while( *eos++ ) ;
+  return( eos - str - 1 );
+};
+int main(){
 // test
-return my_strlen("hello!");
+  return my_strlen("hello!");
 };
 ```
 Compiling in x86 :
@@ -431,12 +429,199 @@ The *float* type requires the same number of bits as the *int* type in 32-bit en
 Example :  
 ```C
 #include <stdio.h>
-double f (double a, double b)
-{
-return a/3.14 + b*4.1;
+double f (double a, double b){
+    return a/3.14 + b*4.1;
 };
-int main()
-{
-printf ("%f\n", f(1.2, 3.4));
+int main(){
+    printf ("%f\n", f(1.2, 3.4));
 };
 ```
+Let's compile it in MSVC 2010 :
+```assembly
+CONST SEGMENT
+__real@4010666666666666 DQ 04010666666666666r ; 4.1
+CONST ENDS
+CONST SEGMENT
+__real@40091eb851eb851f DQ 040091eb851eb851fr ; 3.14
+CONST ENDS
+_TEXT SEGMENT
+_a$ = 8 ; size = 8
+_b$ = 16 ; size = 8
+_f PROC
+    push ebp
+    mov ebp, esp
+    fld QWORD PTR _a$[ebp]
+
+; current stack state: ST(0) = _a
+
+    fdiv QWORD PTR __real@40091eb851eb851f
+
+; current stack state: ST(0) = result of _a divided by 3.14
+
+    fld QWORD PTR _b$[ebp]
+ 
+; current stack state: ST(0) = _b; ST(1) = result of _a divided by 3.14
+
+    fmul QWORD PTR __real@4010666666666666
+
+; current stack state:
+; ST(0) = result of _b * 4.1;
+; ST(1) = result of _a divided by 3.14
+    
+    faddp ST(1), ST(0)
+
+; current stack state: ST(0) = result of addition
+
+    pop ebp
+    ret 0
+_f ENDP
+```
+FLD takes 8 bytes from stack and loads the number into the ST(0) register, automatically converting it into the internal 80-bit format (extended precision).  
+
+FDIV divides the value in ST(0) by the number stored at address __real@40091eb851eb851f (the value 3.14 is encoded here. Thes assembly syntax does not support floating point numbers, so what we see here is the hexadecimal representation of 3.14 in 64-bit IEEE 754 format.  
+
+After the execution of FDIV, ST(0) hold the quotient.  
+
+There is also the FDIVP instruction, which divides ST(1) by ST(0), popping both these values from stack and then pushing the result.  
+
+Then the FLD instruction pushes the value of b into the stack.  
+
+After that, the quotient is placed in ST(1), and ST(0) hold the value of b.  
+
+The next FMUL instruction does multiplication: b from St(0) is multiplied by the value at __real@4010666666666666 (the number 4.1 is there) and leaves the result in the ST(0) register.  
+
+The last FADDP instruction adds the two values at top of stack, storing the result in ST(1) and then popping the value of ST(0), thereby leaving the result at the top of the stack, in ST(0).  
+
+The function must return its result in the St(0) register, so there are no any other instructions except the function epilogue after FADDP.  
+
+### Chapter 18 : arrays
+
+Example :
+```C
+#include <stdio.h>
+
+int main(){
+  int a[20];
+  int i;
+  
+  for (i=0; i<20; i++){
+      a[i]=i*2;
+  }
+  
+  for (i=0; i<20; i++){
+      printf("a[%d]=%d\n", i, a[i]);
+  }
+  
+  return 0;
+};
+```
+Lets' compile in MSVC x86 :
+```assembly
+_TEXT SEGMENT
+_i$ = -84 ; size = 4
+_a$ = -80 ; size = 80
+_main PROC                          |
+    push ebp                        |
+    mov ebp, esp                    |
+    sub esp, 84 ; 00000054H         |--> initalization i=0
+    mov DWORD PTR _i$[ebp], 0       |
+    jmp SHORT $LN6@main             |
+$LN5@main:
+    mov eax, DWORD PTR _i$[ebp]
+    add eax, 1
+    mov DWORD PTR _i$[ebp], eax
+$LN6@main:
+    cmp DWORD PTR _i$[ebp], 20 ; 00000014H    --> i, 20?
+    jge SHORT $LN4@main                       --> if i>=20 jump to LN4
+    mov ecx, DWORD PTR _i$[ebp]               --> else
+    shl ecx, 1                                --> shift left 1 = multiplication by 2
+    mov edx, DWORD PTR _i$[ebp]
+    mov DWORD PTR _a$[ebp+edx*4], ecx
+    jmp SHORT $LN5@main
+$LN4@main:
+    mov DWORD PTR _i$[ebp], 0    --> reinitialization of i to 0 for the second loop
+    jmp SHORT $LN3@main
+$LN2@main:
+    mov eax, DWORD PTR _i$[ebp]
+    add eax, 1
+    mov DWORD PTR _i$[ebp], eax
+$LN3@main:
+    cmp DWORD PTR _i$[ebp], 20 ; 00000014H
+    jge SHORT $LN1@main
+    mov ecx, DWORD PTR _i$[ebp]
+    mov edx, DWORD PTR _a$[ebp+ecx*4]
+    push edx
+    mov eax, DWORD PTR _i$[ebp]
+    push eax
+    push OFFSET $SG2463
+    call _printf
+    add esp, 12 ; 0000000cH
+    jmp SHORT $LN2@main
+$LN1@main:
+    xor eax, eax
+    mov esp, ebp
+    pop ebp
+    ret 0
+_main ENDP
+```
+
+##### Buffer overflow
+
+So, array indexing is just *array[index]*. If we study the generated code closely, we can note the missing index bounds checking, which could check if it is less than 20. What if the index is 20 or greater? That's the one C/C++ feature is often blamed for.  
+
+Here is a code that succesfully compiles and works :
+```C
+#include <stdio.h>
+
+int main(){
+    int a[20];
+    int i;
+    
+    for (i=0; i<20; i++){
+        a[i]=i*2;
+    }
+    
+    printf("a[20]=%d\n", a[20]);
+    
+    return 0;
+};
+```
+Let's comile it :
+```assembly
+$SG2474 DB 'a[20]=%d', 0aH, 00H
+_i$ = -84 ; size = 4
+_a$ = -80 ; size = 80
+_main PROC
+    push ebp
+    mov ebp, esp
+    sub esp, 84
+    mov DWORD PTR _i$[ebp], 0
+    jmp SHORT $LN3@main
+$LN2@main:
+    mov eax, DWORD PTR _i$[ebp]
+    add eax, 1
+    mov DWORD PTR _i$[ebp], eax
+$LN3@main:
+    cmp DWORD PTR _i$[ebp], 20
+    jge SHORT $LN1@main
+    mov ecx, DWORD PTR _i$[ebp]
+    shl ecx, 1
+    mov edx, DWORD PTR _i$[ebp]
+    mov DWORD PTR _a$[ebp+edx*4], ecx
+    jmp SHORT $LN2@main
+$LN1@main:
+    mov eax, DWORD PTR _a$[ebp+80]
+    push eax
+    push OFFSET $SG2474 ; 'a[20]=%d'
+    call DWORD PTR __imp__printf
+    add esp, 8
+    xor eax, eax
+    mov esp, ebp
+    pop ebp
+    ret 0
+_main ENDP
+_TEXT ENDS
+END
+```
+The code prints this result : *a[20]=1638280*  
+It is just something that was lying in the stack near to the array, 80 bytes away from its first element.  
