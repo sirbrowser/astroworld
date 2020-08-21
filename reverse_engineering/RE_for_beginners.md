@@ -696,6 +696,7 @@ After the control flow was passed to main(), the value in the EBP register was s
 
 That's the stack layout while the control is in main():  
 |ESP    |4 bytes allocated for i variable   |
+|-------|-----------------------------------|
 |ESP+4  |80 bytes allocated for a [20] array|
 |ESP+84 |saved EBP value                    |
 |ESP+88 |return address                     |
