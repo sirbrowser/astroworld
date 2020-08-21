@@ -695,8 +695,8 @@ EIP is 0x15 now. It is not a legal address for code (at least for win32 code). W
 After the control flow was passed to main(), the value in the EBP register was saved on the stack. Then, 94 bytes were allocated for the array and the i variable. That's (20+1)*sizeof(int). ESP now points to the _i variable in the local stack and after the execution of the next PUSH something, something is appearing next to _i.  
 
 That's the stack layout while the control is in main():  
-|-------|-----------------------------------|
 |ESP    |4 bytes allocated for i variable   |
+|-------|-----------------------------------|
 |ESP+4  |80 bytes allocated for a [20] array|
 |ESP+84 |saved EBP value                    |
 |ESP+88 |return address                     |
