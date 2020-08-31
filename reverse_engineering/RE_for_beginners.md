@@ -708,8 +708,29 @@ Let's take a look at the register state at the moment of the crash. In our case,
 
 The RET instruction takes the return address from the stack (that is the address in CRT (C Runtime Library), which was called main()), and 21 is stored there (0x15 in hexa). The CPU traps at address 0x15, but there is no executable code there, so exception gets raised.  
 
-Welcome! It is clled a buffer overflow!  
+Welcome! It is called a buffer overflow!  
 
-Replace the *int* array with a string (char array), create a long string deliberately and pass it to the program, to the function, which does not check the legth of the string and copies it in a short buffer, and you'll able to point the program to an address to which it must jump. It is not that simple in reality, but that is how it emerged.  
+Replace the *int* array with a string (char array), create a long string deliberately and pass it to the program, to the function, which does not check the length of the string and copies it in a short buffer, and you'll able to point the program to an address to which it must jump. It is not that simple in reality, but that is how it emerged.  
 
 ##### Multidimensional arrays
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
