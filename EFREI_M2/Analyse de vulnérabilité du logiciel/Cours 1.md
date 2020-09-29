@@ -17,12 +17,12 @@
 Code en langage machine qui se greffent sur un programme utilisé sur la cible, afin d'en modifier le comportement.  
 Une fois implanté sur son programme-hôte, le greffon possède aussi la capacité de se répliquer sur d'autres programmes.  
 
-Virus de boot : le code du virus s'exécute avant le MBR (Master Boot Record) puis redonne la main au MBR.  
+Virus de boot : le code du virus s'exécute avant le MBR (Master Boot Record) puis redonne la main au MBR. Il est de plus en plus diffcile de les créer dû aux TPM et la techno secure boot. Il y a maintenant des virus de boot qui s'attaque à l'UEFI (remplaçant du BIOS). 
 TPM = Trusted Platform Module = is an international standard for a secure cryptoprocessor, a dedicated microcontroller designed to secure hardware through integrated cryptographic keys. Can be use to secure boot.  
 
 Stealth / Tunneling Virus : quand un antivirus demande un fichier pour l'analyser le virus lui donne le fichier original, cela est possible car le virus intercepte tous les appels système.  
 
-Virus chiffré : chifrrement du code / une nouvelle clé de chiffrement par infection / l'antivirus ne pourra pas les détecter en utilisant une approche basée sur les signatures.  
+Virus chiffré : chifrrement du code / une nouvelle clé de chiffrement par infection / l'antivirus ne pourra pas les détecter en utilisant une approche basée sur les signatures. Lorsqu'ils sont chargés en mémoire vive, ils ne sont plus déchiffrés. Si l'antivirus inspecte la mémoire vive, il peut le détecter. Sur le disque, il faut qu'un un bout de code permettant de déchiffrer ce virus pour l'exécuter, soit présent.  
 
 Virus polymorphic : le code mute à chaque infection, mais pas l'algorithme originel.  
 
@@ -41,7 +41,7 @@ Démarche d'infection :
 
 Shell distant (Bind shell) vs reverse shell :  
 Shell distant : un listener écoute chez la victime et l'attaquant se connecte dessus pour obtenir un shell distant.  
-Reverse shell : un listener écoute chez l'attaquant et la cible se connecte dessus avec un shell.  
+Reverse shell : un listener écoute chez l'attaquant et la cible se connecte dessus avec un shell. Cette technique permet de bypass les règles de routage fait sur les paquets entrants de la victime, s'il y en a. 
 
 - Rootkit  
 
