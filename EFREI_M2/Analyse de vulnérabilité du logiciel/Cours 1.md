@@ -4,7 +4,7 @@
 
 - [Types de logiciels malveillants](#types-de-logiciels-malveillants)
 - [Signatures](#signatures)
-- [Analyse statique vs analyse dynamique](#analyse-statique-vs-anlayse-dynamique)
+- [Analyse statique vs analyse dynamique](#analyse-statique-vs-analyse-dynamique)
 - [Portable Executable file format (PE)](#portable-executable-file-format-pe)
 - [Structure d'un programme en mémoire centrale](#structure-dun-programme-en-mémoire-centrale)
 
