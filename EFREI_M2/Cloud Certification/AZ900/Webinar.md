@@ -85,14 +85,19 @@ Créez rapidement et facilement des app web et mobiles pour nptq plateforme
 
 #### Sécurité, confidentialité, conformité et integrité
 
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/azure-secu.PNG>  
 
+ASG = Application Security Group : permet de regrouper des VM et appliquer des regles aux NSG correspondant  
 
+pare feu Azure = FaaS Firewall as a Service --> SLA de 99,99%  
 
+- Azure Key Vault : coffre fort des secrets des applis (secrets, clés, certificats ...)  
 
+- AIP (Azure Information Protection) : classifie et protège les doc et les emails en appliquant des etiquettes.  
 
+3 rôles principaux :  
+- Propriétaire : Tout faire (supp/add/edit) des ressources + attribuer des droits supplémentaires.
+- Contributeur : Idem sauf droits supplémentaires.
+- Lecteur : Lire uniquement les ressources
 
-
-
-
-
-
+Toute ressource qui recoit un droit, peut etre explicite ou hérité du groupe de ressources ou de l'abonnement.  
