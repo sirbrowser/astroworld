@@ -4,6 +4,7 @@
 
 - [Concepts clés du cloud](#concepts-clés-du-cloud)
 - [Les principaux services Azure](#les-principaux-services-azure)
+- [Sécurité, confidentialité, conformité et integrité](#sécurité-confidentialité-conformité-et-integrité)
 
 
 
@@ -69,6 +70,24 @@ Services de base données Azure :
 - Azure cosmos DB --> service de bdd mondialement distribué
 - bdd Azure SQL --> bdd relationnelle en tant que service (DaaS = 
 - migration de bdd Azure --> service entièrement managbé, conçu pour permettre des migrations transparentes de plusieurs sources de bdd (migrer des bdd on prem dans azure bit par bit).
+
+Serverless :  
+- Azure functions : code exécutant votre service et non la plateforme ou l'infra sous jacente. Crée une infra en fonction d'un événement.
+- Azure Logic Apps : automatiser et orchestrer les tâches, les process métier, et les workflows lorsque vous devez integrer des app, des données, des systèmes et des services.
+- Azure Event Grid
+
+DevOps :  
+- Azure devops : fournit des outils de collab de dev, notamment des pipelines, des referentiels git, des tableaux kanban et des tests de charge étezndus automatisés.
+- azure devtest labs :
+
+Azure App Service :  
+Créez rapidement et facilement des app web et mobiles pour nptq plateforme
+
+#### Sécurité, confidentialité, conformité et integrité
+
+
+
+
 
 
 
