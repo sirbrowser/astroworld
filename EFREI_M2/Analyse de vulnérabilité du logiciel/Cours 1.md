@@ -116,6 +116,7 @@ Autres sections :
 - .reloc : adresses des symboles à recalculer.  
 
 Detecter si un fichier est packed :  
+- Si le fichier possède treès peu de fonctions  
 - Analyse des section headers : si taille = 0 sur disque mais tailler sur mémoire virtuelle alors on peut conclure que le fiochier est packed (commande *iS* dans radare2).  
 - En passant le fichier dans le soft PEiD on peut detecter la signature du programme packer (ex : upx).  
 
@@ -135,7 +136,13 @@ Liniking at runtime :
 
 
 **IAT hooking**  
-https://lief.quarkslab.com/doc/stable/tutorials/06_pe_hooking.html
+https://lief.quarkslab.com/doc/stable/tutorials/06_pe_hooking.html  
+
+Pour ELF les fonctions en mémoire sont dans "Program Header" et sur disque dans la partie "Section".  
+
+Equivalent IAT sous linux == PLT/GOT --> plt en mémoire (Program Header)  
+
+
 
 
 
