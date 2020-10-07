@@ -95,3 +95,27 @@ Edition de lien dynamique :
 #### Structure d'un programme en mémoire centrale
 
 <img src=https://github.com/sirbrowser/astroworld/blob/master/images/structure.PNG>  
+
+
+#### Data directrory
+
+The data directory array points to the other optional headers that might be included in the executable and are not necssary included in every application.  
+RVA = Relative Virtual Address = un delta par rapport à l'ImageBase address puisqu'on ne la copnnait pas encore théoriquement.  
+
+
+**IAT table** : fait la relation entre l'exe et la dll.  
+
+**Table de relocation** : propre aux fichiers (exe en a une, dll en a une).  
+Si l'adresse est changée au momen,t du chargement en mémoire.  
+
+**Section headers** : infos sur les sections.  
+
+Autres sections :  
+- .rdata : import et export (IAT EAT).
+- .rsrc : sauvegarde les ressources utilisées par l'exe (strings, icons, menus...)  
+- .reloc : adresses des symboles à recalculer.  
+
+Detecter si un fichier est packed :  
+- Analyse des section headers : si taille = 0 sur disque mais tailler sur mémoire virtuelle alors on peut conclure que le fiochier est packed (commande *iS* dans radare2).  
+- En passant le fichier dans le soft PEiD on peut detecter la signature du programme packer (ex : upx).  
+
