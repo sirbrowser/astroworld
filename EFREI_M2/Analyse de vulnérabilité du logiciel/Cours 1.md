@@ -119,3 +119,24 @@ Detecter si un fichier est packed :
 - Analyse des section headers : si taille = 0 sur disque mais tailler sur mémoire virtuelle alors on peut conclure que le fiochier est packed (commande *iS* dans radare2).  
 - En passant le fichier dans le soft PEiD on peut detecter la signature du programme packer (ex : upx).  
 
+**Imports**  
+Fonctions utilisées par un programme et qui sont stockées dans un autre programme comme une librairie.  
+Connectées a l'exe principal par l'édition de liens.  
+Il existe trois types de linking :  
+- Statique (à la compilation)
+- Dynamique
+- à l'éxecution
+
+Liniking at runtime :  
+- pas souvent utilisée dans les programmes classiques
+- courante dans les malware notamment les mlawares packés
+- le linking est réalisé au besoin et pas nécessairement au démarrage du programme
+- par utilisation des fonctions *LoadLibrary* et *GetProcAddress* (avec strings on ne verra pas le nom de la dll chargée mais le nom des fonctions : *LoadLibrary* par ex)  
+
+
+**IAT hooking**  
+https://lief.quarkslab.com/doc/stable/tutorials/06_pe_hooking.html
+
+
+
+
