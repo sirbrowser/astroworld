@@ -142,6 +142,8 @@ Pour ELF les fonctions en mémoire sont dans "Program Header" et sur disque dans
 
 Equivalent IAT sous linux == PLT/GOT --> plt en mémoire (Program Header)  
 
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/registers.PNG>
+
 
 
 
