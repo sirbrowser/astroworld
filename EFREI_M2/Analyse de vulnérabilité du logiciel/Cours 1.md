@@ -142,10 +142,20 @@ Pour ELF les fonctions en mémoire sont dans "Program Header" et sur disque dans
 
 Equivalent IAT sous linux == PLT/GOT --> plt en mémoire (Program Header)  
 
-<img src=https://github.com/sirbrowser/astroworld/blob/master/images/registers.PNG>
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/registers.PNG>  
 
 
+L'opérateur offset nous donne le déplacement d'une variable ou un label par rapport au début de son segment.  
+L'opérateur PTR peut être utilisé pour forcer la taille d'un opérande.  
 
 
+#### Fonctionnement de la pile 
+
+- Last in, first out
+- la pile d'un programme en execution est partagée par toutes les fonctions du programme
+- ESP (Extended Stack Pointer) - sommet de la pile
+- EBP (Extended Base Pointer) - bottom de la pile (base de la pile)
+- instruction PUSH = empiler les données
+- instruction POP = dépiler les données
 
 
