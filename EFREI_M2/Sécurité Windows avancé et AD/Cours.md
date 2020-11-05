@@ -26,9 +26,7 @@ Le user mode ne communique jamais directement avec la mémoire.
 <img src=https://github.com/sirbrowser/astroworld/blob/master/images/interruption.PNG >  
 
 - virtual memory :
-memory management consists in a strong collaboration between hardware (modern CPU provides a unit called MMU : translation between virtual and physical address) and software.  
-
-
+memory management consists in a strong collaboration between hardware (modern CPU provides a unit called MMU : translation between virtual and physical address) and software. 
 
 #### Section 2 : Windows boot sequence
 
