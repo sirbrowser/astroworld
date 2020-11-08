@@ -2,14 +2,15 @@
 
 ## Index 
 - [Introduction to cyber forensics](#introduction-to-cyber-forensics)
+- [Windows Forensics](#windows-forensics)
 
 #### Introduction to cyber forensics
 
 ###### Forensic investigation process :<br>
 - Incident : Occurence of a cybercrime instance where digital devices like computers, mobile, ect, have been used to commit a crime.<br>
 
-- Identification : scope of actions before starting a forensic examination. (who are the prime suspects? what are the best sources of potential digital evidence that will be further investigated?).
-                   It prevents that no essential evidence is missed and costs can be estimated in advance and the scope of the case can be adjusted accordingly.<br>
+- Identification : scope of actions before starting a forensic examination. (who are the prime suspects? what are the best sources of potential digital evidence that will be further investigated?).  
+It prevents that no essential evidence is missed and costs can be estimated in advance and the scope of the case can be adjusted accordingly.<br>
 
 - Seizure : applicable with the law.<br>
 
@@ -67,4 +68,37 @@ The following must be included in a chain of custody form :
 - where was it taken or seized from?
 - all electronic evidence that was collected from the crime scene must be properly documented each time that evidence is viewed
 - such documentation must be made available, if requested by the client, throughout the pre-trial discovery phase
+
+#### Windows forensics
+
+##### Volatile and non-volatile artifacts
+
+<img src=https://github.com/sirbrowser/astroworld/blob/master/images/volatile.PNG>  
+
+Volatile artifacts are wiped off the system's memory once the power is turned off.  
+Non-volatile artifacts remain iunchanged when the system is shut down. Mostly this data resides in the hard disk, sometimes in unallocateds space.  
+
+- Master File Table (MFT) : keeps all information about a file such as name, size, date, timestamps, etc. The MFT increases in size whenever more files are added to the system. When a file is deleted, its entry is marked as "to be reused". NTFS keeps space for the MFT as it keeps growing, this space is called the MFT zone.  
+
+- Master Boot Record (MBR) : is the information or code in the first sector of most standard hard drive. This code is called the bootloader, and it identifies how and where an OS is located so that it can be booted into the computer's main storage or RAM. The last two bytes of the MBR are **55 AA**.  
+
+- Most Recently Used (MRU) Registry key :
+  - RunMRU : when a command is typed into the 'Run' box, the entry is added to this Registry key.
+  - BagMRU : contains information about the last visited folders.
+
+- SWAP Files : when RAM requires more space to accomodate applications, it creates a file on the system memory and swaps between it to perform tasks. This SWAP file contains information that usually resides in RAM.  
+
+##### File systems
+
+| FAT 32                                                                                                 | NTFS                                                                                                    |
+|--------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| It is the final version of the File Allocation Table (FAT). The '32' denotes the cluster size in FAT32 | NTFS is New Technology File System. Windows OS uses NTFS for storing and retrieving files on hard disk. |
+| Maximum file size is 4GB                                                                               | Maximum file size is 16TB                                                                               |
+| No provision for fault tolerance                                                                       | Automatic troubleshooting                                                                               |
+| File/folder encryption is not provided                                                                 | File/folder encryption is provided                                                                      |
+| FAT32 is less secure                                                                                   | NTFS is more secure                                                                                     |
+| No provision for file compression                                                                      | Support file compression                                                                                |
+| Efficiently works under partition of 200MB                                                             | Efficiently works under partition of 400MB 
+
+NTFS keeps track of lots of timestamps such as Modify, Access, Create and Entry Modified (these four timestamp values are commonly known as MACE values).  
 
