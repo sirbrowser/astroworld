@@ -228,10 +228,10 @@ Utilisé par les malwares pour empecher l'infection du systeme cible par différ
 Arsenal Image Mounter --> nouvelle fonctionnalité : DPAPI Bypass, mdp chrome without mdp of user, wifi passwords avec IaZagne, 
 dechiffrer les bdd dropbox en extractant la clé dropbox avec DPAPI Bypass, dropbox key pour dechiffrer filecache.dbx en filecache.db  
 
-MFT (windows)
-fls (linux)
-qu'est ce qu'une partition
-table d'inode
-comment fonctionne volatility
-qu'est ce qu'un processus
+MFT (windows)  
+fls (linux)  
+qu'est ce qu'une partition  
+table d'inode  
+comment fonctionne volatility  
+qu'est ce qu'un processus  
 quel est le deroulement quand je tape un fichier au niveau kernel et user mdoe
