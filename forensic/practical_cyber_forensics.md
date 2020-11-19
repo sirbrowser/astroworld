@@ -102,3 +102,11 @@ Non-volatile artifacts remain iunchanged when the system is shut down. Mostly th
 
 NTFS keeps track of lots of timestamps such as Modify, Access, Create and Entry Modified (these four timestamp values are commonly known as MACE values).  
 
+##### Tools
+
+- Autopsy : very powerful.
+- Recuva : recover deleted files.
+
+
+
+
