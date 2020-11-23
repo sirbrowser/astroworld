@@ -108,5 +108,3 @@ NTFS keeps track of lots of timestamps such as Modify, Access, Create and Entry 
 - Recuva : recover deleted files.
 
 
-
-
